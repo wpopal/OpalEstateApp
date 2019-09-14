@@ -45,6 +45,13 @@ const Main = () => (
       <Button title="Hey!" />
     </ThemeProvider>
     <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
   </ImageBackground>
 );
 
