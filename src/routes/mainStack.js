@@ -7,7 +7,7 @@ import {
   createAppContainer,
 } from 'react-navigation';
 
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Intro';
 
@@ -24,13 +24,9 @@ type Props = {
   tintColor: string,
 };
 
-const getTabIcon = (icon: string): Object => ({ tintColor }: Props) => (
-  <Icon
-    color={tintColor}
-    name={icon}
-    size={25}
-  />
-);
+const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
+  return <Icon color={tintColor} name={icon} size={25} />;
+};
 
 const ApplicationTabs = createMaterialTopTabNavigator(
   {
@@ -61,7 +57,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       style: {
         paddingBottom: isEqualsOrLargestThanIphoneX() ? 30 : 0,
         backgroundColor: appStyles.colors.white,
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.3,
         shadowRadius: 10,
       },
@@ -69,10 +65,9 @@ const ApplicationTabs = createMaterialTopTabNavigator(
         backgroundColor: 'transparent',
       },
       inactiveTintColor: appStyles.colors.gray,
-      activeTintColor: appStyles.colors.primaryColor,
+      activeTintColor: appStyles.colors.violet,
     },
   },
-
 );
 
 const AppContainer = createAppContainer(ApplicationTabs);

@@ -45,7 +45,7 @@ const Main = () => (
     <ThemeProvider>
       <Button title="Hey!"/>
     </ThemeProvider>
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1"/>
+    <StatusBar barStyle="light-content" backgroundColor="#fff"/>
     <Text>xzaasdasdas</Text>
   </ImageBackground>
 );
