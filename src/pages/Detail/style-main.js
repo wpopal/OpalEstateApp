@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import {RFPercentage, RFValue} from "react-native-responsive-fontsize";
 
 const IS_IOS = Platform.OS === 'ios';
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
