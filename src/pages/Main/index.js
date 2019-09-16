@@ -178,7 +178,7 @@ class Main extends Component<Props, State> {
             </View>
           </View>
         </ScrollView>
-        <StatusBar barStyle="light-content" backgroundColor="#7159c1"/>
+        <StatusBar barStyle="dark-content" backgroundColor="#7159c1"/>
       </ImageBackground>
     );
   }
