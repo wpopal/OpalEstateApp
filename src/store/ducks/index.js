@@ -1,8 +1,9 @@
-import { combineReducers } from 'redux';
+import main from './main';
+import {combineReducers} from 'redux';
 
-const reducers = combineReducers({
-  // Remova essa linha depois de adicionar seus ducks
-  example: () => [],
+export default combineReducers({
+  main,
 });
 
-export default reducers;
+
+

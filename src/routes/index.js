@@ -1,6 +1,6 @@
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 
-import MainStack from '~/pages/Main';
+import MainStack from './mainStack';
 import Intro from '~/pages/Intro';
 
 export const ROUTE_NAMES = {

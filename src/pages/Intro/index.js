@@ -3,7 +3,8 @@ import React from 'react';
 import {
   Text, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,
 } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-elements';
+import {Button, ThemeProvider} from 'react-native-elements';
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -42,16 +43,10 @@ const Main = () => (
     resizeMode="cover"
   >
     <ThemeProvider>
-      <Button title="Hey!" />
+      <Button title="Hey!"/>
     </ThemeProvider>
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
-    <Text>xxxxxxxxxxxxxxxxxxxxxx</Text>
+    <StatusBar barStyle="light-content" backgroundColor="#7159c1"/>
+    <Text>xzaasdasdas</Text>
   </ImageBackground>
 );
 

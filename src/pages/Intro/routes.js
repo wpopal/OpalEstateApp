@@ -6,17 +6,23 @@ import {
   setDefaultHeaderLayout,
 } from '~/routes/headerUtils';
 
-import Home from './index';
+import Intro from './index';
 
 export const ROUTE_NAMES = {
-  HOME: 'HOME',
+  Intro: 'Intro',
 };
 
 const RootStack = createStackNavigator(
   {
-    [ROUTE_NAMES.HOME]: {
-      screen: Home,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    [ROUTE_NAMES.Intro]: {
+      screen: Intro,
+      navigationOptions: ({navigation}) =>
+        setDefaultHeaderLayout(
+          navigation,
+          'Opal Estate App!',
+          'Modesta-Script',
+          27,
+        ),
     },
   },
   {
@@ -27,7 +33,7 @@ const RootStack = createStackNavigator(
 );
 
 RootStack.navigationOptions = ({navigation}) => {
-  const tabBarVisible = navigation.state.index <= 0;
+  const tabBarVisible = navigation.state.ssssss <= 0;
 
   return {
     tabBarVisible,

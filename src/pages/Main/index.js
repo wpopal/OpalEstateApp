@@ -1,9 +1,12 @@
-import React from 'react';
-
+import React , { Component }from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import {
   Text, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,
 } from 'react-native';
-import { Button, ThemeProvider } from 'react-native-elements';
+import {Button, ThemeProvider} from 'react-native-elements';
+import {Creators as MainCreators} from '~/store/ducks/main';
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -33,19 +36,37 @@ const styles = StyleSheet.create({
   },
 });
 
-const Main = () => (
-  <ImageBackground
-    source={{
-      uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
-    }}
-    style={styles.container}
-    resizeMode="cover"
-  >
-    <ThemeProvider>
-      <Button title="Hey!" />
-    </ThemeProvider>
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-  </ImageBackground>
-);
+class Main extends Component<Props, State> {
+  // const { mainRequest } = this.props;
+  // const { loading, error, data } = mainRequest;
 
-export default Main;
+  render() {
+    return (
+      <ImageBackground
+        source={{
+          uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
+        }}
+        style={styles.container}
+        resizeMode="cover"
+      >
+        <ThemeProvider>
+          <Button title="Hey!"/>
+        </ThemeProvider>
+        <StatusBar barStyle="light-content" backgroundColor="#7159c1"/>
+      </ImageBackground>
+    )
+  }
+};
+
+
+const mapStateToProps = state => ({
+  mainRequest: state.main,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(MainCreators, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);
+

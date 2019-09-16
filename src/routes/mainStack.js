@@ -4,25 +4,20 @@ import React from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
-  createMaterialTopTabNavigator,
   createAppContainer,
 } from 'react-navigation';
 
-import SearchRestaurantsRoutes from '~/components/screens/search-restaurants/routes';
-import NearYouRoutes from '~/components/screens/near-you/routes';
-import ProfileRoutes from '~/components/screens/profile/routes';
-import Settings from '~/components/screens/settings/routes';
-import HomeRoutes from '~/components/screens/home/routes';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import MainRoutes from '../pages/Main/routes';
+import index from '../pages/Intro';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
 import appStyles from '~/styles';
 
 export const ROUTE_NAMES = {
   HOME: 'HOME',
-  SEARCH_RESTAURANTS: 'SEARCH_RESTAURANTS',
-  NEAR_YOU: 'NEAR_YOU',
-  PROFILE: 'PROFILE',
-  SETTINGS: 'SETTINGS',
+  INDEX: 'INDEX',
+
 };
 
 type Props = {
@@ -40,34 +35,17 @@ const getTabIcon = (icon: string): Object => ({ tintColor }: Props) => (
 const ApplicationTabs = createMaterialTopTabNavigator(
   {
     [ROUTE_NAMES.HOME]: {
-      screen: HomeRoutes,
+      screen: MainRoutes,
       navigationOptions: {
         tabBarIcon: getTabIcon('home'),
       },
     },
-    [ROUTE_NAMES.SEARCH_RESTAURANTS]: {
-      screen: SearchRestaurantsRoutes,
+    [ROUTE_NAMES.INDEX]: {
+      screen: index,
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
-    },
-    [ROUTE_NAMES.NEAR_YOU]: {
-      screen: NearYouRoutes,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('map'),
-      },
-    },
-    [ROUTE_NAMES.PROFILE]: {
-      screen: ProfileRoutes,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('account'),
-      },
-    },
-    [ROUTE_NAMES.SETTINGS]: {
-      screen: Settings,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('settings'),
-      },
+
     },
   },
   {
@@ -94,6 +72,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       activeTintColor: appStyles.colors.primaryColor,
     },
   },
+
 );
 
 const AppContainer = createAppContainer(ApplicationTabs);
