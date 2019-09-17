@@ -11,6 +11,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Intro';
 import mapMain from '../pages/Maps';
+import user from '../pages/User';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
 import appStyles from '~/styles';
@@ -19,6 +20,7 @@ export const ROUTE_NAMES = {
   HOME: 'HOME',
   INDEX: 'INDEX',
   MAPMAIN: 'MAPMAIN',
+  USER: 'USER',
 
 };
 
@@ -27,7 +29,7 @@ type Props = {
 };
 
 const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
-  return <Icon color={tintColor} name={icon} size={25} />;
+  return <Icon color={tintColor} name={icon} size={25}/>;
 };
 
 const ApplicationTabs = createMaterialTopTabNavigator(
@@ -49,7 +51,12 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
-
+    },
+    [ROUTE_NAMES.USER]: {
+      screen: user,
+      navigationOptions: {
+        tabBarIcon: getTabIcon('account'),
+      },
     },
   },
   {

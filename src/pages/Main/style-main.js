@@ -64,7 +64,7 @@ export default StyleSheet.create({
   listing: {
     width: (viewportWidth / 100) * 90,
     height: (viewportHeight / 100) * 28,
-    marginBottom : 100
+    marginBottom: 100,
   },
   statust: {
     flex: 1,
@@ -76,5 +76,5 @@ export default StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     paddingTop: '3%',
-  }
+  },
 });
