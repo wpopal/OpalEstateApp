@@ -19,8 +19,13 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const entryBorderRadius = 8;
 
 export default StyleSheet.create({
-  header: {
-    height: (viewportHeight / 100) * 8,
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+  imgHead: {
+    height: (viewportHeight / 100) * 35,
     width: viewportWidth,
     backgroundColor: '#7159c1',
   },

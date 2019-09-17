@@ -7,15 +7,27 @@ import {
 } from '~/routes/headerUtils';
 
 import Home from './index';
+import Detail from './Detail';
+import Maps from './maps';
 
 export const ROUTE_NAMES = {
   HOME: 'HOME',
+  DETAIL: 'DETAIL',
+  MAPS: 'MAPS',
 };
 
 const RootStack = createStackNavigator(
   {
     [ROUTE_NAMES.HOME]: {
       screen: Home,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.DETAIL]: {
+      screen: Detail,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.MAPS]: {
+      screen: Maps,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
   },
