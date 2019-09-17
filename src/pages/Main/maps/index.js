@@ -47,15 +47,9 @@ class Mapsx extends Component {
           }}
         >
           <Marker
-            coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-            title={'hree Room Apartment'}
-            description={'The ideal starter set upon on 25 acres of flat country, the choice is yours. Only 15 Minutes from\n' +
-            '            Toowoomba you can enjoy a comfortable semi – rural lifestyle with multiple living areas.\n'}
+            coordinate={'haha'}
+            title={'sdasdasdsa'}
+            description={'hehe'}
           />
         </MapView>
       </View>
