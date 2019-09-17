@@ -10,6 +10,7 @@ import {
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Intro';
+import mapMain from '../pages/Maps';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
 import appStyles from '~/styles';
@@ -17,6 +18,7 @@ import appStyles from '~/styles';
 export const ROUTE_NAMES = {
   HOME: 'HOME',
   INDEX: 'INDEX',
+  MAPMAIN: 'MAPMAIN',
 
 };
 
@@ -34,6 +36,12 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       screen: MainRoutes,
       navigationOptions: {
         tabBarIcon: getTabIcon('home'),
+      },
+    },
+    [ROUTE_NAMES.MAPMAIN]: {
+      screen: mapMain,
+      navigationOptions: {
+        tabBarIcon: getTabIcon('map-search'),
       },
     },
     [ROUTE_NAMES.INDEX]: {
