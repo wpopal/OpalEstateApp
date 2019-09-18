@@ -1,10 +1,13 @@
-import {createStackNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 import {Platform} from 'react-native';
 
-import {setHiddenHeaderLayout} from '~/routes/headerUtils';
+import {
+  setDefaultHeaderLayout,
+  setHiddenHeaderLayout,
+} from '~/routes/headerUtils';
 
 import SignUp from './components/SignUp';
-import Login from '~/components/screens/login';
+import Login from './components/Login';
 import ForgotPass from './components/forgotPassword';
 
 export const ROUTE_NAMES = {
@@ -19,7 +22,6 @@ const RootStack = createStackNavigator(
       screen: Login,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
-
     [ROUTE_NAMES.SIGNUP]: {
       screen: SignUp,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),

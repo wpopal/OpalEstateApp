@@ -13,15 +13,13 @@ import {
 import styled from 'styled-components';
 
 import Input from './Input';
-import appStyles from '~/styles';
 import {NavigationActions} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
 var {height} = Dimensions.get('window');
 const ButtonText = styled(Text)`
-  color: ${({theme}) => theme.colors.defaultWhite};
+  color: #fff;
   font-family: CircularStd-Bold;
-  font-size: ${({theme}) => theme.metrics.largeSize}px;
 `;
 const Container = styled(View)`
   height: ${height};
@@ -36,7 +34,6 @@ const TEXTERR = styled(Text)`
   font-family: Roboto-Bold;
 `;
 const Button = styled(TouchableOpacity)`
-  height: ${({theme}) => theme.metrics.getHeightFromDP('6%')}px;
   justify-content: center;
   align-items;
 `;
@@ -47,14 +44,10 @@ const NavigationTitleWrapper = styled(View)`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding-horizontal: ${({theme}) => 2 * theme.metrics.extraLargeSize}px;
 `;
 const RecoverTextButton = styled(TouchableOpacity)`
   margin-left: 4px;
 `;
-
-const MAX_FONT_SIZE = appStyles.metrics.getWidthFromDP('6%');
-const MIN_FONT_SIZE = appStyles.metrics.getWidthFromDP('4%');
 
 const renderInput = (
   placeholder: string,
@@ -85,21 +78,15 @@ class SignUp extends Component {
           <Animated.Text
             style={{
               textAlign: 'center',
-              paddingBottom: appStyles.metrics.getHeightFromDP('3%'),
-              paddingRight: appStyles.metrics.getHeightFromDP('4%'),
-              paddingTop: appStyles.metrics.getHeightFromDP('1%'),
               fontFamily: 'Roboto-Bold',
               color: this._loginFontSize.interpolate({
                 inputRange: [0, 1],
-                outputRange: [
-                  appStyles.colors.black,
-                  appStyles.colors.defaultWhite,
-                ],
+                outputRange: ['#000', '#000'],
                 extrapolate: 'clamp',
               }),
               fontSize: this._loginFontSize.interpolate({
                 inputRange: [0, 1],
-                outputRange: [MIN_FONT_SIZE, MAX_FONT_SIZE],
+                outputRange: [20, 30],
                 extrapolate: 'clamp',
               }),
             }}>

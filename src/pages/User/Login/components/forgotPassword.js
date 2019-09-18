@@ -11,10 +11,9 @@ import {
 } from 'react-native';
 
 import styled from 'styled-components';
-import ROUTE_NAMES from '../../../routes';
+import ROUTE_NAMES from '../../../User/routes';
 import {withNavigation} from 'react-navigation';
 import Input from './Input';
-import appStyles from '~/styles';
 import {NavigationActions} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -36,32 +35,29 @@ const NavigationTitleWrapper = styled(View)`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding-horizontal: ${({theme}) => 2 * theme.metrics.extraLargeSize}px;
 `;
 const RecoverTextButton = styled(TouchableOpacity)`
   margin-left: 4px;
 `;
 const ButtonText = styled(Text)`
-  color: ${({theme}) => theme.colors.defaultWhite};
+  color: #fff;
   font-family: CircularStd-Bold;
-  font-size: ${({theme}) => theme.metrics.largeSize}px;
 `;
 const Button = styled(TouchableOpacity)`
-  height: ${({theme}) => theme.metrics.getHeightFromDP('6%')}px;
   justify-content: center;
   align-items;
   
 `;
 
-const MAX_FONT_SIZE = appStyles.metrics.getWidthFromDP('6.5%');
-const MIN_FONT_SIZE = appStyles.metrics.getWidthFromDP('4%');
+const MAX_FONT_SIZE = 20;
+const MIN_FONT_SIZE = 10;
 
 const renderInput = (
   placeholder: string,
   iconName: string,
   type: string,
 ): Object => (
-  <Input placeholder={placeholder} iconName={iconName} type={type} />
+  <Input placeholder={placeholder} iconName={iconName} type={type}/>
 );
 
 class forgotPass extends Component {
@@ -79,28 +75,25 @@ class forgotPass extends Component {
   };
 
   render() {
-            const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
       <Container>
         <NavigationTitleWrapper>
           <Animated.Text
             style={{
               textAlign: 'center',
-              paddingBottom: appStyles.metrics.getHeightFromDP('3%'),
-              paddingRight: appStyles.metrics.getHeightFromDP('4%'),
-              paddingTop: appStyles.metrics.getHeightFromDP('1%'),
               fontFamily: 'Roboto-Bold',
               color: this._loginFontSize.interpolate({
                 inputRange: [0, 1],
                 outputRange: [
-                  appStyles.colors.black,
-                  appStyles.colors.defaultWhite,
+                  '#000',
+                  '#000',
                 ],
                 extrapolate: 'clamp',
               }),
               fontSize: this._loginFontSize.interpolate({
                 inputRange: [0, 1],
-                outputRange: [MIN_FONT_SIZE, MAX_FONT_SIZE],
+                outputRange: [20, 30],
                 extrapolate: 'clamp',
               }),
             }}>
@@ -132,7 +125,7 @@ class forgotPass extends Component {
               borderRadius: 10,
               height: 60,
             }}
-            onPress={() => navigation.navigate(ROUTE_NAMES.MAIN_STACK)}>
+            onPress={() => navigation.navigate(ROUTE_NAMES.USER)}>
             <LinearGradient
               start={{
                 x: 0,

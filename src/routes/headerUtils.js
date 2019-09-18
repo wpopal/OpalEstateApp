@@ -101,7 +101,6 @@ export const setDefaultHeaderLayout = (
 ): Object => ({
   title,
   headerTitleStyle: {
-    fontSize: fontSize || appStyles.metrics.navigationHeaderFontSize,
     color: appStyles.colors.defaultWhite,
     fontWeight: undefined,
     fontFamily,

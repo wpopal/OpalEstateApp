@@ -3,7 +3,7 @@ import {Avatar} from 'react-native-elements';
 import styles from './style-user';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Creators as loginCreators} from '~/store/ducks/login';
+import {Creators as userCreators} from '~/store/ducks/users';
 import {
   View,
   StyleSheet,
@@ -31,11 +31,12 @@ const list = [
     title: 'LogOut',
     icon: 'perm-identity'
   },
-
 ]
 
 class User extends Component<Props, State> {
   render() {
+    const {navigation} = this.props;
+    console.log('ROUTE_NAMES', this.props);
     return (
       <View style={styles.container}>
         <View style={styles.avatar}>
@@ -59,7 +60,7 @@ class User extends Component<Props, State> {
             list.map((item, i) => (
               <ListItem
                 key={i}
-                onPress={() => this.props.navigation.navigate('LOGIN')}
+                onPress={() => navigation.navigate('LOGIN')}
                 title={item.title}
                 leftIcon={{name: item.icon}}
                 bottomDivider
@@ -72,12 +73,13 @@ class User extends Component<Props, State> {
     );
   }
 }
+
 const mapStateToProps = state => ({
   loginRequest: state.login,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(loginCreators, dispatch);
+  bindActionCreators(userCreators, dispatch);
 
 export default connect(
   mapStateToProps,

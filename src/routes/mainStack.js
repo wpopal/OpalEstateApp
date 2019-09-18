@@ -11,7 +11,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Intro';
 import mapMain from '../pages/Maps';
-import user from '../pages/User';
+import user from '../pages/User/routes';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
 import appStyles from '~/styles';
@@ -60,7 +60,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
     },
   },
   {
-    initialRouteName: ROUTE_NAMES.USER,
+    initialRouteName: ROUTE_NAMES.HOME,
     tabBarPosition: 'bottom',
     optimizationsEnabled: true,
     animationEnabled: true,

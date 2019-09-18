@@ -24,7 +24,7 @@ class Main extends Component<Props, State> {
 
   render() {
     const { navigation } = this.props;
-    console.log('ROUTE_NAMES', ROUTE_NAMES);
+    console.log('ROUTE_NAMES',this.props);
     return (
       <ImageBackground
         source={{
@@ -38,7 +38,7 @@ class Main extends Component<Props, State> {
             <Text style={styles.logos}>OPAL ESTATE</Text>
           </View>
           <View style={styles.body}>
-            <TouchableOpacity onPress={() => navigation.navigate(ROUTE_NAMES.DETAIL)}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate(ROUTE_NAMES.DETAIL)}>
               <View style={styles.listing}>
                 <ImageBackground
                   style={{width: '100%', height: '100%'}}

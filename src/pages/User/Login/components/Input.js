@@ -7,27 +7,25 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components';
 
 import { ContentContainer } from './Common';
-import appStyles from '~/styles';
 
 const InputWrapper = styled(View)`
   width: 100%;
   height: 100%;
   flex-direction: row;
   align-items: center;
-  padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
+  padding-horizontal: 15px;
 `;
 
 const InputIcon = styled(Icon).attrs(({ iconName }) => ({
   name: iconName,
   size: 22,
 }))`
-  margin-right: ${({ theme }) => theme.metrics.mediumSize}px;
-  color: ${({ theme }) => theme.colors.darkText};
+  color: #000;
 `;
 
 const CustomInput = styled(TextInput).attrs(({ placeholder, type, theme }) => ({
-  placeholderTextColor: theme.colors.darkText,
-  selectionColor: theme.colors.darkText,
+  placeholderTextColor: '#000',
+  selectionColor: '#000',
   underlineColorAndroid: 'transparent',
   secureTextEntry: type === 'password',
   autoCapitalize: 'none',
@@ -38,7 +36,7 @@ const CustomInput = styled(TextInput).attrs(({ placeholder, type, theme }) => ({
   width: 90%;
   height: 100%;
   font-family: CircularStd-Book;
-  color: ${({ theme }) => theme.colors.darkText};
+  color: #000;
 `;
 
 type InputProps = {
@@ -49,7 +47,7 @@ type InputProps = {
 
 const Input = ({ placeholder, iconName, type }: InputProps): Object => (
   <ContentContainer
-    color={appStyles.colors.defaultWhite}
+    color={'#fff'}
   >
     <InputWrapper>
       <InputIcon

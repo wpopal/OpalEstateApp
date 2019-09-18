@@ -1,4 +1,5 @@
 // @flow
+
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {withNavigation} from 'react-navigation';
@@ -12,9 +13,7 @@ type Props = {
 };
 
 const ButtonContent = ({navigation, children, color}: Props): Object => (
-  <TouchableOpacity
-    onPress={() => navigation.navigate(ROUTE_NAMES.MAIN_STACK)}
-  >
+  <TouchableOpacity onPress={() => navigation.navigate(ROUTE_NAMES.MAIN_STACK)}>
     <ContentContainer color={color}>{children}</ContentContainer>
   </TouchableOpacity>
 );

@@ -1,8 +1,8 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import {Dimensions, Platform, PixelRatio} from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const getWidthFromDP = (widthPercentage) => {
+const getWidthFromDP = widthPercentage => {
   const percentageDesired = parseFloat(widthPercentage);
   const widthPercentageToDP = PixelRatio.roundToNearestPixel(
     (width * percentageDesired) / 100,
@@ -11,7 +11,7 @@ const getWidthFromDP = (widthPercentage) => {
   return widthPercentageToDP;
 };
 
-const getHeightFromDP = (heightPercentage) => {
+const getHeightFromDP = heightPercentage => {
   const percentageDesired = parseFloat(heightPercentage);
   const heightPercentageToDP = PixelRatio.roundToNearestPixel(
     (height * percentageDesired) / 100,
