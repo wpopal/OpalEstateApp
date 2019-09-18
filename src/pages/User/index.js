@@ -1,53 +1,85 @@
-import React from 'react';
-
+import React, {Component} from 'react';
+import {Avatar} from 'react-native-elements';
+import styles from './style-user';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {Creators as loginCreators} from '~/store/ducks/login';
 import {
-  Text, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,
+  View,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  StatusBar,
 } from 'react-native';
-import {Button, ThemeProvider} from 'react-native-elements';
+import {Button, ThemeProvider, Text, ListItem} from 'react-native-elements';
+import ROUTE_NAMES from "../../routes/index";
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: 20,
+const list = [
+  {
+    title: 'Profile',
+    icon: 'chrome-reader-mode'
   },
-  fileName: {
-    fontWeight: 'bold',
-    marginTop: 5,
+  {
+    title: 'Bookmarks',
+    icon: 'library-books'
   },
-  instructions: {
-    color: '#DDD',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center',
+  {
+    title: 'Settings',
+    icon: 'settings-applications'
   },
-  logo: {
-    height: Dimensions.get('window').height * 0.11,
-    marginVertical: Dimensions.get('window').height * 0.11,
-    width: Dimensions.get('window').height * 0.11 * (1950 / 662),
+  {
+    title: 'LogOut',
+    icon: 'perm-identity'
   },
-  welcome: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+
+]
+
+class User extends Component<Props, State> {
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.avatar}>
+          <Avatar
+            icon={{color: '#7e00ff'}}
+            size="xlarge"
+            onPress={() => console.log('Works!')}
+            activeOpacity={0.7}
+            rounded
+            onEditPress={() => console.log('Works!')}
+            source={{
+              uri:
+                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+            }}
+            showEditButton
+          />
+          <Text h4> Name User </Text>
+        </View>
+        <View style={styles.listItem}>
+          {
+            list.map((item, i) => (
+              <ListItem
+                key={i}
+                onPress={() => this.props.navigation.navigate('LOGIN')}
+                title={item.title}
+                leftIcon={{name: item.icon}}
+                bottomDivider
+                chevron
+              />
+            ))
+          }
+        </View>
+      </View>
+    );
+  }
+}
+const mapStateToProps = state => ({
+  loginRequest: state.login,
 });
 
-const User = () => (
-  <ImageBackground
-    source={{
-      uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
-    }}
-    style={styles.container}
-    resizeMode="cover"
-  >
-    <ThemeProvider>
-      <Button title="Hey!"/>
-    </ThemeProvider>
-    <StatusBar barStyle="light-content" backgroundColor="#fff"/>
-    <Text>xzaasdasdas</Text>
-  </ImageBackground>
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(loginCreators, dispatch);
 
-export default User;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(User);
