@@ -46,18 +46,19 @@ const ApplicationTabs = createMaterialTopTabNavigator(
         tabBarIcon: getTabIcon('map-search'),
       },
     },
+    [ROUTE_NAMES.USER]: {
+      screen: user,
+      navigationOptions: {
+        tabBarIcon: getTabIcon('magnify'),
+      },
+    },
     [ROUTE_NAMES.INDEX]: {
       screen: index,
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
-    },
-    [ROUTE_NAMES.USER]: {
-      screen: user,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('account'),
-      },
-    },
+    }
+
   },
   {
     initialRouteName: ROUTE_NAMES.HOME,

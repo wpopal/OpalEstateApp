@@ -29,7 +29,7 @@ const list = [
   },
   {
     title: 'LogOut',
-    icon: 'perm-identity'
+    icon: 'settings-applications'
   },
 ]
 
@@ -41,7 +41,7 @@ class User extends Component<Props, State> {
       <View style={styles.container}>
         <View style={styles.avatar}>
           <Avatar
-            icon={{color: '#7e00ff'}}
+            title="NU"
             size="xlarge"
             onPress={() => console.log('Works!')}
             activeOpacity={0.7}
