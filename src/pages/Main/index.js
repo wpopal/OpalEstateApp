@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { ROUTE_NAMES } from '../Main/routes';
+import {ROUTE_NAMES} from '../Main/routes';
 import {
   Image,
   View,
@@ -12,6 +12,7 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+import Searchbar from '../components/searchbar'
 import {Button, ThemeProvider, Text} from 'react-native-elements';
 import {Creators as MainCreators} from '~/store/ducks/main';
 import {RFPercentage, RFValue} from "react-native-responsive-fontsize";
@@ -23,8 +24,8 @@ class Main extends Component<Props, State> {
   // const { loading, error, data } = mainRequest;
 
   render() {
-    const { navigation } = this.props;
-    console.log('ROUTE_NAMES',this.props);
+    const {navigation} = this.props;
+    console.log('ROUTE_NAMES', this.props);
     return (
       <ImageBackground
         source={{
@@ -34,6 +35,7 @@ class Main extends Component<Props, State> {
         style={styles.container}
         resizeMode="cover">
         <ScrollView>
+
           <View style={styles.header}>
             <Text style={styles.logos}>OPAL ESTATE</Text>
           </View>
@@ -183,7 +185,6 @@ class Main extends Component<Props, State> {
             </View>
           </View>
         </ScrollView>
-        <StatusBar barStyle="dark-content" backgroundColor="#7159c1"/>
       </ImageBackground>
     );
   }

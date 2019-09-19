@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
-import index from '../pages/Intro';
+import index from '../pages/Search';
 import mapMain from '../pages/Maps';
 import user from '../pages/User/routes';
 

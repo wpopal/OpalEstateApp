@@ -1,7 +1,7 @@
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 
 import MainStack from './mainStack';
-import Intro from '~/pages/Intro';
+import Intro from '~/pages/Search';
 import MapMain from '~/pages/Maps';
 import User from '~/pages/User';
 
