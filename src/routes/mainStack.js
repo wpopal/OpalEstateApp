@@ -3,10 +3,7 @@
 import React from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  createAppContainer,
-} from 'react-navigation';
-
+import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Intro';
@@ -21,7 +18,6 @@ export const ROUTE_NAMES = {
   INDEX: 'INDEX',
   MAPMAIN: 'MAPMAIN',
   USER: 'USER',
-
 };
 
 type Props = {
@@ -29,7 +25,7 @@ type Props = {
 };
 
 const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
-  return <Icon color={tintColor} name={icon} size={25}/>;
+  return <Icon color={tintColor} name={icon} size={25} />;
 };
 
 const ApplicationTabs = createMaterialTopTabNavigator(
@@ -49,7 +45,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
     [ROUTE_NAMES.USER]: {
       screen: user,
       navigationOptions: {
-        tabBarIcon: getTabIcon('magnify'),
+        tabBarIcon: getTabIcon('account'),
       },
     },
     [ROUTE_NAMES.INDEX]: {
@@ -57,8 +53,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
-    }
-
+    },
   },
   {
     initialRouteName: ROUTE_NAMES.HOME,

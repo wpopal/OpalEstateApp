@@ -9,6 +9,8 @@ import LoginComponent from './components/Login';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Creators as LoginCreators} from '~/store/ducks/login';
+
+
 const {height: viewportHeight} = Dimensions.get('window');
 const Container = styled(View)`
   flex: 1;
@@ -37,6 +39,17 @@ const LAYOUTS = [
   },
 ];
 
+// GoogleSignin.configure({
+//   scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+//   webClientId: "505447290427-8h3uc0kp5h84q1diij9e2nan8gfvbatb.apps.googleusercontent.com", // client ID of type WEB for your server (needed to verify user ID and offline access)
+//   offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+//   hostedDomain: '', // specifies a hosted domain restriction
+//   loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
+//   forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login.
+//   accountName: '', // [Android] specifies an account name on the device that should be used
+// });
+
+
 class Login extends Component {
   _loginFontSize: Object = new Animated.Value(1);
   _signUpFontSize: Object = new Animated.Value(0);
@@ -45,6 +58,24 @@ class Login extends Component {
   state = {
     isBackgroundImageLoaded: true,
   };
+
+  // signIn = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     console.log('userInfo', userInfo);
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       console.log('1', error);
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       console.log('1', error);
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       console.log('1', error);
+  //     } else {
+  //       console.log('1', error);
+  //     }
+  //   }
+  // };
 
   onClickLoginButton = (): void => {
     Animated.parallel([
@@ -130,6 +161,7 @@ class Login extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   loginRequest: state.login,
 });
