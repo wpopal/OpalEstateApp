@@ -10,12 +10,12 @@ import {
   Dimensions,
   ImageBackground,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import Searchbar from '../components/searchbar'
+import Searchbar from '../components/searchbar';
 import {Button, ThemeProvider, Text} from 'react-native-elements';
 import {Creators as MainCreators} from '~/store/ducks/main';
-import {RFPercentage, RFValue} from "react-native-responsive-fontsize";
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -35,12 +35,14 @@ class Main extends Component<Props, State> {
         style={styles.container}
         resizeMode="cover">
         <ScrollView>
-
           <View style={styles.header}>
             <Text style={styles.logos}>OPAL ESTATE</Text>
           </View>
           <View style={styles.body}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate(ROUTE_NAMES.DETAIL)}>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
+              }>
               <View style={styles.listing}>
                 <ImageBackground
                   style={{width: '100%', height: '100%'}}
@@ -48,11 +50,11 @@ class Main extends Component<Props, State> {
                     uri:
                       'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-09-650x428.jpg',
                   }}>
-                  <View
-                    style={styles.statust}>
-                    <View style={{
-                      flexDirection: 'row',
-                    }}>
+                  <View style={styles.statust}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}>
                       <View
                         style={{
                           backgroundColor: 'red',
@@ -61,22 +63,39 @@ class Main extends Component<Props, State> {
                           paddingRight: 6,
                           paddingLeft: 6,
                         }}>
-                        <Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FEATURED</Text>
+                        <Text
+                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                          FEATURED
+                        </Text>
                       </View>
-                      <View style={{
-                        backgroundColor: '#efc065', paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FOR SALE</Text></View>
+                      <View
+                        style={{
+                          backgroundColor: '#efc065',
+                          paddingTop: 3,
+                          paddingBottom: 3,
+                          paddingRight: 6,
+                          paddingLeft: 6,
+                        }}>
+                        <Text
+                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                          FOR SALE
+                        </Text>
+                      </View>
                     </View>
                     <View>
-                      <View style={{
-                        backgroundColor: 'green', paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>SOLD</Text></View>
+                      <View
+                        style={{
+                          backgroundColor: 'green',
+                          paddingTop: 3,
+                          paddingBottom: 3,
+                          paddingRight: 6,
+                          paddingLeft: 6,
+                        }}>
+                        <Text
+                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                          SOLD
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </ImageBackground>
@@ -96,11 +115,11 @@ class Main extends Component<Props, State> {
                   uri:
                     'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-04-650x428.jpg',
                 }}>
-                <View
-                  style={styles.statust}>
-                  <View style={{
-                    flexDirection: 'row',
-                  }}>
+                <View style={styles.statust}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
                     <View
                       style={{
                         backgroundColor: 'red',
@@ -109,29 +128,49 @@ class Main extends Component<Props, State> {
                         paddingRight: 6,
                         paddingLeft: 6,
                       }}>
-                      <Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FEATURED</Text>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        FEATURED
+                      </Text>
                     </View>
-                    <View style={{
-                      backgroundColor: '#efc065', paddingTop: 3,
-                      paddingBottom: 3,
-                      paddingRight: 6,
-                      paddingLeft: 6,
-                    }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FOR SALE</Text></View>
+                    <View
+                      style={{
+                        backgroundColor: '#efc065',
+                        paddingTop: 3,
+                        paddingBottom: 3,
+                        paddingRight: 6,
+                        paddingLeft: 6,
+                      }}>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        FOR SALE
+                      </Text>
+                    </View>
                   </View>
                   <View>
-                    <View style={{
-                      backgroundColor: 'green', paddingTop: 3,
-                      paddingBottom: 3,
-                      paddingRight: 6,
-                      paddingLeft: 6,
-                    }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>SOLD</Text></View>
+                    <View
+                      style={{
+                        backgroundColor: 'green',
+                        paddingTop: 3,
+                        paddingBottom: 3,
+                        paddingRight: 6,
+                        paddingLeft: 6,
+                      }}>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        SOLD
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </ImageBackground>
               <View style={{flex: 1, width: '100%'}}>
                 <View>
                   <Text h4>Apartment In San Francisco</Text>
-                  <Text style={{color: '#aaa'}}> 2018 Clement St, San Francisco, CA 94121, USA</Text>
+                  <Text style={{color: '#aaa'}}>
+                    {' '}
+                    2018 Clement St, San Francisco, CA 94121, USA
+                  </Text>
                   <Text style={{color: '#1e4ecc'}}>Call to Price</Text>
                 </View>
               </View>
@@ -143,11 +182,11 @@ class Main extends Component<Props, State> {
                   uri:
                     'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-01-650x428.jpg',
                 }}>
-                <View
-                  style={styles.statust}>
-                  <View style={{
-                    flexDirection: 'row',
-                  }}>
+                <View style={styles.statust}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
                     <View
                       style={{
                         backgroundColor: 'red',
@@ -156,22 +195,39 @@ class Main extends Component<Props, State> {
                         paddingRight: 6,
                         paddingLeft: 6,
                       }}>
-                      <Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FEATURED</Text>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        FEATURED
+                      </Text>
                     </View>
-                    <View style={{
-                      backgroundColor: '#efc065', paddingTop: 3,
-                      paddingBottom: 3,
-                      paddingRight: 6,
-                      paddingLeft: 6,
-                    }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>FOR SALE</Text></View>
+                    <View
+                      style={{
+                        backgroundColor: '#efc065',
+                        paddingTop: 3,
+                        paddingBottom: 3,
+                        paddingRight: 6,
+                        paddingLeft: 6,
+                      }}>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        FOR SALE
+                      </Text>
+                    </View>
                   </View>
                   <View>
-                    <View style={{
-                      backgroundColor: 'green', paddingTop: 3,
-                      paddingBottom: 3,
-                      paddingRight: 6,
-                      paddingLeft: 6,
-                    }}><Text style={{color: '#fff', fontSize: RFPercentage(1.8)}}>SOLD</Text></View>
+                    <View
+                      style={{
+                        backgroundColor: 'green',
+                        paddingTop: 3,
+                        paddingBottom: 3,
+                        paddingRight: 6,
+                        paddingLeft: 6,
+                      }}>
+                      <Text
+                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                        SOLD
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </ImageBackground>

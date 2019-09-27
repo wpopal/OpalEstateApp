@@ -7,7 +7,7 @@ import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Search';
-import mapMain from '../pages/Maps';
+import MapRoutes from '../pages/Maps/routes';
 import user from '../pages/User/routes';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
@@ -37,7 +37,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       },
     },
     [ROUTE_NAMES.MAPMAIN]: {
-      screen: mapMain,
+      screen: MapRoutes,
       navigationOptions: {
         tabBarIcon: getTabIcon('map-search'),
       },

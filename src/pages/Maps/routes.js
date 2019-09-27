@@ -6,34 +6,34 @@ import {
   setDefaultHeaderLayout,
 } from '~/routes/headerUtils';
 
-import map from './index';
+import Map from './containers/MapView';
+import Search from './componenten/Search';
 
 export const ROUTE_NAMES = {
-  MAPMAIN: 'MAPMAIN',
+  MAP: 'MAP',
+  SEARCH: 'SEARCH',
 };
 
 const RootStack = createStackNavigator(
   {
-    [ROUTE_NAMES.MAPMAIN]: {
-      screen: map,
-      navigationOptions: ({navigation}) =>
-        setDefaultHeaderLayout(
-          navigation,
-          'Opal Estate App!',
-          'Modesta-Script',
-          27,
-        ),
+    [ROUTE_NAMES.MAP]: {
+      screen: Map,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.SEARCH]: {
+      screen: Search,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
   },
   {
-    initialRouteName: ROUTE_NAMES.HOME,
+    initialRouteName: ROUTE_NAMES.MAP,
     mode: Platform.OS === 'ios' ? 'card' : 'modal',
     headerMode: 'screen',
   },
 );
 
 RootStack.navigationOptions = ({navigation}) => {
-  const tabBarVisible = navigation.state.maps <= 0;
+  const tabBarVisible = navigation.state.index <= 0;
 
   return {
     tabBarVisible,
