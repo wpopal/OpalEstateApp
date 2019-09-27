@@ -8,6 +8,7 @@ export const ROUTE_NAMES = {
   MAIN_STACK: 'MAIN_STACK',
   INTRO: 'INTRO',
   USER: 'USER',
+
 };
 
 const InitialStack = createSwitchNavigator(
