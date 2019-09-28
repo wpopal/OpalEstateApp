@@ -93,7 +93,7 @@ class Search extends React.Component {
               }}
               placeholder="Work, company ... v..v .."
             />
-            <Text>Địa điểm tìm kiếm :</Text>
+            <Text>Location search :</Text>
             <Input
               style={{
                 paddingHorizontal: 16,
