@@ -18,14 +18,20 @@ import {Creators as MainCreators} from '~/store/ducks/main';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
 
 class Main extends Component<Props, State> {
   // const { mainRequest } = this.props;
   // const { loading, error, data } = mainRequest;
+  componentDidMount(): void {
+    this.props.getmainRequest();
+  }
 
   render() {
     const {navigation} = this.props;
-    console.log('ROUTE_NAMES', this.props);
+    const {mainRequest} = this.props;
+    const {loading, error, data} = mainRequest;
     return (
       <ImageBackground
         source={{
@@ -39,206 +45,103 @@ class Main extends Component<Props, State> {
             <Text style={styles.logos}>OPAL ESTATE</Text>
           </View>
           <View style={styles.body}>
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
-              }>
-              <View style={styles.listing}>
-                <ImageBackground
-                  style={{width: '100%', height: '100%'}}
-                  source={{
-                    uri:
-                      'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-09-650x428.jpg',
-                  }}>
-                  <View style={styles.statust}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                      }}>
-                      <View
-                        style={{
-                          backgroundColor: 'red',
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                          paddingRight: 6,
-                          paddingLeft: 6,
-                        }}>
-                        <Text
-                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                          FEATURED
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          backgroundColor: '#efc065',
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                          paddingRight: 6,
-                          paddingLeft: 6,
-                        }}>
-                        <Text
-                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                          FOR SALE
-                        </Text>
-                      </View>
-                    </View>
-                    <View>
-                      <View
-                        style={{
-                          backgroundColor: 'green',
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                          paddingRight: 6,
-                          paddingLeft: 6,
-                        }}>
-                        <Text
-                          style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                          SOLD
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </ImageBackground>
-                <View style={{flex: 1, width: '100%'}}>
-                  <View>
-                    <Text h4>312 Hue Street</Text>
-                    <Text style={{color: '#aaa'}}> Hai Ba Trung District</Text>
-                    <Text style={{color: '#1e4ecc'}}>Call to Price</Text>
-                  </View>
-                </View>
+            {loading && (
+              <View>
+                <Text>Loading...</Text>
               </View>
-            </TouchableOpacity>
-            <View style={styles.listing}>
-              <ImageBackground
-                style={{width: '100%', height: '100%'}}
-                source={{
-                  uri:
-                    'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-04-650x428.jpg',
-                }}>
-                <View style={styles.statust}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: 'red',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        FEATURED
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        backgroundColor: '#efc065',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        FOR SALE
-                      </Text>
-                    </View>
-                  </View>
-                  <View>
-                    <View
-                      style={{
-                        backgroundColor: 'green',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        SOLD
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </ImageBackground>
-              <View style={{flex: 1, width: '100%'}}>
-                <View>
-                  <Text h4>Apartment In San Francisco</Text>
-                  <Text style={{color: '#aaa'}}>
-                    {' '}
-                    2018 Clement St, San Francisco, CA 94121, USA
-                  </Text>
-                  <Text style={{color: '#1e4ecc'}}>Call to Price</Text>
-                </View>
+            )}
+            {error && (
+              <View>
+                <Text>ERROR !!!</Text>
               </View>
-            </View>
-            <View style={styles.listing}>
-              <ImageBackground
-                style={{width: '100%', height: '100%'}}
-                source={{
-                  uri:
-                    'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-01-650x428.jpg',
-                }}>
-                <View style={styles.statust}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: 'red',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
+            )}
+            {!loading && !error && (<View style={{width: '100%'}}>
+              {data.collection.map((l, i) => (
+                <TouchableOpacity key={i}
+                                  onPress={() =>
+                                    this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
+                                  }>
+                  <View style={styles.listing}>
+                    <ImageBackground
+                      style={{width: '100%', height: '100%'}}
+                      source={{
+                        uri:
+                        l.info.thumbnail,
                       }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        FEATURED
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        backgroundColor: '#efc065',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        FOR SALE
-                      </Text>
+                      <View style={styles.statust}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                          }}>
+                          {
+                            l.is_featured === 'on' ? (<View
+                              style={{
+                                backgroundColor: 'red',
+                                paddingTop: 3,
+                                paddingBottom: 3,
+                                paddingRight: 6,
+                                paddingLeft: 6,
+                              }}>
+
+                              <Text
+                                style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                                FEATURED
+                              </Text>
+                            </View>) : (<View></View>)
+                          }
+                          {
+                            l.labels.length == 0 ? (<View></View>) : (<View
+                              style={{
+                                backgroundColor: '#efc065',
+                                paddingTop: 3,
+                                paddingBottom: 3,
+                                paddingRight: 6,
+                                paddingLeft: 6,
+                              }}>
+
+                              {
+                                l.labels.map((y, x) => (
+                                  <Text key={x}
+                                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>{y.name}</Text>
+                                ))
+                              }
+                            </View>)}
+
+                        </View>
+                        <View>
+                          {
+                            l.status.length == 0 ? (<View></View>) : (<View
+                              style={{
+                                backgroundColor: 'green',
+                                paddingTop: 3,
+                                paddingBottom: 3,
+                                paddingRight: 6,
+                                paddingLeft: 6,
+                              }}>
+                              {
+                                l.status.map((y, x) => (
+                                  <Text key={x}
+                                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
+                                    {y.name}
+                                  </Text>
+                                ))
+                              }
+                            </View>)
+                          }
+                        </View>
+                      </View>
+                    </ImageBackground>
+                    <View style={{flex: 1, width: '100%'}}>
+                      <View>
+                        <Text h4>{l.info.title}</Text>
+                        <Text style={{color: '#aaa'}}>{l.info.address}</Text>
+                        <Text style={{color: '#1e4ecc'}}>Call to Price</Text>
+                      </View>
                     </View>
                   </View>
-                  <View>
-                    <View
-                      style={{
-                        backgroundColor: 'green',
-                        paddingTop: 3,
-                        paddingBottom: 3,
-                        paddingRight: 6,
-                        paddingLeft: 6,
-                      }}>
-                      <Text
-                        style={{color: '#fff', fontSize: RFPercentage(1.8)}}>
-                        SOLD
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </ImageBackground>
-              <View style={{flex: 1, width: '100%'}}>
-                <View>
-                  <Text h4>Easy Mill Arbor</Text>
-                  <Text style={{color: '#aaa'}}> 4767 Lake Rd, Miami, FL</Text>
-                  <Text style={{color: '#1e4ecc'}}>Call to Price</Text>
-                </View>
-              </View>
-            </View>
+                </TouchableOpacity>
+              ))}
+            </View>)}
           </View>
         </ScrollView>
       </ImageBackground>

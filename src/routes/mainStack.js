@@ -9,6 +9,7 @@ import MainRoutes from '../pages/Main/routes';
 import index from '../pages/Search';
 import MapRoutes from '../pages/Maps/routes';
 import user from '../pages/User/routes';
+import agency from '../pages/Agency/routes';
 
 import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
 import appStyles from '~/styles';
@@ -18,6 +19,7 @@ export const ROUTE_NAMES = {
   INDEX: 'INDEX',
   MAPMAIN: 'MAPMAIN',
   USER: 'USER',
+  AGENCY: 'AGENCY',
 };
 
 type Props = {
@@ -25,7 +27,7 @@ type Props = {
 };
 
 const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
-  return <Icon color={tintColor} name={icon} size={25} />;
+  return <Icon color={tintColor} name={icon} size={25}/>;
 };
 
 const ApplicationTabs = createMaterialTopTabNavigator(
@@ -42,6 +44,12 @@ const ApplicationTabs = createMaterialTopTabNavigator(
         tabBarIcon: getTabIcon('map-search'),
       },
     },
+    [ROUTE_NAMES.AGENCY]: {
+      screen: agency,
+      navigationOptions: {
+        tabBarIcon: getTabIcon('city-variant'),
+      },
+    },
     [ROUTE_NAMES.USER]: {
       screen: user,
       navigationOptions: {
@@ -53,7 +61,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
-    },
+    }
   },
   {
     initialRouteName: ROUTE_NAMES.HOME,

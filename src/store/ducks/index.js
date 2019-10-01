@@ -1,3 +1,4 @@
+import agency from './agency';
 import main from './main';
 import mapMain from './mapMain';
 import user from './users';
@@ -7,4 +8,5 @@ export default combineReducers({
   main,
   mapMain,
   user,
+  agency,
 });

@@ -5,7 +5,7 @@ import api from '~/services/api';
 
 export function* mainRequest() {
   try {
-    const response = yield call(api.get, '/main');
+    const response = yield call(api.get, '/v1/property/list');
     console.log('main-sagas-9, response:', response);
 
     yield put(mainActions.getmainSuccess(response.data));

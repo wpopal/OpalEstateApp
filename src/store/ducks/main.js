@@ -7,7 +7,7 @@ export const Types = {
 };
 
 const initialState = Immutable({
-  loading: false,
+  loading: true,
   error: false,
   data: [],
 });
@@ -19,7 +19,7 @@ export const Creators = {
 
   getmainSuccess: data => ({
     type: Types.GET_SUCCESS,
-    payload: { data },
+    payload: {data},
   }),
 
   getmainFailure: () => ({
@@ -43,7 +43,7 @@ const main = (state = initialState, action) => {
       };
 
     case Types.GET_FAILURE:
-    return {
+      return {
         ...state,
         loading: false,
         error: true,
