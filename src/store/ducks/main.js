@@ -13,8 +13,9 @@ const initialState = Immutable({
 });
 
 export const Creators = {
-  getmainRequest: () => ({
+  getmainRequest: param => ({
     type: Types.GET_REQUEST,
+    param: param,
   }),
 
   getmainSuccess: data => ({

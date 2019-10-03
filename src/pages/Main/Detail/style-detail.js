@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
-import {RFPercentage, RFValue} from "react-native-responsive-fontsize";
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 const IS_IOS = Platform.OS === 'ios';
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
@@ -69,7 +69,7 @@ export default StyleSheet.create({
   listing: {
     width: (viewportWidth / 100) * 90,
     height: (viewportHeight / 100) * 28,
-    marginBottom : 100
+    marginBottom: 100,
   },
   statust: {
     flex: 1,
@@ -81,5 +81,5 @@ export default StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     paddingTop: '3%',
-  }
+  },
 });

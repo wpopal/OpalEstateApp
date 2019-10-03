@@ -59,7 +59,7 @@ class Main extends Component<Props, State> {
               {data.collection.map((l, i) => (
                 <TouchableOpacity key={i}
                                   onPress={() =>
-                                    this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
+                                    this.props.navigation.navigate(ROUTE_NAMES.DETAIL,l)
                                   }>
                   <View style={styles.listing}>
                     <ImageBackground
@@ -98,7 +98,6 @@ class Main extends Component<Props, State> {
                                 paddingRight: 6,
                                 paddingLeft: 6,
                               }}>
-
                               {
                                 l.labels.map((y, x) => (
                                   <Text key={x}
@@ -106,7 +105,6 @@ class Main extends Component<Props, State> {
                                 ))
                               }
                             </View>)}
-
                         </View>
                         <View>
                           {

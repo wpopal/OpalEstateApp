@@ -7,19 +7,20 @@ export const Types = {
 };
 
 const initialState = Immutable({
-  loading: false,
+  loading: true,
   error: false,
   data: [],
 });
 
 export const Creators = {
-  getdetailRequest: () => ({
+  getdetailRequest: param => ({
     type: Types.GET_REQUEST,
+    param: param,
   }),
 
   getdetailSuccess: data => ({
     type: Types.GET_SUCCESS,
-    payload: { data },
+    payload: {data},
   }),
 
   getdetailFailure: () => ({
@@ -43,7 +44,7 @@ const detail = (state = initialState, action) => {
       };
 
     case Types.GET_FAILURE:
-    return {
+      return {
         ...state,
         loading: false,
         error: true,

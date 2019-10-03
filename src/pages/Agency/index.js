@@ -6,6 +6,7 @@ import {Creators as AgencyCreators} from '~/store/ducks/agency';
 import {
   Text,
   Dimensions,
+  Image,
   View,
   ScrollView,
   ImageBackground,
@@ -25,10 +26,10 @@ class Agency extends Component<Props, State> {
     this.props.getagencyRequest();
     this.props.getagentRequest();
   }
-
   render() {
     const {navigation} = this.props;
     const {AgencyRequest} = this.props;
+    console.log('AgencyRequest', AgencyRequest);
     const {
       loading,
       error,
@@ -64,18 +65,18 @@ class Agency extends Component<Props, State> {
                         <TouchableOpacity
                           key={i}
                           onPress={() =>
-                            this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
+                            this.props.navigation.navigate(
+                              ROUTE_NAMES.DETAIL,
+                              l,
+                            )
                           }>
-                          <Avatar
-                            xlarge
-                            rounded
+                          <Image
+                            style={{width: 50, height: 100}}
                             source={{uri: l.info.avatar}}
-                            onPress={() => console.log('Works!')}
-                            activeOpacity={0.7}
                           />
                           <View>
                             <Text style={{fontWeight: 'bold', fontSize: 18}}>
-                              {l.info.title}
+                              {l.info.title} - {l.info.avatar}
                             </Text>
                             <Text>
                               2223 W Jefferson Blvd, Los Angeles, CA 90018, USA
@@ -112,7 +113,10 @@ class Agency extends Component<Props, State> {
                         <TouchableOpacity
                           key={i}
                           onPress={() =>
-                            this.props.navigation.navigate(ROUTE_NAMES.DETAIL)
+                            this.props.navigation.navigate(
+                              ROUTE_NAMES.DETAIL,
+                              l,
+                            )
                           }>
                           <Avatar
                             xlarge
