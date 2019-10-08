@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {ROUTE_NAMES} from '../Agency/routes';
-import {Creators as AgencyCreators} from '~/store/ducks/agency';
+import {ROUTE_NAMES} from '../Agent/routes';
 import {
   Text,
   Dimensions,
@@ -35,7 +34,7 @@ interface Post {
   thumbnailUrl: string;
 }
 
-class Agency extends Component<Props, State> {
+class Agent extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -60,7 +59,7 @@ class Agency extends Component<Props, State> {
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
     console.log('222222222', perPage, page);
     const posts = await fetch(
-      `http://dev.wpopal.com/latehome_free/wp-json/estate-api/v1/agencies/?per_page=${perPage}&page=${page}`,
+      `http://dev.wpopal.com/latehome_free/wp-json/estate-api/v1/agents/?per_page=${perPage}&page=${page}`,
     ).then(response => response.json());
     return posts.collection;
   }
@@ -123,9 +122,7 @@ class Agency extends Component<Props, State> {
         onPress={() => this.props.navigation.navigate(ROUTE_NAMES.DETAIL, l)}>
         <Image style={{width: 50, height: 100}} source={{uri: l.avatar}} />
         <View>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>
-            {l.name}
-          </Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>{l.name}</Text>
           <Text>2223 W Jefferson Blvd, Los Angeles, CA 90018, USA</Text>
           <Text numberOfLines={2} style={{color: '#767676', fontSize: 16}}>
             {l.content}
@@ -161,16 +158,5 @@ class Agency extends Component<Props, State> {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    AgencyRequest: state.agency,
-  };
-};
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(AgencyCreators, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Agency);
+export default Agent;

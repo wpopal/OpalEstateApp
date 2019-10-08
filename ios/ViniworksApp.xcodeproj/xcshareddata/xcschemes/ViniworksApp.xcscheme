@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "OpalEstateApp.app"
-               BlueprintName = "OpalEstateApp"
-               ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+               BuildableName = "ViniworksApp.app"
+               BlueprintName = "ViniworksApp"
+               ReferencedContainer = "container:ViniworksApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "OpalEstateAppTests.xctest"
-               BlueprintName = "OpalEstateAppTests"
-               ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+               BuildableName = "ViniworksAppTests.xctest"
+               BlueprintName = "ViniworksAppTests"
+               ReferencedContainer = "container:ViniworksApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "OpalEstateAppTests.xctest"
-               BlueprintName = "OpalEstateAppTests"
-               ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+               BuildableName = "ViniworksAppTests.xctest"
+               BlueprintName = "ViniworksAppTests"
+               ReferencedContainer = "container:ViniworksApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "OpalEstateApp.app"
-            BlueprintName = "OpalEstateApp"
-            ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+            BuildableName = "ViniworksApp.app"
+            BlueprintName = "ViniworksApp"
+            ReferencedContainer = "container:ViniworksApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "OpalEstateApp.app"
-            BlueprintName = "OpalEstateApp"
-            ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+            BuildableName = "ViniworksApp.app"
+            BlueprintName = "ViniworksApp"
+            ReferencedContainer = "container:ViniworksApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "OpalEstateApp.app"
-            BlueprintName = "OpalEstateApp"
-            ReferencedContainer = "container:OpalEstateApp.xcodeproj">
+            BuildableName = "ViniworksApp.app"
+            BlueprintName = "ViniworksApp"
+            ReferencedContainer = "container:ViniworksApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

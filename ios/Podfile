@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'OpalEstateApp' do
-  # Pods for OpalEstateApp
+target 'ViniworksApp' do
+  # Pods for ViniworksApp
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -27,7 +27,9 @@ target 'OpalEstateApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'OpalEstateAppTests' do
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  target 'ViniworksAppTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -35,10 +37,10 @@ target 'OpalEstateApp' do
   use_native_modules!
 end
 
-target 'OpalEstateApp-tvOS' do
-  # Pods for OpalEstateApp-tvOS
+target 'ViniworksApp-tvOS' do
+  # Pods for ViniworksApp-tvOS
 
-  target 'OpalEstateApp-tvOSTests' do
+  target 'ViniworksApp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

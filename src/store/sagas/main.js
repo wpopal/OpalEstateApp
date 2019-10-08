@@ -7,7 +7,7 @@ export function* mainRequest(action) {
     console.log('api', api);
   console.log('action', action);
   try {
-    const response = yield call(api.get, '/v1/property/list');
+    const response = yield call(api.get, '/v1/properties/');
     console.log('main-sagas-9, response:', response);
 
     yield put(mainActions.getmainSuccess(response.data));

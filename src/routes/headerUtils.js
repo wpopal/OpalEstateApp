@@ -86,7 +86,7 @@ export const setHiddenHeaderLayout = (navigation: Object): Object => {
     ...Platform.select({
       android: {
         headerStyle: {
-          marginTop: StatusBar.currentHeight,
+          marginTop: StatusBar.currentHeight + 10,
         },
       },
     }),
