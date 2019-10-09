@@ -1,7 +1,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {Platform} from 'react-native';
 
-import {setHiddenHeaderLayout} from '~/routes/headerUtils';
+import {setHiddenHeaderLayout} from '../../routes/headerUtils';
 
 import Home from './index';
 import Detail from './Detail';

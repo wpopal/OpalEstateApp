@@ -1,8 +1,8 @@
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 
 import MainStack from './mainStack';
-import Intro from '~/pages/Search';
-import User from '~/pages/User';
+import Intro from '../pages/Search';
+import User from '../pages/User';
 
 export const ROUTE_NAMES = {
   MAIN_STACK: 'MAIN_STACK',

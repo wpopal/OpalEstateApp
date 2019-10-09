@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {ROUTE_NAMES} from '../Agency/routes';
-import {Creators as AgencyCreators} from '~/store/ducks/agency';
+import {Creators as AgencyCreators} from '../../store/ducks/agency';
 import {
   Text,
   Dimensions,

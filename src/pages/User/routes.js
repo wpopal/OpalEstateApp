@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 import {
   setHiddenHeaderLayout,
   setDefaultHeaderLayout,
-} from '~/routes/headerUtils';
+} from '../../routes/headerUtils';
 
 import User from './index';
 import Login from './Login';

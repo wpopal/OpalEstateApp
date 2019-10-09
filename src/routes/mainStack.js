@@ -12,8 +12,8 @@ import user from '../pages/User/routes';
 import agent from '../pages/Agent/routes';
 import agency from '../pages/Agency/routes';
 
-import isEqualsOrLargestThanIphoneX from '~/utils/isEqualsOrLargestThanIphoneX';
-import appStyles from '~/styles';
+import isEqualsOrLargestThanIphoneX from '../utils/isEqualsOrLargestThanIphoneX';
+import appStyles from '../styles';
 
 export const ROUTE_NAMES = {
   HOME: 'HOME',

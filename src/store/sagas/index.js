@@ -1,11 +1,11 @@
 import {all, takeLatest} from 'redux-saga/effects';
 
-import {Types as HomeTypes} from '~/store/ducks/main';
-import {Types as UserTypes} from '~/store/ducks/users';
-import {Types as MapTypes} from '~/store/ducks/mapMain';
-import {Types as AgencyTypes} from '~/store/ducks/agency';
-import {Types as AgentTypes} from '~/store/ducks/agency';
-import {Types as DetailTypes} from '~/store/ducks/detail';
+import {Types as HomeTypes} from '../../store/ducks/main';
+import {Types as UserTypes} from '../../store/ducks/users';
+import {Types as MapTypes} from '../../store/ducks/mapMain';
+import {Types as AgencyTypes} from '../../store/ducks/agency';
+import {Types as AgentTypes} from '../../store/ducks/agency';
+import {Types as DetailTypes} from '../../store/ducks/detail';
 
 import {mainRequest} from './main';
 import {mapMainRequest} from './mapMain';

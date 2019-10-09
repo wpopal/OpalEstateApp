@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import Searchbar from '../components/searchbar';
 import {Button, ThemeProvider, Text} from 'react-native-elements';
-import {Creators as MainCreators} from '~/store/ducks/main';
+import {Creators as MainCreators} from '../../store/ducks/main';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Icon from 'react-native-vector-icons/FontAwesome';

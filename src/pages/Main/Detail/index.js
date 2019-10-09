@@ -18,7 +18,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button, ThemeProvider, Text} from 'react-native-elements';
-import {Creators as DetailCreators} from '~/store/ducks/detail';
+import {Creators as DetailCreators} from '../../../store/ducks/detail';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import styles from './style-detail.js';
 import ActionButton from 'react-native-action-button';

@@ -8,7 +8,7 @@ import SignUpComponent from './components/SignUp';
 import LoginComponent from './components/Login';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Creators as LoginCreators} from '~/store/ducks/login';
+import {Creators as LoginCreators} from '../../../store/ducks/login';
 
 
 const {height: viewportHeight} = Dimensions.get('window');

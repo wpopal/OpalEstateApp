@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 
 import {
   setHiddenHeaderLayout,
-} from '~/routes/headerUtils';
+} from '../../routes/headerUtils';
 
 import Home from './index';
 import Detail from './Detail';

@@ -1,7 +1,7 @@
 import {call, put} from 'redux-saga/effects';
 
-import {Creators as userActions} from '~/store/ducks/users';
-import api from '~/services/api';
+import {Creators as userActions} from '../../store/ducks/users';
+import api from '../../services/api';
 
 export function* userRequest() {
   try {

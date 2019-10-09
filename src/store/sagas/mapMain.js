@@ -1,7 +1,7 @@
 import {call, put} from 'redux-saga/effects';
 
-import {Creators as mapMainActions} from '~/store/ducks/mapMain';
-import api from '~/services/api';
+import {Creators as mapMainActions} from '../../store/ducks/mapMain';
+import api from '../../services/api';
 
 export function* mapMainRequest() {
   try {

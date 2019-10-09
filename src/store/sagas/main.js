@@ -1,7 +1,7 @@
 import {call, put} from 'redux-saga/effects';
 
-import {Creators as mainActions} from '~/store/ducks/main';
-import api from '~/services/api';
+import {Creators as mainActions} from '../../store/ducks/main';
+import api from '../../services/api';
 
 export function* mainRequest(action) {
     console.log('api', api);

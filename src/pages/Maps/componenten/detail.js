@@ -11,7 +11,7 @@ import {Text, Button} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Creators as MainCreators} from '~/store/ducks/main';
+import {Creators as MainCreators} from '../../../store/ducks/main';
 import {TabView, SceneMap} from 'react-native-tab-view';
 
 const styles = StyleSheet.create({

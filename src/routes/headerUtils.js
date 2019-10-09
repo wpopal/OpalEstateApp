@@ -2,8 +2,8 @@
 
 import { Platform, StatusBar } from 'react-native';
 
-import CONSTANTS from '~/utils/CONSTANTS';
-import appStyles from '~/styles';
+import CONSTANTS from '../utils/CONSTANTS';
+import appStyles from '../styles';
 
 const hiddenProps = {
   [CONSTANTS.NAVIGATION_PARAM_HEADER_HAS_DATA_STYLE]: {

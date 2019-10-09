@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 import {
   setHiddenHeaderLayout,
   setDefaultHeaderLayout,
-} from '~/routes/headerUtils';
+} from '../../routes/headerUtils';
 
 import Map from './containers/MapView';
 import Search from './componenten/Search';

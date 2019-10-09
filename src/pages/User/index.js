@@ -3,7 +3,7 @@ import {Avatar} from 'react-native-elements';
 import styles from './style-user';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Creators as userCreators} from '~/store/ducks/users';
+import {Creators as userCreators} from '../../store/ducks/users';
 import {
   View,
   StyleSheet,

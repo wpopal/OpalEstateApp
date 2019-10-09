@@ -3,7 +3,7 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {withNavigation} from 'react-navigation';
-import {ROUTE_NAMES} from '~/routes';
+import {ROUTE_NAMES} from '../routes';
 import {ContentContainer} from './Common';
 
 type Props = {

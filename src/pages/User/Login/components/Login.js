@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faFacebookF, faGoogle} from '@fortawesome/free-brands-svg-icons';
 import LinearGradient from 'react-native-linear-gradient';
 import {withNavigation} from 'react-navigation';
-import {ROUTE_NAMES} from '~/routes';
+import {ROUTE_NAMES} from '../routes';
 
 const {height: viewportHeight} = Dimensions.get('window');
 const Container = styled(View)`
