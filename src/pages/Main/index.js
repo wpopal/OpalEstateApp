@@ -13,14 +13,10 @@ import {
   TouchableOpacity,
   ListRenderItemInfo,
 } from 'react-native';
-import Searchbar from '../components/searchbar';
 import {Button, ThemeProvider, Text} from 'react-native-elements';
 import {Creators as MainCreators} from '../../store/ducks/main';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import styles from './style-main';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
 import Grid from 'react-native-infinite-scroll-grid';
 
 interface Props {}
@@ -216,21 +212,21 @@ class Main extends Component<Props, State> {
     const {mainRequest} = this.props;
     const {loading, error, data} = mainRequest;
     return (
-      <View style={{flex:1}}>
-      <Grid
-        style={{flex: 1}}
-        key={this.state.numColumns}
-        numColumns={this.state.numColumns}
-        data={this.state.posts}
-        keyExtractor={item => item.id.toString()}
-        renderItem={info => this.renderItem(info)}
-        onRefresh={() => this.onRefresh()}
-        refreshing={this.state.refreshing}
-        onEndReached={() => this.onEndReached()}
-        loadingMore={this.state.loadingMore}
-        marginExternal={10}
-        marginInternal={10}
-      />
+      <View style={{flex: 1}}>
+        <Grid
+          style={{flex: 1}}
+          key={this.state.numColumns}
+          numColumns={this.state.numColumns}
+          data={this.state.posts}
+          keyExtractor={item => item.id.toString()}
+          renderItem={info => this.renderItem(info)}
+          onRefresh={() => this.onRefresh()}
+          refreshing={this.state.refreshing}
+          onEndReached={() => this.onEndReached()}
+          loadingMore={this.state.loadingMore}
+          marginExternal={10}
+          marginInternal={10}
+        />
       </View>
     );
   }

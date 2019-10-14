@@ -81,7 +81,6 @@ class Detail extends Component<Props, State> {
 
   render() {
     const {navigation} = this.props;
-    console.log('this.props.navigation', this.props.navigation);
     const property = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
@@ -120,7 +119,6 @@ class Detail extends Component<Props, State> {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return {DetailRequest: state.detail};
 };
 

@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {debounce} from 'lodash';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {mapMarker} from '../../constants/assets';
 import {findPlaceFromLatLng} from '../../services/google.service';
 import styles from './styles';
 import Geolocation from '@react-native-community/geolocation';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import {withNavigation} from 'react-navigation';
+
 const latitudeDelta = 0.025;
 const longitudeDelta = 0.025;
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
@@ -30,6 +31,8 @@ class HomeLocator extends Component {
   constructor() {
     super();
     this.state = {
+      forceRefresh: true,
+      dataMap: [],
       region: {
         latitude: 10.780889,
         longitude: 106.629271,
@@ -56,8 +59,7 @@ class HomeLocator extends Component {
         };
         this.onRegionChangeComplete(region);
       },
-      error => {
-      },
+      error => {},
       {enableHighAccuracy: false},
     );
   }
@@ -87,6 +89,35 @@ class HomeLocator extends Component {
   };
   _draggedValue = new Animated.Value(30);
 
+  reRenderMap = data => {
+    console.log('data', data);
+    if (data.geo_lat) {
+      console.log('22222');
+      this.setState({
+        forceRefresh: !this.state.forceRefresh,
+        dataMap: data.data,
+        region: {
+          longitude: Number(data.geo_long),
+          latitude: Number(data.geo_lat),
+          latitudeDelta,
+          longitudeDelta,
+        },
+      });
+    } else {
+      console.log('11111');
+      this.setState({
+        forceRefresh: !this.state.forceRefresh,
+        dataMap: data.data,
+        region: {
+          longitude: Number(data.data[0].map.longitude),
+          latitude: Number(data.data[0].map.latitude),
+          latitudeDelta,
+          longitudeDelta,
+        },
+      });
+    }
+  };
+
   render() {
     const {region, isPanding, text, openModal} = this.state;
     const {top, bottom} = this.props.draggableRange;
@@ -100,18 +131,17 @@ class HomeLocator extends Component {
       <View style={styles.container}>
         <View style={{position: 'absolute', zIndex: 999999}}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('SEARCH')}>
-            <Icon
-              raised
-              name="search"
-              type="font-awesome"
-              color="#f50"
-              onPress={() => this.props.navigation.navigate('SEARCH')}
-            />
+            onPress={() =>
+              this.props.navigation.navigate('SEARCH', {
+                getdataMap: this.reRenderMap,
+              })
+            }>
+            <Icon raised name="search" type="font-awesome" color="#f50" />
           </TouchableOpacity>
         </View>
         <View style={styles.mapWrapper}>
           <MapView
+            key={this.state.forceRefresh}
             ref={map => (this.map = map)}
             initialRegion={region}
             style={styles.map}
@@ -119,8 +149,21 @@ class HomeLocator extends Component {
             followUserLocation={true}
             loadingEnabled={true}
             onPanDrag={this.onPanDrag}
-            onRegionChangeComplete={this.onRegionChangeComplete}
-          />
+            onRegionChangeComplete={this.onRegionChangeComplete}>
+            {this.state.dataMap.map(item => {
+              return (
+                <Marker
+                  key={item.id}
+                  coordinate={{
+                    latitude: Number(item.map.latitude),
+                    longitude: Number(item.map.longitude),
+                  }}
+                  title={item.name}
+                  description={item.content}
+                />
+              );
+            })}
+          </MapView>
         </View>
         <View
           style={[styles.markerFixed, isPanding ? styles.isPanding : null]}

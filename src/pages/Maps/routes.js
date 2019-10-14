@@ -7,7 +7,7 @@ import {
 } from '../../routes/headerUtils';
 
 import Map from './containers/MapView';
-import Search from './componenten/Search';
+import Search from './components/Search';
 
 export const ROUTE_NAMES = {
   MAP: 'MAP',

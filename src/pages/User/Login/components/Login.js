@@ -80,7 +80,6 @@ class LoginComponent extends Component {
   _forgotPasswordTextAnimation = new Animated.Value(0);
 
   componentDidMount() {
-    console.log('this.props.navigation', this.props.navigation);
 
     Animated.stagger(100, [
       Animated.timing(this._emailInputFieldAnimation, {
@@ -116,7 +115,6 @@ class LoginComponent extends Component {
     type: string,
     style: Object,
   ): Object => {
-    console.log('style', style);
     return <Input placeholder={placeholder} iconName={iconName} type={type}/>;
   };
 

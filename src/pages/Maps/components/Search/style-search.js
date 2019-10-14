@@ -108,4 +108,20 @@ export default StyleSheet.create({
     paddingRight: '5%',
     paddingTop: '3%',
   },
+
+  sliders: {
+    margin: 20,
+    width: 280,
+  },
+  text: {
+    alignSelf: 'center',
+    paddingVertical: 20,
+  },
+  title: {
+    fontSize: 30,
+  },
+  sliderOne: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
 });

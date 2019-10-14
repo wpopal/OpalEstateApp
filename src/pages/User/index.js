@@ -36,7 +36,6 @@ const list = [
 class User extends Component<Props, State> {
   render() {
     const {navigation} = this.props;
-    console.log('ROUTE_NAMES', this.props);
     return (
       <View style={styles.container}>
         <View style={styles.avatar}>

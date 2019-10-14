@@ -5,7 +5,6 @@ import api from '../../services/api';
 import axios from 'axios';
 
 export function* detailRequest(action) {
-  console.log('api', api);
   try {
     const response = yield call(api.get, '/v1/property/' + action.param);
     console.log('detail-sagas-9, response:', response);

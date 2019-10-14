@@ -42,10 +42,7 @@ class Mapsx extends Component {
   }
 
   componentDidMount(): void {
-    console.log(
-      'this.props.navigation.state.params',
-      this.props.navigation.state.params,
-    );
+
     this.setState({
       local: {
         latitude: Number(this.props.navigation.state.params.latitude),

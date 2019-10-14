@@ -48,17 +48,14 @@ class Agency extends Component<Props, State> {
   }
 
   onRefresh() {
-    console.log('reload');
     this.loadData(true);
   }
 
   onEndReached() {
-    console.log('load more');
     this.loadData(false);
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    console.log('222222222', perPage, page);
     const posts = await fetch(
       `http://dev.wpopal.com/latehome_free/wp-json/estate-api/v1/agencies/?per_page=${perPage}&page=${page}`,
     ).then(response => response.json());
@@ -70,14 +67,12 @@ class Agency extends Component<Props, State> {
       return;
     }
     if (refresh) {
-      console.log('refresh', refresh);
       this.setState({refreshing: true});
       this.setState({posts: []});
       try {
         this.isLoading = true;
         const posts = await this.fetchPosts(1);
         this.setState(previousState => {
-          console.log(previousState);
           return {
             loadingMore: false,
             posts: refresh ? posts : previousState.posts.concat(posts),
@@ -87,19 +82,15 @@ class Agency extends Component<Props, State> {
       } catch (error) {
         console.error(error);
       } finally {
-        console.log('adasdasdasdasdasdasdasdas');
         this.isLoading = false;
         this.setState({loadingMore: false, refreshing: false});
       }
     } else {
-      console.log('refresh', refresh, this.state.nextPage);
       this.setState({loadingMore: true});
       try {
         this.isLoading = true;
         const posts = await this.fetchPosts(this.state.nextPage + 1);
-        console.log('posts', posts);
         this.setState(previousState => {
-          console.log(previousState);
           return {
             loadingMore: false,
             posts: refresh ? posts : previousState.posts.concat(posts),
@@ -117,7 +108,6 @@ class Agency extends Component<Props, State> {
 
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info.item;
-    console.log('info', info);
     return (
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate(ROUTE_NAMES.DETAIL, l)}>

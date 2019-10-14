@@ -63,7 +63,6 @@ class Login extends Component {
   //   try {
   //     await GoogleSignin.hasPlayServices();
   //     const userInfo = await GoogleSignin.signIn();
-  //     console.log('userInfo', userInfo);
   //   } catch (error) {
   //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
   //       console.log('1', error);

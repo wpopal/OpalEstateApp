@@ -15,7 +15,6 @@ export function* agencyRequest() {
 }
 
 export function* agentRequest(item) {
-  console.log('item', item);
   try {
     const response = yield call(api.get, '/v1/agents/?per_page=2&page=1');
     console.log('agency-sagas-9, response:', response);

@@ -57,7 +57,6 @@ const RootStack = createStackNavigator(
 );
 
 RootStack.navigationOptions = ({navigation}) => {
-  console.log('navigation', navigation);
   const tabBarVisible = navigation.state.index <= 0;
 
   return {
