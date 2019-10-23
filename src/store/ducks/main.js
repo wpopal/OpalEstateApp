@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 export const Types = {
+  GET_MORE: 'main/GET_MORE',
   GET_REQUEST: 'main/GET_REQUEST',
   GET_SUCCESS: 'main/GET_SUCCESS',
   GET_FAILURE: 'main/GET_FAILURE',

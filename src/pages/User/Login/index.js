@@ -10,7 +10,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Creators as LoginCreators} from '../../../store/ducks/login';
 
-
 const {height: viewportHeight} = Dimensions.get('window');
 const Container = styled(View)`
   flex: 1;
@@ -48,7 +47,6 @@ const LAYOUTS = [
 //   forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login.
 //   accountName: '', // [Android] specifies an account name on the device that should be used
 // });
-
 
 class Login extends Component {
   _loginFontSize: Object = new Animated.Value(1);
@@ -118,11 +116,15 @@ class Login extends Component {
     });
   };
 
-  renderContent = (): Object => (
-    <ContentWrapper>
-      <LoginComponent/>
-    </ContentWrapper>
-  );
+  renderContent = (): Object => {
+    console.log('Object', Object);
+    return (
+      <ContentWrapper>
+        <LoginComponent />
+      </ContentWrapper>
+    );
+  };
+  componentDidMount(): void {}
 
   render() {
     return (

@@ -6,20 +6,20 @@ import {
   setDefaultHeaderLayout,
 } from '../../routes/headerUtils';
 
-import Home from './index';
+import Login from './index';
 import Detail from './Detail';
 import Maps from './maps';
 
 export const ROUTE_NAMES = {
-  HOME: 'HOME',
+  LOGIN: 'LOGIN',
   DETAIL: 'DETAIL',
   MAPS: 'MAPS',
 };
 
 const RootStack = createStackNavigator(
   {
-    [ROUTE_NAMES.HOME]: {
-      screen: Home,
+    [ROUTE_NAMES.LOGIN]: {
+      screen: Login,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
     [ROUTE_NAMES.DETAIL]: {
@@ -32,7 +32,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: ROUTE_NAMES.HOME,
+    initialRouteName: ROUTE_NAMES.LOGIN,
     mode: Platform.OS === 'ios' ? 'card' : 'modal',
     headerMode: 'screen',
   },

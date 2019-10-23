@@ -17,6 +17,8 @@ import styles from './style-main';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import Grid from 'react-native-infinite-scroll-grid';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import axios from 'axios';
+import {queryUser} from '../../database/allSchemas';
 
 interface Props {}
 
@@ -55,10 +57,33 @@ class Agent extends Component<Props, State> {
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    const posts = await fetch(
-      `http://dev.wpopal.com/latehome_free/wp-json/estate-api/v1/agents/?per_page=${perPage}&page=${page}`,
-    ).then(response => response.json());
-    return posts.collection;
+    console.log('this.state.token', this.state.token);
+    if (this.state.token) {
+      const posts = await axios({
+        method: 'get',
+        params: {
+          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          per_page: perPage,
+          page: page,
+        },
+        url:
+          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/agents',
+        headers: {
+          'X-Custom-Header': 'foobar',
+          Authorization: 'Bearer ' + this.state.token,
+          Accept: 'application/json',
+        },
+      });
+      console.log('posts', posts);
+      if (posts.data.status !== 200) {
+        return [];
+      } else {
+        return posts.data.collection;
+      }
+    } else {
+      return [];
+    }
   }
 
   async loadData(refresh: boolean) {
@@ -104,13 +129,20 @@ class Agent extends Component<Props, State> {
       }
     }
   }
-
+  creUrl(l) {
+    let avatar_url = l.avatar;
+    avatar_url = avatar_url.replace('localhost', '10.0.2.2');
+    return avatar_url;
+  }
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info.item;
     return (
       <TouchableOpacity
         onPress={() => this.props.navigation.navigate(ROUTE_NAMES.DETAIL, l)}>
-        <Image style={{width: 50, height: 100}} source={{uri: l.avatar}} />
+        <Image
+          style={{width: 50, height: 100}}
+          source={{uri: this.creUrl(l)}}
+        />
         <View>
           <Text style={{fontWeight: 'bold', fontSize: 18}}>{l.name}</Text>
           <Text>2223 W Jefferson Blvd, Los Angeles, CA 90018, USA</Text>
@@ -123,7 +155,15 @@ class Agent extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.loadData(true);
+    queryUser()
+      .then(item => {
+        const dataUser = Array.from(item);
+        this.setState({token: dataUser[0].token});
+        this.loadData(true);
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
   }
 
   render() {

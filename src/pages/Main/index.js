@@ -2,26 +2,24 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {ROUTE_NAMES} from '../Main/routes';
+import {queryUser} from '../../database/allSchemas';
 import {
-  Image,
   View,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
   ImageBackground,
-  StatusBar,
   TouchableOpacity,
   ListRenderItemInfo,
 } from 'react-native';
-import {Button, ThemeProvider, Text} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import {Creators as MainCreators} from '../../store/ducks/main';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Grid from 'react-native-infinite-scroll-grid';
+import axios from 'axios';
 
 interface Props {}
 
 interface State {
+  token: string;
   loadingMore: boolean;
   refreshing: boolean;
   posts: Post[];
@@ -58,10 +56,31 @@ class Main extends Component<Props, State> {
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    const posts = await fetch(
-      `http://dev.wpopal.com/latehome_free/wp-json/estate-api/v1/properties/?per_page=${perPage}&page=${page}`,
-    ).then(response => response.json());
-    return posts.collection;
+    if (this.state.token) {
+      const posts = await axios({
+        method: 'get',
+        params: {
+          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          per_page: perPage,
+          page: page,
+        },
+        url:
+          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
+        headers: {
+          'X-Custom-Header': 'foobar',
+          Authorization: 'Bearer ' + this.state.token,
+          Accept: 'application/json',
+        },
+      });
+      if (posts.data.status !== 200) {
+        return [];
+      } else {
+        return posts.data.collection;
+      }
+    } else {
+      return [];
+    }
   }
 
   async loadData(refresh: boolean) {
@@ -69,14 +88,12 @@ class Main extends Component<Props, State> {
       return;
     }
     if (refresh) {
-      console.log('refresh', refresh);
       this.setState({refreshing: true});
       this.setState({posts: []});
       try {
         this.isLoading = true;
         const posts = await this.fetchPosts(1);
         this.setState(previousState => {
-          console.log(previousState);
           return {
             loadingMore: false,
             posts: refresh ? posts : previousState.posts.concat(posts),
@@ -86,17 +103,14 @@ class Main extends Component<Props, State> {
       } catch (error) {
         console.error(error);
       } finally {
-        console.log('adasdasdasdasdasdasdasdas');
         this.isLoading = false;
         this.setState({loadingMore: false, refreshing: false});
       }
     } else {
-      console.log('refresh', refresh, this.state.nextPage);
       this.setState({loadingMore: true});
       try {
         this.isLoading = true;
         const posts = await this.fetchPosts(this.state.nextPage + 1);
-        console.log('posts', posts);
         this.setState(previousState => {
           console.log(previousState);
           return {
@@ -204,10 +218,19 @@ class Main extends Component<Props, State> {
   }
 
   componentDidMount(): void {
-    this.loadData(true);
+    queryUser()
+      .then(item => {
+        const dataUser = Array.from(item);
+        this.setState({token: dataUser[0].token});
+        this.loadData(true);
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
   }
 
   render() {
+    console.log('this.state.posts', this.state.posts);
     const {navigation} = this.props;
     const {mainRequest} = this.props;
     const {loading, error, data} = mainRequest;

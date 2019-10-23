@@ -10,8 +10,10 @@ import {faFacebookF, faGoogle} from '@fortawesome/free-brands-svg-icons';
 import LinearGradient from 'react-native-linear-gradient';
 import {withNavigation} from 'react-navigation';
 import {ROUTE_NAMES} from '../routes';
+import {updateUser} from '../../../../database/allSchemas';
 
 const {height: viewportHeight} = Dimensions.get('window');
+import RNRestart from 'react-native-restart'; // Import package from node modules
 const Container = styled(View)`
   width: 100%;
   height: 100%;
@@ -70,6 +72,10 @@ const ButtonText = styled(Text)`
   font-family: CircularStd-Bold;
   font-size: 15px;
 `;
+var data = {
+  Email: '',
+  Password: '',
+};
 
 class LoginComponent extends Component {
   _emailInputFieldAnimation = new Animated.Value(0);
@@ -79,8 +85,11 @@ class LoginComponent extends Component {
   _loginGooglePlusButtonAnimation = new Animated.Value(0);
   _forgotPasswordTextAnimation = new Animated.Value(0);
 
-  componentDidMount() {
+  constructor(props: Props) {
+    super(props);
+  }
 
+  componentDidMount() {
     Animated.stagger(100, [
       Animated.timing(this._emailInputFieldAnimation, {
         toValue: 1,
@@ -109,14 +118,85 @@ class LoginComponent extends Component {
     ]).start();
   }
 
+  async Clicklogin() {
+    const posts = await fetch(
+      'http://10.0.2.2/wordpress/latehome_free/wp-json/jwt-auth/v1/token',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: data.Email,
+          password: data.Password,
+        }),
+      },
+    )
+      .then(response => response.json())
+      .catch(errer => {
+        console.log('errer', errer);
+      });
+    console.log('posts.token', posts.token);
+    if (posts.token) {
+      console.log('dadasasdasdasdasdasdas');
+      this.CheckToken(posts);
+    }
+  }
+
+  async CheckToken(data) {
+    console.log('data', data);
+    const x = data.token;
+    await fetch(
+      'http://10.0.2.2/wordpress/latehome_free/wp-json/jwt-auth/v1/token/validate',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + x,
+        },
+      },
+    ).then(response => {
+      this.setToken(data);
+    });
+  }
+
+  async setToken(data) {
+    console.log('data', data);
+    data.user_role = data.user_role.toString();
+    await updateUser(data)
+      .then(item => {
+        setTimeout(function() {
+          RNRestart.Restart();
+        }, 2000);
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
+  }
+
   renderInput = (
     placeholder: string,
     iconName: string,
     type: string,
     style: Object,
   ): Object => {
-    return <Input placeholder={placeholder} iconName={iconName} type={type}/>;
+    return (
+      <Input
+        placeholder={placeholder}
+        iconName={iconName}
+        type={type}
+        onChange={text => this.setInPut(placeholder, text)}
+      />
+    );
   };
+
+  setInPut(placeholder, text) {
+    if (placeholder === 'E-mail') {
+      data.Email = text;
+    } else {
+      data.Password = text;
+    }
+  }
 
   renderForgotPasswordText = (): Object => {
     return (
@@ -249,9 +329,9 @@ class LoginComponent extends Component {
               borderRadius: 10,
               height: 60,
             }}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTE_NAMES.MAIN_STACK)
-            }>
+            onPress={() => {
+              this.Clicklogin();
+            }}>
             <LinearGradient
               start={{
                 x: 0,
