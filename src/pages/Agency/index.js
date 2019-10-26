@@ -127,7 +127,6 @@ class Agency extends Component<Props, State> {
   creUrl = l => {
     let avatar_url = l.avatar;
     avatar_url = avatar_url.replace('localhost', '10.0.2.2');
-    console.log('avatar_url', avatar_url);
     return avatar_url;
   };
 

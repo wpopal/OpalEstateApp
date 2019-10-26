@@ -7,10 +7,14 @@ import store from './store';
 
 import Routes from './routes/index.js';
 
-const App = () => (
-  <Provider store={store}>
-    <Routes />
-  </Provider>
-);
 
-export default App;
+export default class App extends React.Component {
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    );
+  }
+}

@@ -3,10 +3,11 @@ import {Avatar} from 'react-native-elements';
 import styles from './style-user';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Creators as userCreators} from '../../store/ducks/users';
+import {Creators as userCreators} from '../../store/ducks/login';
 import {View} from 'react-native';
 import {Text, ListItem} from 'react-native-elements';
 import {queryUser, deleteDataUser} from '../../database/allSchemas';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 
 class User extends React.Component {
   constructor(props: Props) {
@@ -51,6 +52,8 @@ class User extends React.Component {
         },
       ],
     };
+
+    this.creUrl = this.creUrl.bind(this);
   }
   componentDidMount(): void {
     queryUser()
@@ -63,13 +66,20 @@ class User extends React.Component {
         console.log('error !', error);
       });
   }
-
   logout = () => {};
+
+  componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('nextProps', nextProps);
+    if (nextProps.loginRequest.fu !== 'nânnanannanana') {
+      console.log('ssssssssssssssssssssss');
+      this.setState({data:{avatar:nextProps.loginRequest.fu}})
+    }
+  }
 
   redirects = item => {
     switch (item) {
       case 'Profile':
-        console.log('Profile');
+        this.props.navigation.navigate('PRO_FILE');
         break;
       case 'Bookmarks':
         console.log('Bookmarks');
@@ -83,6 +93,9 @@ class User extends React.Component {
       case 'Logout':
         deleteDataUser()
           .then(res => {
+            setTimeout(function() {
+              RNRestart.Restart();
+            }, 2000);
             console.log('res', res);
           })
           .catch(error => {
@@ -100,10 +113,13 @@ class User extends React.Component {
     return avatar_url;
   }
   render() {
+    console.log('xxxxxxxxxxxxxxxxx');
+
     const {navigation} = this.props;
     if (this.state.token !== false) {
       return (
         <View style={styles.container}>
+          <Text>{this.props.loginRequest.fu}</Text>
           <View style={styles.avatar}>
             <Avatar
               title="NU"
@@ -113,7 +129,7 @@ class User extends React.Component {
               rounded
               onEditPress={() => console.log('Works!')}
               source={{
-                uri: this.creUrl(this.state.data.avatar),
+                uri: this.state.data.avatar,
               }}
               showEditButton
             />

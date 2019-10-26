@@ -59,7 +59,7 @@ class Search extends React.Component {
     };
 
     componentDidMount(): void {
-        this.getSetting();
+        // this.getSetting();
     }
 
     async getSetting() {

@@ -15,6 +15,7 @@ import {RFPercentage} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Grid from 'react-native-infinite-scroll-grid';
 import axios from 'axios';
+import SplashScreen from 'react-native-splash-screen';
 
 interface Props {}
 
@@ -57,26 +58,31 @@ class Main extends Component<Props, State> {
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
     if (this.state.token) {
-      const posts = await axios({
-        method: 'get',
-        params: {
-          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
-          per_page: perPage,
-          page: page,
-        },
-        url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
-        headers: {
-          'X-Custom-Header': 'foobar',
-          Authorization: 'Bearer ' + this.state.token,
-          Accept: 'application/json',
-        },
-      });
-      if (posts.data.status !== 200) {
+      try {
+        const posts = await axios({
+          method: 'get',
+          params: {
+            consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+            consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+            per_page: perPage,
+            page: page,
+          },
+          url:
+            'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
+          headers: {
+            'X-Custom-Header': 'foobar',
+            Authorization: 'Bearer ' + this.state.token,
+            Accept: 'application/json',
+          },
+        });
+        if (posts.data.status !== 200) {
+          return [];
+        } else {
+          return posts.data.collection;
+        }
+      } catch (error) {
+        console.log('error', error);
         return [];
-      } else {
-        return posts.data.collection;
       }
     } else {
       return [];
@@ -218,9 +224,11 @@ class Main extends Component<Props, State> {
   }
 
   componentDidMount(): void {
+    SplashScreen.hide();
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
+        console.log('dataUser', dataUser);
         this.setState({token: dataUser[0].token});
         this.loadData(true);
       })
@@ -230,7 +238,6 @@ class Main extends Component<Props, State> {
   }
 
   render() {
-    console.log('this.state.posts', this.state.posts);
     const {navigation} = this.props;
     const {mainRequest} = this.props;
     const {loading, error, data} = mainRequest;

@@ -129,12 +129,6 @@ class Login extends Component {
   render() {
     return (
       <Container>
-        <StatusBar
-          backgroundColor="transparent"
-          barStyle="light-content"
-          translucent
-          animated
-        />
         <Wrapper>
           <Animated.Text
             style={{

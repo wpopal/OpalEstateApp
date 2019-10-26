@@ -10,12 +10,15 @@ import User from './index';
 import Login from './Login';
 import SignUp from './Login/components/SignUp';
 import ForgotPass from './Login/components/forgotPassword';
+import Profile from './components/profile';
+
 
 export const ROUTE_NAMES = {
   USER: 'USER',
   LOGIN: 'LOGIN',
   SIGNUP: 'SIGNUP',
   FORGOT: 'FORGOT',
+  PRO_FILE: 'PRO_FILE',
 };
 
 const RootStack = createStackNavigator(
@@ -46,6 +49,10 @@ const RootStack = createStackNavigator(
     },
     [ROUTE_NAMES.FORGOT]: {
       screen: ForgotPass,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.PRO_FILE]: {
+      screen: Profile,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
   },

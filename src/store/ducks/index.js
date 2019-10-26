@@ -3,11 +3,13 @@ import main from './main';
 import mapMain from './mapMain';
 import detail from './detail';
 import user from './users';
+import login from './login';
 import {combineReducers} from 'redux';
 
 export default combineReducers({
   main,
   mapMain,
+  login,
   user,
   agency,
   detail,

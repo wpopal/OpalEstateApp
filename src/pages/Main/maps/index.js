@@ -11,6 +11,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -54,7 +55,7 @@ class Mapsx extends Component {
   }
 
   render() {
-    const {address} = this.props.navigation.state.params
+    const {address} = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
         <MapView

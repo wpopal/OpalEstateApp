@@ -4,11 +4,13 @@ export const Types = {
   GET_REQUEST: 'login/GET_REQUEST',
   GET_SUCCESS: 'login/GET_SUCCESS',
   GET_FAILURE: 'login/GET_FAILURE',
+  UPDATE_FU: 'user/UPDATE_FU',
 };
 
 const initialState = Immutable({
   loading: false,
   error: false,
+  fu: 'nânnanannanana',
   data: [],
 });
 
@@ -17,9 +19,13 @@ export const Creators = {
     type: Types.GET_REQUEST,
   }),
 
+  updateFu: data => ({
+    type: Types.UPDATE_FU,
+    payload: {data},
+  }),
   getloginSuccess: data => ({
     type: Types.GET_SUCCESS,
-    payload: { data },
+    payload: {data},
   }),
 
   getloginFailure: () => ({
@@ -34,7 +40,12 @@ const login = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-
+    case Types.UPDATE_FU:
+      return {
+        ...state,
+        loading: true,
+        fu: action.payload.data,
+      };
     case Types.GET_SUCCESS:
       return {
         ...state,
@@ -43,7 +54,7 @@ const login = (state = initialState, action) => {
       };
 
     case Types.GET_FAILURE:
-    return {
+      return {
         ...state,
         loading: false,
         error: true,

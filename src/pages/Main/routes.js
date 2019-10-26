@@ -3,7 +3,6 @@ import {Platform} from 'react-native';
 
 import {
   setHiddenHeaderLayout,
-  setDefaultHeaderLayout,
 } from '../../routes/headerUtils';
 
 import Login from './index';

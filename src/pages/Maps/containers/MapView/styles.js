@@ -1,5 +1,5 @@
-import {StyleSheet, Platform} from 'react-native';
-
+import {StyleSheet, Platform, Dimensions} from 'react-native';
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 const style = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -96,6 +96,68 @@ const style = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     zIndex: 1,
+  },
+
+  searchBarContainerStyle: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    height: 40,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+
+    backgroundColor: 'rgba(255,255,255,1)',
+    shadowColor: '#d3d3d3',
+    borderRadius: 10,
+    elevation: 3,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  pic: {
+    height: 25,
+    width: '100%',
+  },
+  viewPic: {
+    width: (viewportWidth / 100) * 25,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  selectLabelTextStyle: {
+    color: '#9a9a9a',
+    textAlign: 'left',
+    width: '99%',
+    padding: 10,
+    flexDirection: 'row',
+  },
+  placeHolderTextStyle: {
+    color: '#D3D3D3',
+    padding: 10,
+    textAlign: 'left',
+    width: '99%',
+    flexDirection: 'row',
+  },
+  dropDownImageStyle: {
+    margin: 10,
+    width: 10,
+    height: 10,
+    alignSelf: 'center',
+  },
+
+  textStyle: {
+    margin: 10,
+    color: '#272B2E',
+  },
+
+  pickerStyle: {
+    margin: 10,
+    alignItems: 'center',
+    backgroundColor: '#F1F4F5',
+    flexDirection: 'row',
   },
 });
 
