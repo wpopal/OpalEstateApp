@@ -21,6 +21,7 @@ import {withNavigation} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import axios from 'axios';
 
 const latitudeDelta = 0.025;
 const longitudeDelta = 0.025;
@@ -35,24 +36,7 @@ class HomeLocator extends Component {
     super();
     this.state = {
       forceRefresh: true,
-      value: null,
-      items: [
-        {key: 1, section: true, label: 'Fruits'},
-        {key: 2, label: 'Red Apples'},
-        {key: 3, label: 'Cherries'},
-        {key: 4, label: 'Cranberries'},
-        {key: 5, label: 'Pink Grapefruit'},
-        {key: 6, label: 'Raspberries'},
-        {key: 7, section: true, label: 'Vegetables'},
-        {key: 8, label: 'Beets'},
-        {key: 9, label: 'Red Peppers'},
-        {key: 10, label: 'Radishes'},
-        {key: 11, label: 'Radicchio'},
-        {key: 12, label: 'Red Onions'},
-        {key: 13, label: 'Red Potatoes'},
-        {key: 14, label: 'Rhubarb'},
-        {key: 15, label: 'Tomatoes'},
-      ],
+      info: [],
       dataMap: [],
       search: '',
       region: {
@@ -84,6 +68,7 @@ class HomeLocator extends Component {
   };
 
   componentDidMount() {
+    this.getFillter();
     SplashScreen.hide();
     Geolocation.getCurrentPosition(
       position => {
@@ -98,6 +83,33 @@ class HomeLocator extends Component {
       error => {},
       {enableHighAccuracy: false},
     );
+  }
+  async getFillter() {
+    try {
+      const posts = await axios({
+        method: 'get',
+        params: {
+          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+        },
+        url:
+          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/search-form',
+        headers: {
+          'X-Custom-Header': 'foobar',
+          Accept: 'application/json',
+        },
+      });
+      if (posts.data.status !== 200) {
+        return [];
+      } else {
+        console.log('responseJson', posts);
+        this.setState({
+          info: Array.from(posts.data.fields.info),
+        });
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   }
 
   onRegionChangeComplete = async region => {
@@ -195,7 +207,9 @@ class HomeLocator extends Component {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
+
             <View style={{marginLeft: '2%'}}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('SecondPage')}>
               <Svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={RFPercentage(5)}
@@ -207,6 +221,7 @@ class HomeLocator extends Component {
                   d="M9 3.417h9.833c.584 0 1.084-.5 1.084-1.084 0-.583-.5-1.083-1.084-1.083H9c-.583 0-1.083.5-1.083 1.083 0 .667.5 1.084 1.083 1.084zM18.917 7.833H9c-.583 0-1.083.5-1.083 1.084C7.917 9.5 8.417 10 9 10h9.833c.584 0 1.084-.5 1.084-1.083.083-.584-.417-1.084-1-1.084zM18.917 14.417H9c-.583 0-1.083.5-1.083 1.083s.5 1.083 1.083 1.083h9.833c.584 0 1.084-.5 1.084-1.083.083-.583-.417-1.083-1-1.083zM4.583 1.5H3.25L2.833.25A.458.458 0 002.417 0c-.084 0-.25.083-.334.25L1.667 1.5H.333c-.166 0-.25.083-.333.25 0 .167 0 .333.167.417l1.083.75L.833 4.25c-.083.167 0 .25.084.417.166.083.333.083.416 0l1.084-.75 1.083.75c.083.083.167.083.25.083.083 0 .167 0 .25-.083.083-.167.167-.25.083-.417L3.667 3l1.083-.75c.167-.083.167-.25.167-.417-.084-.25-.25-.333-.334-.333zM3.667 7.333H1.25c-.25 0-.417.167-.417.334v2.416c0 .167.167.334.334.334h2.416a.359.359 0 00.334-.334V7.667c.166-.167 0-.334-.25-.334zM3.667 13.917H1.25a.358.358 0 00-.333.333v2.417c0 .166.166.333.333.333h2.417A.358.358 0 004 16.667V14.25c.083-.167-.083-.333-.333-.333z"
                 />
               </Svg>
+              </TouchableOpacity>
             </View>
             <View style={{width: '77%'}}>
               <View>
@@ -282,80 +297,6 @@ class HomeLocator extends Component {
                 </Defs>
               </Svg>
             </View>
-          </View>
-          <View>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              <View style={{flexDirection: 'row'}}>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-                <View style={styles.viewPic}>
-                  <Picker
-                    selectedValue={''}
-                    style={styles.pic}
-                    onValueChange={(itemValue, itemIndex) =>
-                      console.log(itemValue, itemIndex)
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                  </Picker>
-                </View>
-              </View>
-            </ScrollView>
           </View>
         </View>
         <View style={styles.mapWrapper}>

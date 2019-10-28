@@ -2,7 +2,7 @@ import {StyleSheet, Platform, Dimensions} from 'react-native';
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 const style = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#cc223e',
     flex: 1,
     position: 'relative',
   },
@@ -116,14 +116,26 @@ const style = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  scrollPage: {
+    width: viewportWidth,
+    padding: 20,
+  },
+  screen: {
+    width: viewportWidth,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+
   pic: {
-    height: 25,
+    color: '#5F6870',
+    height: 28,
     width: '100%',
   },
   viewPic: {
+    backgroundColor: '#F1F4F5',
     width: (viewportWidth / 100) * 25,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
     marginLeft: 10,
     marginRight: 10,
   },

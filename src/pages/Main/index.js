@@ -57,34 +57,29 @@ class Main extends Component<Props, State> {
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    if (this.state.token) {
-      try {
-        const posts = await axios({
-          method: 'get',
-          params: {
-            consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-            consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
-            per_page: perPage,
-            page: page,
-          },
-          url:
-            'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
-          headers: {
-            'X-Custom-Header': 'foobar',
-            Authorization: 'Bearer ' + this.state.token,
-            Accept: 'application/json',
-          },
-        });
-        if (posts.data.status !== 200) {
-          return [];
-        } else {
-          return posts.data.collection;
-        }
-      } catch (error) {
-        console.log('error', error);
+    try {
+      const posts = await axios({
+        method: 'get',
+        params: {
+          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          per_page: perPage,
+          page: page,
+        },
+        url:
+          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
+        headers: {
+          'X-Custom-Header': 'foobar',
+          Accept: 'application/json',
+        },
+      });
+      if (posts.data.status !== 200) {
         return [];
+      } else {
+        return posts.data.collection;
       }
-    } else {
+    } catch (error) {
+      console.log('error', error);
       return [];
     }
   }
