@@ -38,6 +38,35 @@ const style = StyleSheet.create({
     right: 0,
     zIndex: 1,
   },
+  screen: {
+    backgroundColor: 'yellow',
+    flexDirection: 'column',
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+  },
+  screenA: {
+    backgroundColor: '#ffffff',
+  },
+  screenB: {
+    backgroundColor: '#ffffff',
+  },
+
+  letter: {
+    color: '#000',
+    fontSize: 60,
+    textAlign: 'center',
+  },
+  scrollButton: {
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    height: 50,
+    marginTop: 50,
+    width: 150,
+  },
+  scrollButtonText: {
+    padding: 20,
+    textAlign: 'center',
+  },
   text: {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -119,13 +148,6 @@ const style = StyleSheet.create({
   scrollPage: {
     width: viewportWidth,
     padding: 20,
-  },
-  screen: {
-    width: viewportWidth,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
   },
 
   pic: {
