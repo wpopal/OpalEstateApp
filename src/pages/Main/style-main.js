@@ -63,7 +63,7 @@ export default StyleSheet.create({
   },
   listing: {
     width: (viewportWidth / 100) * 90,
-    height: (viewportHeight / 100) * 60,
+    height: (viewportHeight / 100) * 65,
     marginBottom: 10,
     borderRadius: 10,
     borderStyle: 'solid',
@@ -75,7 +75,6 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-
     elevation: 2,
   },
   statust: {

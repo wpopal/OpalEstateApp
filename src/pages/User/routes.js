@@ -12,7 +12,6 @@ import SignUp from './Login/components/SignUp';
 import ForgotPass from './Login/components/forgotPassword';
 import Profile from './components/profile';
 
-
 export const ROUTE_NAMES = {
   USER: 'USER',
   LOGIN: 'LOGIN',
@@ -62,7 +61,6 @@ const RootStack = createStackNavigator(
     headerMode: 'screen',
   },
 );
-
 RootStack.navigationOptions = ({navigation}) => {
   const tabBarVisible = navigation.state.index <= 0;
 

@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import MainRoutes from '../pages/Main/routes';
-import index from '../pages/Search';
+import search from '../pages/Search';
 import MapRoutes from '../pages/Maps/routes';
 import user from '../pages/User/routes';
 import agent from '../pages/Agent/routes';
@@ -16,7 +16,6 @@ import isEqualsOrLargestThanIphoneX from '../utils/isEqualsOrLargestThanIphoneX'
 import appStyles from '../styles';
 
 export const ROUTE_NAMES = {
-  HOME: 'HOME',
   INDEX: 'INDEX',
   MAPMAIN: 'MAPMAIN',
   USER: 'USER',
@@ -34,12 +33,6 @@ const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
 
 const ApplicationTabs = createMaterialTopTabNavigator(
   {
-    [ROUTE_NAMES.HOME]: {
-      screen: MainRoutes,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('home'),
-      },
-    },
     [ROUTE_NAMES.MAPMAIN]: {
       screen: MapRoutes,
       navigationOptions: {
@@ -65,14 +58,14 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       },
     },
     [ROUTE_NAMES.INDEX]: {
-      screen: index,
+      screen: search,
       navigationOptions: {
         tabBarIcon: getTabIcon('magnify'),
       },
     },
   },
   {
-    initialRouteName: ROUTE_NAMES.HOME,
+    initialRouteName: ROUTE_NAMES.MAPMAIN,
     tabBarPosition: 'bottom',
     optimizationsEnabled: true,
     animationEnabled: true,
