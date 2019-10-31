@@ -27,6 +27,32 @@ export default StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
+  pickerStyle: {
+    margin: 10,
+    alignItems: 'center',
+    backgroundColor: '#F1F4F5',
+    flexDirection: 'row',
+  },
+  dropDownImageStyle: {
+    margin: 10,
+    width: 10,
+    height: 10,
+    alignSelf: 'center',
+  },
+  placeHolderTextStyle: {
+    color: '#D3D3D3',
+    padding: 10,
+    textAlign: 'left',
+    width: '99%',
+    flexDirection: 'row',
+  },
+  selectLabelTextStyle: {
+    color: '#9a9a9a',
+    textAlign: 'left',
+    width: '99%',
+    padding: 10,
+    flexDirection: 'row',
+  },
   buttonContainer: {
     padding: 15,
   },

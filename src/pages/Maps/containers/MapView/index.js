@@ -16,7 +16,7 @@ import {mapMarker} from '../../constants/assets';
 import {findPlaceFromLatLng} from '../../services/google.service';
 import styles from './styles';
 import Geolocation from '@react-native-community/geolocation';
-import RNPicker from './RNModalPicker';
+
 import {withNavigation} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
@@ -43,6 +43,8 @@ class HomeLocator extends Component {
       screenWidth: Dimensions.get('window').width,
       dataMap: [],
       search: '',
+          selectedText: 'Search.....',
+    placeHolderText: 'Please Select Country',
       region: {
         latitude: 10.780889,
         longitude: 106.629271,
@@ -51,9 +53,6 @@ class HomeLocator extends Component {
       },
       isPanding: false,
       openModal: false,
-      dataSource: [],
-      placeHolderText: 'Please Select Country',
-      selectedText: 'Search.....',
       selectedFlag: false,
       defaultValue: true,
       select: '',
@@ -73,10 +72,6 @@ class HomeLocator extends Component {
     this.setState({Changeicon: !this.state.Changeicon});
   };
 
-  _selectedValue(index, name) {
-    this.setState({selectedText: name});
-    console.log('ssadsdas', index, name);
-  }
   onSelectedItemsChange = (key, value) => {
     console.log(key, value);
   };
@@ -287,31 +282,6 @@ class HomeLocator extends Component {
                   </View>
                 </TouchableOpacity>
               </View>
-              {/*<RNPicker*/}
-              {/*  dataSource={this.state.dataSource}*/}
-              {/*  dummyDataSource={this.state.dataSource}*/}
-              {/*  defaultValue={false}*/}
-              {/*  pickerTitle={'Country Picker'}*/}
-              {/*  showSearchBar={true}*/}
-              {/*  disablePicker={false}*/}
-              {/*  changeAnimation={'none'}*/}
-              {/*  searchBarPlaceHolder={'Search.....'}*/}
-              {/*  showPickerTitle={true}*/}
-              {/*  searchBarContainerStyle={this.props.searchBarContainerStyle}*/}
-              {/*  pickerStyle={styles.pickerStyle}*/}
-              {/*  selectedLabel={this.state.selectedText}*/}
-              {/*  placeHolderLabel={this.state.placeHolderText}*/}
-              {/*  selectLabelTextStyle={styles.selectLabelTextStyle}*/}
-              {/*  placeHolderTextStyle={styles.placeHolderTextStyle}*/}
-              {/*  dropDownImageStyle={styles.dropDownImageStyle}*/}
-              {/*  dropDownImage={require('./ic_drop_down.png')}*/}
-              {/*  selectedValue={(index, name) =>*/}
-              {/*    this._selectedValue(index, name)*/}
-              {/*  }*/}
-              {/*  onChangeText={text => {*/}
-              {/*    console.log(text);*/}
-              {/*  }}*/}
-              {/*/>*/}
             </View>
             <View style={{marginRight: '2%'}}>
               <Svg

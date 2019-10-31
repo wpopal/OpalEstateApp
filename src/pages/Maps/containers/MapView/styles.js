@@ -168,19 +168,6 @@ const style = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
   },
-  placeHolderTextStyle: {
-    color: '#D3D3D3',
-    padding: 10,
-    textAlign: 'left',
-    width: '99%',
-    flexDirection: 'row',
-  },
-  dropDownImageStyle: {
-    margin: 10,
-    width: 10,
-    height: 10,
-    alignSelf: 'center',
-  },
 
   textStyle: {
     margin: 10,

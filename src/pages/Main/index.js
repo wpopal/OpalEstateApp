@@ -531,20 +531,26 @@ class Main extends Component<Props, State> {
               {l.item.address}
             </Text>
           </TouchableOpacity>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{color: '#5F6870'}}>House | </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+            }}>
+            <Text style={{color: '#5F6870'}}>House </Text>
             {l.item.statuses.map(item => {
               return (
                 <View
                   key={item.term_id}
                   style={{
-                    marginRight: 10,
                     height: 23,
-                    width: 60,
+                    width: 'auto',
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: '#5F6870'}}>{item.name}</Text>
+                  <Text style={{color: '#5F6870'}}>
+                    {'  |  '}
+                    {item.name}
+                  </Text>
                 </View>
               );
             })}
