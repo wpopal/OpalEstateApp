@@ -10,19 +10,23 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
+import {bindActionCreators} from 'redux';
 import {debounce} from 'lodash';
 import MapView, {Marker} from 'react-native-maps';
 import {mapMarker} from '../../constants/assets';
 import {findPlaceFromLatLng} from '../../services/google.service';
 import styles from './styles';
 import Geolocation from '@react-native-community/geolocation';
-
+import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
+import {connect} from 'react-redux';
 import {withNavigation} from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
+
+
 const latitudeDelta = 0.025;
 const longitudeDelta = 0.025;
 const {height: viewportHeight} = Dimensions.get('window');
@@ -43,8 +47,8 @@ class HomeLocator extends Component {
       screenWidth: Dimensions.get('window').width,
       dataMap: [],
       search: '',
-          selectedText: 'Search.....',
-    placeHolderText: 'Please Select Country',
+      selectedText: 'Search.....',
+      placeHolderText: 'Please Select Country',
       region: {
         latitude: 10.780889,
         longitude: 106.629271,
@@ -360,4 +364,16 @@ class HomeLocator extends Component {
   }
 }
 
-export default withNavigation(HomeLocator);
+const mapStateToProps = state => {
+  console.log('state', state);
+  return ({
+  mapMainRequest: state.mapMain,
+})};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(mapMainCreators, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withNavigation(HomeLocator));

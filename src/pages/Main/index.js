@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {ROUTE_NAMES} from '../Main/routes';
-import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
+import {Path, Svg} from 'react-native-svg';
 import {queryUser} from '../../database/allSchemas';
 import {
   View,
-  Image,
   ImageBackground,
   TouchableOpacity,
   ListRenderItemInfo,

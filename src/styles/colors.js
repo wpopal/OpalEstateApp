@@ -23,5 +23,5 @@ export default {
   googlePlus: '#DD4B39',
   inactiveSwitch: 'rgba(0, 0, 0, 0.38)',
   activeSwitch: 'rgba(222, 60, 75, 0.54)',
-  violet: '#7e00ff',
+  violet: '#6923E7',
 };

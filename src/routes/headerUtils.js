@@ -1,6 +1,6 @@
 // @flow
 
-import { Platform, StatusBar } from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 
 import CONSTANTS from '../utils/CONSTANTS';
 import appStyles from '../styles';
@@ -54,13 +54,12 @@ export const handleHiddenHeaderStyle = (
 };
 
 const getHiddenProps = (navigation: Object): Object => {
-  const { params } = navigation.state;
+  const {params} = navigation.state;
 
   let props = {
-    headerTintColor: appStyles.colors.primaryColor,
+    headerTintColor: appStyles.colors.violet,
     headerTransparent: true,
     headerStyle: {
-      backgroundColor: 'transparent',
       borderBottomWidth: 0,
     },
   };
@@ -86,7 +85,7 @@ export const setHiddenHeaderLayout = (navigation: Object): Object => {
     ...Platform.select({
       android: {
         headerStyle: {
-          marginTop: StatusBar.currentHeight + 10,
+          marginTop: 5,
         },
       },
     }),

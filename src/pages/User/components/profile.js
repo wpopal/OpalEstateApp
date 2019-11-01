@@ -32,8 +32,6 @@ class ProFile extends React.Component {
 
   uploadImg = () => {
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {

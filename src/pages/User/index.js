@@ -71,7 +71,6 @@ class User extends React.Component {
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
     console.log('nextProps', nextProps);
     if (nextProps.loginRequest.fu !== 'nânnanannanana') {
-      console.log('ssssssssssssssssssssss');
       this.setState({data:{avatar:nextProps.loginRequest.fu}})
     }
   }
