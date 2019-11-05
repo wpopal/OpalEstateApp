@@ -9,11 +9,12 @@ import {
   StatusBar,
   ScrollView,
   Dimensions,
+  ImageBackground,
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {debounce} from 'lodash';
-import MapView, {Marker} from 'react-native-maps';
-import {mapMarker} from '../../constants/assets';
+import {Marker} from 'react-native-maps';
+import {mapMarker} from '../../assets/images/Vector.png';
 import {findPlaceFromLatLng} from '../../services/google.service';
 import styles from './styles';
 import Geolocation from '@react-native-community/geolocation';
@@ -25,10 +26,10 @@ import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
+import MapView from 'react-native-map-clustering';
 
-
-const latitudeDelta = 0.025;
-const longitudeDelta = 0.025;
+const latitudeDelta = 0.8;
+const longitudeDelta = 0.8;
 const {height: viewportHeight} = Dimensions.get('window');
 let scrollYPos = 0;
 
@@ -50,8 +51,8 @@ class HomeLocator extends Component {
       selectedText: 'Search.....',
       placeHolderText: 'Please Select Country',
       region: {
-        latitude: 10.780889,
-        longitude: 106.629271,
+        latitude: 0,
+        longitude: 0,
         latitudeDelta,
         longitudeDelta,
       },
@@ -61,10 +62,6 @@ class HomeLocator extends Component {
       defaultValue: true,
       select: '',
     };
-    this.onPanDrag = debounce(this.onPanDrag, 1000, {
-      leading: true,
-      trailing: false,
-    });
   }
   scrollToB = () => {
     scrollXPos = this.state.screenWidth * 1;
@@ -83,19 +80,19 @@ class HomeLocator extends Component {
   componentDidMount() {
     this.getFillter();
     SplashScreen.hide();
-    Geolocation.getCurrentPosition(
-      position => {
-        const region = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta,
-          longitudeDelta,
-        };
-        this.onRegionChangeComplete(region);
-      },
-      error => {},
-      {enableHighAccuracy: false},
-    );
+    // Geolocation.getCurrentPosition(
+    //   position => {
+    //     const region = {
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //       latitudeDelta,
+    //       longitudeDelta,
+    //     };
+    //     this.onRegionChangeComplete(region);
+    //   },
+    //   error => {},
+    //   {enableHighAccuracy: false},
+    // );
   }
   async getFillter() {
     try {
@@ -115,7 +112,6 @@ class HomeLocator extends Component {
       if (posts.data.status !== 200) {
         return [];
       } else {
-        console.log('responseJson', posts);
         this.setState({
           info: Array.from(posts.data.fields.info),
         });
@@ -125,47 +121,27 @@ class HomeLocator extends Component {
     }
   }
 
-  onRegionChangeComplete = async region => {
-    const {data} = await findPlaceFromLatLng(
-      `${region.latitude},${region.longitude}`,
-    );
-    const newState = {
-      region,
-      isPanding: false,
-    };
-    if (data.status === 'OK') {
-      newState.text = data.results[0].formatted_address;
+  componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxx', nextProps);
+    if (nextProps.mapMainRequest.data.length > 0) {
+      this.reRenderMap(nextProps.mapMainRequest);
     }
-    this.setState(newState);
-  };
-
-  onPanDrag = () => {
-    const {isPanding} = this.state;
-    if (isPanding) {
-      return;
-    }
-    this.setState({
-      isPanding: true,
-    });
-  };
+  }
   _draggedValue = new Animated.Value(30);
 
   reRenderMap = data => {
-    console.log('data', data);
-    if (data.geo_lat) {
-      console.log('22222');
+    if (data.geoLocal.latitude !== '') {
       this.setState({
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
         region: {
-          longitude: Number(data.geo_long),
-          latitude: Number(data.geo_lat),
+          longitude: Number(data.geoLocal.longitude),
+          latitude: Number(data.geoLocal.latitude),
           latitudeDelta,
           longitudeDelta,
         },
       });
     } else {
-      console.log('11111');
       this.setState({
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
@@ -178,6 +154,7 @@ class HomeLocator extends Component {
       });
     }
   };
+
   eventScroll(event) {
     if (event.nativeEvent.contentOffset.x === 0) {
       this.setState({Changeicon: !this.state.Changeicon});
@@ -321,37 +298,53 @@ class HomeLocator extends Component {
             <View style={styles.mapWrapper}>
               <MapView
                 key={this.state.forceRefresh}
-                ref={map => (this.map = map)}
-                initialRegion={region}
+                region={region}
                 style={styles.map}
-                showsUserLocation={true}
-                followUserLocation={true}
-                loadingEnabled={true}
-                onPanDrag={this.onPanDrag}
-                onRegionChangeComplete={this.onRegionChangeComplete}>
+                loadingEnabled={true}>
                 {this.state.dataMap.map(item => {
+                  console.log('item', item);
                   return (
                     <Marker
                       key={item.id}
+                      style={{
+                        height: 50,
+                        width: 50,
+                      }}
                       coordinate={{
                         latitude: Number(item.map.latitude),
                         longitude: Number(item.map.longitude),
                       }}
                       title={item.name}
-                      description={item.content}
-                    />
+                      description={item.content}>
+                      <ImageBackground
+                        style={{
+                          width: 50,
+                          height: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                        resizeMode="contain"
+                        source={require('../../assets/images/Vector.png')}>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            bottom:6,
+                          }}>
+                          {Number(
+                            item.price
+                              .replace('&#36;', '')
+                              .replace(',', '')
+                              .replace('.', ''),
+                          ) / 1000}
+                          {' k'}
+                        </Text>
+                      </ImageBackground>
+                    </Marker>
                   );
                 })}
               </MapView>
-            </View>
-            <View
-              style={[styles.markerFixed, isPanding ? styles.isPanding : null]}
-              pointerEvents="none">
-              <Image
-                style={styles.marker}
-                resizeMode="contain"
-                source={mapMarker}
-              />
             </View>
           </View>
           <View style={[styles.screen, styles.screenB]}>
@@ -365,10 +358,10 @@ class HomeLocator extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state);
-  return ({
-  mapMainRequest: state.mapMain,
-})};
+  return {
+    mapMainRequest: state.mapMain,
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(mapMainCreators, dispatch);

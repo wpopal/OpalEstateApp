@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   Image,
+  ImageBackground,
 } from 'react-native';
 import styles from './style-search';
 import {Slider} from 'react-native-elements';
@@ -24,6 +25,8 @@ import Geolocation from '@react-native-community/geolocation';
 import {bindActionCreators} from 'redux';
 import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
 import {connect} from 'react-redux';
+import {upDateGeoLocal} from '../../../../database/allSchemas';
+import RNRestart from 'react-native-restart';
 
 var params = {
   geo_radius: '',
@@ -45,6 +48,7 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.SearchBack = this.SearchBack.bind(this);
+    this.setLocal = this.setLocal.bind(this);
   }
 
   creUrl = l => {
@@ -53,26 +57,93 @@ class Search extends React.Component {
   };
 
   renderItem = ({item, index}) => {
-    console.log('item', item);
     if (item.meta.opalestate_city_image) {
       return (
         <View style={styles.image}>
-          <Image
-            style={styles.image}
-            source={{uri: this.creUrl(item.meta.opalestate_city_image[0])}}
-          />
+          <TouchableOpacity onPress={() => this.findPopularCities(item)}>
+            <ImageBackground
+              imageStyle={{
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                borderWidth: 1,
+                borderColor: '#fff',
+              }}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              source={{uri: this.creUrl(item.meta.opalestate_city_image[0])}}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  width: '100%',
+                  height: '30%',
+                  backgroundColor: '#000',
+                  opacity: 0.2,
+                }}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  width: '100%',
+                  height: '30%',
+                }}>
+                <Text
+                  style={{
+                    opacity: 1,
+                    color: '#fff',
+                    fontWeight: 'bold',
+                  }}>
+                  {item.name}
+                </Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
       );
     } else {
       return (
         <View style={styles.image}>
-          <Image
-            style={styles.image}
-            source={{
-              uri:
-                'https://vtv1.mediacdn.vn/k:thumb_w/640/2015/26e3b3ac00000578-3006311-image-a-39-1427023392562-1427185816055/choang-ngop-voi-khung-canh-thanh-pho-dem-dieu-ki.jpg',
-            }}
-          />
+          <TouchableOpacity onPress={() => this.findPopularCities(item)}>
+            <ImageBackground
+              imageStyle={{
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                borderWidth: 1,
+                borderColor: '#fff',
+              }}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              source={{
+                uri:
+                  'https://vtv1.mediacdn.vn/k:thumb_w/640/2015/26e3b3ac00000578-3006311-image-a-39-1427023392562-1427185816055/choang-ngop-voi-khung-canh-thanh-pho-dem-dieu-ki.jpg',
+              }}>
+              <View
+                style={{
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '20%',
+                }}>
+                <Text style={{color: '#fff', fontWeight: 'bold'}}>
+                  {item.name}
+                </Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -168,8 +239,39 @@ class Search extends React.Component {
   }
 
   findCoordinates = () => {
-    Geolocation.getCurrentPosition(info => console.log(info));
+    Geolocation.getCurrentPosition(info => this.setLocal(info));
   };
+
+  findPopularCities = Geolocal => {
+    console.log('Geolocal', Geolocal);
+    this.props.setPopularCiti(Geolocal.slug);
+    this.props.navigation.navigate('MAP');
+  };
+
+  async setLocal(data) {
+    console.log('data', data);
+    const item = {
+      latitude: data.coords.latitude,
+      longitude: data.coords.longitude,
+    };
+    await upDateGeoLocal(
+      JSON.stringify({
+        latitude: data.coords.latitude,
+        longitude: data.coords.longitude,
+      }),
+    )
+      .then(item => {
+        console.log(this.props);
+        this.props.setGeo({
+          latitude: data.coords.latitude,
+          longitude: data.coords.longitude,
+        });
+        this.props.navigation.navigate('MAP');
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
+  }
 
   _selectedValue(index, name) {
     this.setState({selectedText: name});

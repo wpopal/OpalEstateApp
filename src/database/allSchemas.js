@@ -13,8 +13,10 @@ export const TodoLisrSchema = {
     user_nicename: 'string',
     avatar: 'string',
     user_role: 'string',
+    geo_local: 'string',
   },
 };
+
 const databaseOption = {
   path: 'dataSetApp.realm',
   schema: [TodoLisrSchema],
@@ -36,10 +38,30 @@ export const updateUser = newUser =>
               user_nicename: newUser.user_nicename,
               avatar: newUser.avatar,
               user_role: newUser.user_role,
+              geo_local: '',
             },
             true,
           );
           resolve(newUser);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
+export const upDateGeoLocal = newData =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOption)
+      .then(realm => {
+        realm.write(() => {
+          realm.create(
+            DATA_SET,
+            {
+              id: 0,
+              geo_local: newData,
+            },
+            true,
+          );
+          resolve(newData);
         });
       })
       .catch(error => reject(error));
@@ -52,19 +74,6 @@ export const deleteDataUser = () =>
         realm.write(() => {
           let deletingTodoList = realm.objectForPrimaryKey(DATA_SET, 0);
           realm.delete(deletingTodoList);
-          resolve();
-        });
-      })
-      .catch(error => reject(error));
-  });
-
-export const updateLang = dataSet =>
-  new Promise((resolve, reject) => {
-    Realm.open(databaseOption)
-      .then(realm => {
-        realm.write(() => {
-          let updatingDataSet = realm.objectForPrimaryKey(DATA_SET, dataSet.id);
-          updatingDataSet.name = dataSet.name;
           resolve();
         });
       })

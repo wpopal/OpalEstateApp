@@ -139,7 +139,6 @@ class LoginComponent extends Component {
       });
     console.log('posts.token', posts.token);
     if (posts.token) {
-      console.log('dadasasdasdasdasdasdas',posts);
       this.CheckToken(posts);
     }
   }
@@ -222,7 +221,6 @@ class LoginComponent extends Component {
       </ForgotPasswordContainer>
     );
   };
-
   renderSocialButtons = (): Object => {
     return (
       <SocialButtonsContainer>

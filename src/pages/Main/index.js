@@ -12,12 +12,11 @@ import {
   Dimensions,
 } from 'react-native';
 import {Text} from 'react-native-elements';
-import {Creators as MainCreators} from '../../store/ducks/main';
+import {Creators as MainCreators} from '../../store/ducks/mapMain';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Grid from 'react-native-infinite-scroll-grid';
 import axios from 'axios';
-import SplashScreen from 'react-native-splash-screen';
 
 const {width: viewportWidth} = Dimensions.get('window');
 
@@ -37,11 +36,17 @@ interface Post {
   title: string;
   thumbnailUrl: string;
 }
-
+var params = {
+  consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
+  consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+  per_page: 5,
+  page: 1,
+};
 class Main extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      geo_local: {},
       isLoading: false,
       loadingMore: false,
       refreshing: false,
@@ -51,36 +56,33 @@ class Main extends Component<Props, State> {
   }
 
   onRefresh() {
-    console.log('reload');
+    console.log('1111');
     this.loadData(true);
   }
 
   onEndReached() {
-    console.log('load more');
+    console.log('2222222');
     this.loadData(false);
   }
 
-  async fetchPosts(page: number, perPage: number = 10): Promise<[Post]> {
+  async fetchPosts(): Promise<[Post]> {
+    console.log('xxxxxxxxxxxx', params);
     try {
       const posts = await axios({
         method: 'get',
-        params: {
-          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
-          per_page: perPage,
-          page: page,
-        },
+        params: params,
         url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties',
+          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties/search',
         headers: {
+          Authorization: 'Bearer ' + this.state.token,
           'X-Custom-Header': 'foobar',
           Accept: 'application/json',
         },
       });
+      console.log('postspostspostspostsposts', posts);
       if (posts.data.status !== 200) {
         return [];
       } else {
-        console.log('posts.data.collection', posts.data.collection);
         return posts.data.collection;
       }
     } catch (error) {
@@ -382,7 +384,11 @@ class Main extends Component<Props, State> {
       this.setState({posts: []});
       try {
         this.isLoading = true;
-        const posts = await this.fetchPosts(1);
+        params.page = 1;
+        params.per_page = 5;
+
+        const posts = await this.fetchPosts(params);
+        this.props.getmapMainSuccess(posts);
         this.setState(previousState => {
           return {
             loadingMore: false,
@@ -400,9 +406,10 @@ class Main extends Component<Props, State> {
       this.setState({loadingMore: true});
       try {
         this.isLoading = true;
-        const posts = await this.fetchPosts(this.state.nextPage + 1);
+        params.page = this.state.nextPage + 1;
+        const posts = await this.fetchPosts(params);
+        this.props.getmapMainSuccess(posts);
         this.setState(previousState => {
-          console.log(previousState);
           return {
             loadingMore: false,
             posts: refresh ? posts : previousState.posts.concat(posts),
@@ -609,13 +616,23 @@ class Main extends Component<Props, State> {
     );
   }
 
+  componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('nextProps', nextProps);
+    params.geo_long = nextProps.mainRequest.geoLocal.longitude;
+    params.geo_lat = nextProps.mainRequest.geoLocal.latitude;
+    params.city = nextProps.mainRequest.PopularCiti;
+    this.loadData(true);
+  }
+
   componentDidMount(): void {
-    SplashScreen.hide();
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
         console.log('dataUser', dataUser);
-        this.setState({token: dataUser[0].token});
+        this.setState({
+          token: dataUser[0].token,
+          geo_local: JSON.parse(dataUser[0].geo_local),
+        });
         this.loadData(true);
       })
       .catch(error => {
@@ -649,7 +666,7 @@ class Main extends Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  mainRequest: state.main,
+  mainRequest: state.mapMain,
 });
 
 const mapDispatchToProps = dispatch =>

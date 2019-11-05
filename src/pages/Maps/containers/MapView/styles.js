@@ -14,10 +14,7 @@ const style = StyleSheet.create({
   map: {
     flex: 1,
   },
-  marker: {
-    height: 48,
-    width: 48,
-  },
+
   markerFixed: {
     left: '50%',
     marginLeft: -24,
