@@ -17,6 +17,7 @@ import {RFPercentage} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Grid from 'react-native-infinite-scroll-grid';
 import axios from 'axios';
+import Geolocation from '@react-native-community/geolocation';
 
 const {width: viewportWidth} = Dimensions.get('window');
 
@@ -56,17 +57,14 @@ class Main extends Component<Props, State> {
   }
 
   onRefresh() {
-    console.log('1111');
     this.loadData(true);
   }
 
   onEndReached() {
-    console.log('2222222');
     this.loadData(false);
   }
 
   async fetchPosts(): Promise<[Post]> {
-    console.log('xxxxxxxxxxxx', params);
     try {
       const posts = await axios({
         method: 'get',
@@ -79,7 +77,6 @@ class Main extends Component<Props, State> {
           Accept: 'application/json',
         },
       });
-      console.log('postspostspostspostsposts', posts);
       if (posts.data.status !== 200) {
         return [];
       } else {
@@ -617,21 +614,29 @@ class Main extends Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    console.log('nextProps', nextProps);
     params.geo_long = nextProps.mainRequest.geoLocal.longitude;
     params.geo_lat = nextProps.mainRequest.geoLocal.latitude;
     params.city = nextProps.mainRequest.PopularCiti;
     this.loadData(true);
   }
 
-  componentDidMount(): void {
+  componentWillMount(): void {
+    if (
+      this.props.mainRequest.PopularCiti === '' &&
+      this.props.mainRequest.geoLocal.latitude === ''
+    ) {
+      Geolocation.getCurrentPosition(info => {
+        params.geo_long = info.coords.latitude;
+        params.geo_lat = info.coords.longitude;
+      });
+    }
+
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
-        console.log('dataUser', dataUser);
+
         this.setState({
           token: dataUser[0].token,
-          geo_local: JSON.parse(dataUser[0].geo_local),
         });
         this.loadData(true);
       })
@@ -639,6 +644,8 @@ class Main extends Component<Props, State> {
         console.log('error !', error);
       });
   }
+
+  componentDidMount(): void {}
 
   render() {
     const {navigation} = this.props;

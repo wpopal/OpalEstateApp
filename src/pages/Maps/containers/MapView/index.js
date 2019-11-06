@@ -73,27 +73,11 @@ class HomeLocator extends Component {
     this.setState({Changeicon: !this.state.Changeicon});
   };
 
-  onSelectedItemsChange = (key, value) => {
-    console.log(key, value);
-  };
-
+  onSelectedItemsChange = (key, value) => {};
   componentDidMount() {
     this.getFillter();
-    SplashScreen.hide();
-    // Geolocation.getCurrentPosition(
-    //   position => {
-    //     const region = {
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //       latitudeDelta,
-    //       longitudeDelta,
-    //     };
-    //     this.onRegionChangeComplete(region);
-    //   },
-    //   error => {},
-    //   {enableHighAccuracy: false},
-    // );
   }
+
   async getFillter() {
     try {
       const posts = await axios({
@@ -122,10 +106,10 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxx', nextProps);
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     }
+    SplashScreen.hide();
   }
   _draggedValue = new Animated.Value(30);
 
@@ -296,55 +280,58 @@ class HomeLocator extends Component {
           }}>
           <View style={[styles.screen, styles.screenA]}>
             <View style={styles.mapWrapper}>
-              <MapView
-                key={this.state.forceRefresh}
-                region={region}
-                style={styles.map}
-                loadingEnabled={true}>
-                {this.state.dataMap.map(item => {
-                  console.log('item', item);
-                  return (
-                    <Marker
-                      key={item.id}
-                      style={{
-                        height: 50,
-                        width: 50,
-                      }}
-                      coordinate={{
-                        latitude: Number(item.map.latitude),
-                        longitude: Number(item.map.longitude),
-                      }}
-                      title={item.name}
-                      description={item.content}>
-                      <ImageBackground
+              {region.latitude === 0 ? (
+                  <View><Text>loading...</Text></View>
+              ) : (
+                <MapView
+                  key={this.state.forceRefresh}
+                  region={region}
+                  style={styles.map}
+                  loadingEnabled={true}>
+                  {this.state.dataMap.map(item => {
+                    return (
+                      <Marker
+                        key={item.id}
                         style={{
-                          width: 50,
                           height: 50,
-                          justifyContent: 'center',
-                          alignItems: 'center',
+                          width: 50,
                         }}
-                        resizeMode="contain"
-                        source={require('../../assets/images/Vector.png')}>
-                        <Text
+                        coordinate={{
+                          latitude: Number(item.map.latitude),
+                          longitude: Number(item.map.longitude),
+                        }}
+                        title={item.name}
+                        description={item.content}>
+                        <ImageBackground
                           style={{
-                            fontSize: 13,
-                            color: '#fff',
-                            fontWeight: 'bold',
-                            bottom:6,
-                          }}>
-                          {Number(
-                            item.price
-                              .replace('&#36;', '')
-                              .replace(',', '')
-                              .replace('.', ''),
-                          ) / 1000}
-                          {' k'}
-                        </Text>
-                      </ImageBackground>
-                    </Marker>
-                  );
-                })}
-              </MapView>
+                            width: 50,
+                            height: 50,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                          resizeMode="contain"
+                          source={require('../../assets/images/Vector.png')}>
+                          <Text
+                            style={{
+                              fontSize: 13,
+                              color: '#fff',
+                              fontWeight: 'bold',
+                              bottom: 6,
+                            }}>
+                            {Number(
+                              item.price
+                                .replace('&#36;', '')
+                                .replace(',', '')
+                                .replace('.', ''),
+                            ) / 1000000}
+                            {' M'}
+                          </Text>
+                        </ImageBackground>
+                      </Marker>
+                    );
+                  })}
+                </MapView>
+              )}
             </View>
           </View>
           <View style={[styles.screen, styles.screenB]}>
