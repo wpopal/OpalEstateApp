@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {debounce} from 'lodash';
-import {Marker} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {mapMarker} from '../../assets/images/Vector.png';
 import {findPlaceFromLatLng} from '../../services/google.service';
 import styles from './styles';
@@ -26,7 +26,7 @@ import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
-import MapView from 'react-native-map-clustering';
+import MapViewZoom from 'react-native-map-clustering';
 
 const latitudeDelta = 0.8;
 const longitudeDelta = 0.8;
@@ -63,6 +63,7 @@ class HomeLocator extends Component {
       select: '',
     };
   }
+
   scrollToB = () => {
     scrollXPos = this.state.screenWidth * 1;
     this.scroller.scrollTo({x: scrollXPos, y: 0});
@@ -74,6 +75,7 @@ class HomeLocator extends Component {
   };
 
   onSelectedItemsChange = (key, value) => {};
+
   componentDidMount() {
     this.getFillter();
   }
@@ -111,6 +113,7 @@ class HomeLocator extends Component {
     }
     SplashScreen.hide();
   }
+
   _draggedValue = new Animated.Value(30);
 
   reRenderMap = data => {
@@ -144,6 +147,7 @@ class HomeLocator extends Component {
       this.setState({Changeicon: !this.state.Changeicon});
     }
   }
+
   render() {
     const {region, isPanding, text, openModal} = this.state;
     const {top, bottom} = this.props.draggableRange;
@@ -281,9 +285,11 @@ class HomeLocator extends Component {
           <View style={[styles.screen, styles.screenA]}>
             <View style={styles.mapWrapper}>
               {region.latitude === 0 ? (
-                  <View><Text>loading...</Text></View>
+                <View>
+                  <Text>loading...</Text>
+                </View>
               ) : (
-                <MapView
+                <MapViewZoom
                   key={this.state.forceRefresh}
                   region={region}
                   style={styles.map}
@@ -299,9 +305,7 @@ class HomeLocator extends Component {
                         coordinate={{
                           latitude: Number(item.map.latitude),
                           longitude: Number(item.map.longitude),
-                        }}
-                        title={item.name}
-                        description={item.content}>
+                        }}>
                         <ImageBackground
                           style={{
                             width: 50,
@@ -327,10 +331,24 @@ class HomeLocator extends Component {
                             {' M'}
                           </Text>
                         </ImageBackground>
+                        <MapView.Callout
+                          onPress={() => console.log('xxxxxxxxxxxxxxxxxxxx')}
+                        >
+                          <View style={{width:250,height:200,alignItems: 'center',    justifyContent: 'center'}}>
+                            <Text style={{top:-85}}>
+                              <Image
+                                style={{width:250,height:250}}
+                                source={{uri: item.thumbnail}}
+                              />
+                            </Text>
+                             <Text style={{top:-85,fontWeight:'bold'}}>{item.name}</Text>
+                             <Text style={{top:-85,fontWeight:'bold',color:'#706e72'}}>{item.address}</Text>
+                          </View>
+                        </MapView.Callout>
                       </Marker>
                     );
                   })}
-                </MapView>
+                </MapViewZoom>
               )}
             </View>
           </View>

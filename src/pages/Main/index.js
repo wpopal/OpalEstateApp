@@ -57,14 +57,17 @@ class Main extends Component<Props, State> {
   }
 
   onRefresh() {
+    console.log('1111');
     this.loadData(true);
   }
 
   onEndReached() {
+    console.log('2222');
     this.loadData(false);
   }
 
   async fetchPosts(): Promise<[Post]> {
+    console.log('params', params);
     try {
       const posts = await axios({
         method: 'get',
@@ -383,8 +386,15 @@ class Main extends Component<Props, State> {
         this.isLoading = true;
         params.page = 1;
         params.per_page = 5;
-
+        if (params.city === '') {
+          delete params.city;
+        } else if (params.geo_long === '') {
+          delete params.geo_long;
+        } else if (params.geo_long === '') {
+          delete params.geo_long;
+        }
         const posts = await this.fetchPosts(params);
+        console.log('posts', posts);
         this.props.getmapMainSuccess(posts);
         this.setState(previousState => {
           return {
