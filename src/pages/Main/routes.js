@@ -6,12 +6,10 @@ import {
 } from '../../routes/headerUtils';
 
 import Login from './index';
-import Detail from './Detail';
 import Maps from './maps';
 
 export const ROUTE_NAMES = {
   LOGIN: 'LOGIN',
-  DETAIL: 'DETAIL',
   MAPS: 'MAPS',
 };
 
@@ -19,10 +17,6 @@ const RootStack = createStackNavigator(
   {
     [ROUTE_NAMES.LOGIN]: {
       screen: Login,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
-    },
-    [ROUTE_NAMES.DETAIL]: {
-      screen: Detail,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
     [ROUTE_NAMES.MAPS]: {

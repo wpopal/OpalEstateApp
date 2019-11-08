@@ -24,6 +24,39 @@ export default StyleSheet.create({
     height: 22,
     color: 'white',
   },
+  Cardtitle: {
+    height: 250,
+    width: '90%',
+    padding: 20,
+    backgroundColor: '#fff',
+    position: 'absolute',
+    borderRadius: 10,
+    top: -25,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  view: {
+    height: 50,
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+  },
+  collapseView: {
+    padding: 20,
+  },
+  iconView: {
+    padding: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+  },
   imgHead: {
     height: (viewportHeight / 100) * 35,
     width: viewportWidth,
@@ -81,5 +114,29 @@ export default StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '5%',
     paddingTop: '3%',
+  },
+  wrapper: {},
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  image: {
+    width: viewportWidth,
+    height: 400,
+  },
+  paginationStyle: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+  },
+  paginationText: {
+    color: 'white',
+    fontSize: 20,
   },
 });

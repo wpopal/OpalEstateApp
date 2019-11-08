@@ -1,95 +1,74 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {ROUTE_NAMES} from '../Main/routes';
-import {Path, Svg} from 'react-native-svg';
-import {queryUser} from '../../database/allSchemas';
+import {withNavigation} from 'react-navigation';
 import {
+  Image,
   View,
-  ImageBackground,
-  TouchableOpacity,
-  ListRenderItemInfo,
+  ScrollView,
+  Platform,
+  UIManager,
+  LayoutAnimation,
   Dimensions,
 } from 'react-native';
-import {Text} from 'react-native-elements';
-import {Creators as MainCreators} from '../../store/ducks/mapMain';
-import {RFPercentage} from 'react-native-responsive-fontsize';
-import styles from './style-main';
-import Grid from 'react-native-infinite-scroll-grid';
-import axios from 'axios';
-import Geolocation from '@react-native-community/geolocation';
-import {withNavigation} from 'react-navigation';
+import ReadMore from 'react-native-read-more-text';
+import {Button, ThemeProvider, Text} from 'react-native-elements';
+import {Creators as DetailCreators} from '../../../../store/ducks/detail';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import styles from './style-detail.js';
+import Carousel from 'react-native-snap-carousel';
+import SliderEntry from './SliderEntry';
+import {Path, Svg} from 'react-native-svg';
+import Expandable_ListView from './Accordion';
 
-const {width: viewportWidth} = Dimensions.get('window');
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
-interface Props {}
-
-interface State {
-  token: string;
-  loadingMore: boolean;
-  refreshing: boolean;
-  posts: Post[];
-  nextPage: number;
-  numColumns: number;
-}
-
-interface Post {
-  id: number;
-  title: string;
-  thumbnailUrl: string;
-}
-var params = {
-  consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-  consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
-  per_page: 5,
-  page: 1,
-};
-class Main extends Component<Props, State> {
-  constructor(props: Props) {
+class Detail extends Component<Props, State> {
+  constructor(props) {
     super(props);
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
     this.state = {
-      geo_local: {},
-      isLoading: false,
-      loadingMore: false,
-      refreshing: false,
-      posts: [],
-      nextPage: 1,
+      position: 1,
+      interval: null,
+      dataSource: [],
+      AccordionData: [],
     };
   }
 
-  onRefresh() {
-    console.log('1111');
-    this.loadData(true);
-  }
+  componentWillMount(): void {
+    const full = [];
+    const da = this.props.navigation.state.params.item.full_info;
 
-  onEndReached() {
-    console.log('2222');
-    this.loadData(false);
-  }
-
-  async fetchPosts(): Promise<[Post]> {
-    console.log('params', params);
-    try {
-      const posts = await axios({
-        method: 'get',
-        params: params,
-        url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties/search',
-        headers: {
-          Authorization: 'Bearer ' + this.state.token,
-          'X-Custom-Header': 'foobar',
-          Accept: 'application/json',
-        },
-      });
-      if (posts.data.status !== 200) {
-        return [];
-      } else {
-        return posts.data.collection;
-      }
-    } catch (error) {
-      console.log('error', error);
-      return [];
+    for (let keyx in Object.keys(da)) {
+      let c = Object.keys(da);
+      full.push(da[c[keyx]]);
     }
+
+    this.setState({
+      AccordionData: [
+        {
+          expanded: false,
+          category_Name: 'Amenities',
+          sub_Category: this.props.navigation.state.params.item.amenities,
+        },
+        {
+          expanded: false,
+          category_Name: 'Facts & Features',
+          sub_Category: full,
+        },
+        {
+          expanded: false,
+          category_Name: 'Facilities',
+          sub_Category: this.props.navigation.state.params.item.facilities,
+        },
+      ],
+    });
+  }
+
+  _renderItem({item, index}) {
+    return <SliderEntry data={item} even={(index + 1) % 2 === 0} />;
   }
 
   renIcon = (item, key) => {
@@ -97,8 +76,8 @@ class Main extends Component<Props, State> {
       case 'amountrooms':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -111,8 +90,8 @@ class Main extends Component<Props, State> {
       case 'areasize':
         return (
           <Svg
-            width={RFPercentage(2.5)}
-            height={RFPercentage(2.5)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 12 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -125,8 +104,8 @@ class Main extends Component<Props, State> {
       case 'bathrooms':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 15 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -139,8 +118,8 @@ class Main extends Component<Props, State> {
       case 'bedrooms':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -153,8 +132,8 @@ class Main extends Component<Props, State> {
       case 'builtyear':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -167,8 +146,8 @@ class Main extends Component<Props, State> {
       case 'kitchens':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -181,8 +160,8 @@ class Main extends Component<Props, State> {
       case 'livingrooms':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -195,8 +174,8 @@ class Main extends Component<Props, State> {
       case 'orientation':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -209,8 +188,8 @@ class Main extends Component<Props, State> {
       case 'parking':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -223,8 +202,8 @@ class Main extends Component<Props, State> {
       case 'plotsize':
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -237,8 +216,8 @@ class Main extends Component<Props, State> {
       default:
         return (
           <Svg
-            width={RFPercentage(2.7)}
-            height={RFPercentage(2.7)}
+            width={RFPercentage(2)}
+            height={RFPercentage(2)}
             viewBox="0 0 16 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -257,8 +236,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             amou
           </Text>
@@ -268,8 +247,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             sqft
           </Text>
@@ -279,8 +258,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             ba
           </Text>
@@ -290,8 +269,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             bds
           </Text>
@@ -301,8 +280,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             bly
           </Text>
@@ -312,8 +291,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             kir
           </Text>
@@ -323,8 +302,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             liv
           </Text>
@@ -334,8 +313,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             ori
           </Text>
@@ -345,8 +324,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             par
           </Text>
@@ -356,8 +335,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             plo
           </Text>
@@ -367,8 +346,8 @@ class Main extends Component<Props, State> {
           <Text
             style={{
               color: '#AEB3BA',
-              fontSize: RFPercentage(2.4),
-              marginLeft: 4,
+              fontSize: RFPercentage(2),
+              marginLeft: 2,
             }}>
             {key}
           </Text>
@@ -376,321 +355,273 @@ class Main extends Component<Props, State> {
     }
   };
 
-  async loadData(refresh: boolean) {
-    if (this.isLoading) {
-      return;
-    }
-    if (refresh) {
-      this.setState({refreshing: true});
-      this.setState({posts: []});
-      try {
-        this.isLoading = true;
-        params.page = 1;
-        params.per_page = 5;
-        if (params.city === '') {
-          delete params.city;
-        } else if (params.geo_long === '') {
-          delete params.geo_long;
-        } else if (params.geo_long === '') {
-          delete params.geo_long;
-        }
-        const posts = await this.fetchPosts(params);
-        console.log('posts', posts);
-        this.props.getmapMainSuccess(posts);
-        this.setState(previousState => {
-          return {
-            loadingMore: false,
-            posts: refresh ? posts : previousState.posts.concat(posts),
-            nextPage: 1,
-          };
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false;
-        this.setState({loadingMore: false, refreshing: false});
-      }
-    } else {
-      this.setState({loadingMore: true});
-      try {
-        this.isLoading = true;
-        params.page = this.state.nextPage + 1;
-        const posts = await this.fetchPosts(params);
-        this.props.getmapMainSuccess(posts);
-        this.setState(previousState => {
-          return {
-            loadingMore: false,
-            posts: refresh ? posts : previousState.posts.concat(posts),
-            nextPage: previousState.nextPage + 1,
-          };
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false;
-        this.setState({loadingMore: false, refreshing: false});
-      }
-    }
-  }
-
-  renderItem(info: ListRenderItemInfo<Post>) {
-    const l = info;
+  _renderTruncatedFooter = handlePress => {
     return (
-      <View style={styles.listing}>
-        <View
-          style={{
-            width: '100%',
-            height: '55%',
-          }}>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('DETAIL', l)
-            }>
-            <ImageBackground
-              imageStyle={{
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                borderWidth: 1,
-                borderColor: '#fff',
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-              source={{
-                uri: l.item.thumbnail,
-              }}>
-              <View style={styles.statust}>
-                <View
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    flexDirection: 'row-reverse',
-                  }}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: '12%',
-                      height: '12%',
-                      backgroundColor: '#fff',
-                      paddingTop: 6,
-                      paddingBottom: 6,
-                      paddingRight: 6,
-                      paddingLeft: 6,
-                      borderRadius: 50,
-                    }}>
-                    <Svg
-                      width="80%"
-                      height="80%"
-                      viewBox="0 0 16 15"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <Path
-                        d="M8 14.1333C7.86667 14.1333 7.73333 14.1333 7.66667 14.0667C4.8 12.6 0 9.46667 0 5C0 2.26667 1.93333 0.0666667 4.4 0.0666667C6.06667 0.0666667 7.26667 0.866667 8 1.53333L8.06667 1.46667C8.8 0.8 9.93333 0 11.6667 0C14.0667 0.0666667 16 2.26667 16 5C16 9.46667 11.2 12.6 8.33333 14.0667C8.26667 14.1333 8.13333 14.1333 8 14.1333ZM4.4 1.53333C2.53333 1.53333 1.53333 3.33333 1.53333 5C1.53333 8.53333 5.6 11.2667 8 12.5333C10.4667 11.2667 14.5333 8.53333 14.5333 5C14.5333 3.33333 13.5333 1.53333 11.6667 1.53333C9.73333 1.53333 8.73333 3 8.66667 3.06667C8.53333 3.26667 8.26667 3.4 8.06667 3.4C7.8 3.4 7.6 3.26667 7.46667 3.06667C6.86667 2.33333 5.73333 1.53333 4.4 1.53333Z"
-                        fill="#6923E7"
-                      />
-                    </Svg>
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            height: '45%',
-            paddingLeft: 20,
-            paddingRight: 20,
-          }}>
-          <View
-            style={{
-              position: 'absolute',
-              flexDirection: 'row',
-              top: -15,
-              height: 23,
-              left: 20,
-              width: viewportWidth,
-            }}>
-            {l.item.labels.map(item => {
-              return (
-                <View
-                  key={item.term_id}
-                  style={{
-                    marginRight: 10,
-                    backgroundColor: `${item.meta.opalestate_label_lb_bg}`,
-                    height: 23,
-                    width: 60,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 4,
-                  }}>
-                  <Text style={{color: '#fff'}}>{item.name}</Text>
-                </View>
-              );
-            })}
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('DETAIL', l)
-            }>
-            <Text
-              style={{
-                marginTop: 20,
-                fontWeight: 'bold',
-                fontSize: RFPercentage(2.8),
-                color: '#272B2E',
-              }}>
-              {l.item.address}
-            </Text>
-          </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-            }}>
-            <Text style={{color: '#5F6870'}}>House </Text>
-            {l.item.statuses.map(item => {
-              return (
-                <View
-                  key={item.term_id}
-                  style={{
-                    height: 23,
-                    width: 'auto',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{color: '#5F6870'}}>
-                    {'  |  '}
-                    {item.name}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text
-              style={{
-                color: '#6923E7',
-                fontWeight: 'bold',
-                fontSize: RFPercentage(3.8),
-              }}>
-              ${l.item.price.replace('&#36;', '')}
-            </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: RFPercentage(2.8),
-                color: '#5F6870',
-              }}>
-              /month
-            </Text>
-          </View>
-          <View
-            style={{
-              height: 85,
-              marginTop: 6,
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
-            {Object.keys(l.item.short_info).map(key => {
-              return (
-                <View
-                  key={key}
-                  style={{
-                    paddingRight: 20,
-                    marginRight: 15,
-                    marginTop: 5,
-                    height: RFPercentage(3),
-                    flexDirection: 'row',
-                  }}>
-                  {this.renIcon(l.item.short_info[key], key)}
-                  <Text
-                    style={{
-                      color: '#AEB3BA',
-                      fontSize: RFPercentage(2.4),
-                      marginLeft: 4,
-                    }}>
-                    {l.item.short_info[key].value}
-                  </Text>
-                  {this.renName(l.item.short_info[key], key)}
-                </View>
-              );
-            })}
-          </View>
-        </View>
-      </View>
+      <Text
+        style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
+        onPress={handlePress}>
+        + Show more
+      </Text>
     );
-  }
+  };
 
-  componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    params.geo_long = nextProps.mainRequest.geoLocal.longitude;
-    params.geo_lat = nextProps.mainRequest.geoLocal.latitude;
-    params.city = nextProps.mainRequest.PopularCiti;
-    this.loadData(true);
-  }
+  _renderRevealedFooter = handlePress => {
+    return (
+      <Text
+        style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
+        onPress={handlePress}>
+        - Show less
+      </Text>
+    );
+  };
 
-  componentWillMount(): void {
-    if (
-      this.props.mainRequest.PopularCiti === '' &&
-      this.props.mainRequest.geoLocal.latitude === ''
-    ) {
-      Geolocation.getCurrentPosition(info => {
-        params.geo_long = info.coords.latitude;
-        params.geo_lat = info.coords.longitude;
-      });
-    }
+  update_Layout = index => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
-    queryUser()
-      .then(item => {
-        const dataUser = Array.from(item);
+    const array = [...this.state.AccordionData];
 
-        this.setState({
-          token: dataUser[0].token,
-        });
-        this.loadData(true);
-      })
-      .catch(error => {
-        console.log('error !', error);
-      });
-  }
+    array[index].expanded = !array[index].expanded;
 
-  componentDidMount(): void {}
+    this.setState(() => {
+      return {
+        AccordionData: array,
+      };
+    });
+  };
 
   render() {
     const {navigation} = this.props;
-    const {mainRequest} = this.props;
-    const {loading, error, data} = mainRequest;
+    const property = this.props.navigation.state.params;
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Grid
-          style={{flex: 1, marginTop: 20}}
-          key={this.state.numColumns}
-          numColumns={this.state.numColumns}
-          data={this.state.posts}
-          keyExtractor={item => item.id.toString()}
-          renderItem={info => this.renderItem(info)}
-          onRefresh={() => this.onRefresh()}
-          refreshing={this.state.refreshing}
-          onEndReached={() => this.onEndReached()}
-          loadingMore={this.state.loadingMore}
-          marginExternal={10}
-          marginInternal={10}
-        />
+      <View style={styles.container}>
+        <View style={{width: '100%'}}>
+          <ScrollView>
+            <Carousel
+              data={property.item.gallery}
+              autoplay={false}
+              renderItem={this._renderItem}
+              sliderWidth={viewportWidth}
+              itemWidth={viewportWidth}
+              inactiveSlideScale={0.95}
+              layout={'default'}
+              inactiveSlideOpacity={1}
+              enableMomentum={true}
+              activeSlideAlignment={'start'}
+              activeAnimationType={'spring'}
+              activeAnimationOptions={{
+                friction: 4,
+                tension: 40,
+              }}
+            />
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View style={styles.Cardtitle}>
+                <View
+                  style={{
+                    position: 'absolute',
+                    flexDirection: 'row',
+                    top: -15,
+                    height: 23,
+                    left: 20,
+                    width: viewportWidth,
+                  }}>
+                  {property.item.labels.map(item => {
+                    return (
+                      <View
+                        key={item.term_id}
+                        style={{
+                          marginRight: 10,
+                          backgroundColor: `${
+                            item.meta.opalestate_label_lb_bg
+                          }`,
+                          height: 23,
+                          width: 60,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 4,
+                        }}>
+                        <Text style={{color: '#fff'}}>{item.name}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+                <Text style={{fontSize: RFPercentage(3.2), fontWeight: 'bold'}}>
+                  {property.item.address}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: '100%',
+                  }}>
+                  <Text style={{color: '#5F6870'}}>House </Text>
+                  {property.item.statuses.map(item => {
+                    return (
+                      <View
+                        key={item.term_id}
+                        style={{
+                          height: 23,
+                          width: 'auto',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text style={{color: '#5F6870'}}>
+                          {'  |  '}
+                          {item.name}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 5,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#6923E7',
+                      fontWeight: 'bold',
+                      fontSize: RFPercentage(3.8),
+                    }}>
+                    ${property.item.price.replace('&#36;', '')}
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: RFPercentage(2.8),
+                      color: '#5F6870',
+                    }}>
+                    /month
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    height: 'auto',
+                    marginTop: 5,
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                  }}>
+                  {Object.keys(property.item.short_info).map(key => {
+                    return (
+                      <View
+                        key={key}
+                        style={{
+                          paddingRight: 20,
+                          marginRight: 5,
+                          marginTop: 5,
+                          height: RFPercentage(3),
+                          flexDirection: 'row',
+                        }}>
+                        {this.renIcon(property.item.short_info[key], key)}
+                        <Text
+                          style={{
+                            color: '#AEB3BA',
+                            fontSize: RFPercentage(2.4),
+                            marginLeft: 2,
+                          }}>
+                          {property.item.short_info[key].value}
+                        </Text>
+                        {this.renName(property.item.short_info[key], key)}
+                      </View>
+                    );
+                  })}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                    height: 30,
+                  }}>
+                  <Button
+                    buttonStyle={{backgroundColor: '#6923E7'}}
+                    icon={
+                      <View style={{margin: 10}}>
+                        <Svg
+                          width="20"
+                          height="18"
+                          viewBox="0 0 20 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <Path
+                            d="M10 17.6667C9.83333 17.6667 9.66667 17.6667 9.58333 17.5833C6 15.75 0 11.8333 0 6.25C0 2.83333 2.41667 0.0833333 5.5 0.0833333C7.58333 0.0833333 9.08333 1.08333 10 1.91667L10.0833 1.83333C11 1 12.4167 0 14.5833 0C17.5833 0.0833333 20 2.83333 20 6.25C20 11.8333 14 15.75 10.4167 17.5833C10.3333 17.6667 10.1667 17.6667 10 17.6667ZM5.5 1.91667C3.16667 1.91667 1.91667 4.16667 1.91667 6.25C1.91667 10.6667 7 14.0833 10 15.6667C13.0833 14.0833 18.1667 10.6667 18.1667 6.25C18.1667 4.16667 16.9167 1.91667 14.5833 1.91667C12.1667 1.91667 10.9167 3.75 10.8333 3.83333C10.6667 4.08333 10.3333 4.25 10.0833 4.25C9.75 4.25 9.5 4.08333 9.33333 3.83333C8.58333 2.91667 7.16667 1.91667 5.5 1.91667Z"
+                            fill="white"
+                          />
+                        </Svg>
+                      </View>
+                    }
+                    title="ADD TO FAVORITE"
+                  />
+                </View>
+              </View>
+              <View
+                style={{
+                  marginTop: 250,
+                  paddingRight: 20,
+                  paddingLeft: 20,
+                  width: '90%',
+                }}>
+                <Text
+                  style={{
+                    fontSize: RFPercentage(2.8),
+                    fontWeight: 'bold',
+                    marginBottom: 5,
+                  }}>
+                  Description
+                </Text>
+                <ReadMore
+                  numberOfLines={8}
+                  renderTruncatedFooter={this._renderTruncatedFooter}
+                  renderRevealedFooter={this._renderRevealedFooter}>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      color: '#5F6870',
+                      fontSize: RFPercentage(2),
+                      letterSpacing: 0.7,
+                    }}>
+                    {property.item.content}
+                  </Text>
+                </ReadMore>
+              </View>
+              <View style={{width: '90%', marginTop: 10,marginBottom:100}}>
+                {this.state.AccordionData.map((item, key) => (
+                  <Expandable_ListView
+                    key={item.category_Name}
+                    onClickFunction={this.update_Layout.bind(this, key)}
+                    item={item}
+                  />
+                ))}
+              </View>
+            </View>
+          </ScrollView>
+          {/*<ActionButton*/}
+          {/*  buttonColor="#8e5cf1"*/}
+          {/*  onPress={() => {*/}
+          {/*    navigation.navigate('MAPS', property.item.map);*/}
+          {/*  }}*/}
+          {/*  renderIcon={this.renderIcon}*/}
+          {/*/>*/}
+        </View>
       </View>
     );
   }
 }
+const dataArray = [
+  {title: 'First Element', content: 'Lorem ipsum dolor sit amet'},
+  {title: 'Second Element', content: 'Lorem ipsum dolor sit amet'},
+  {title: 'Third Element', content: 'Lorem ipsum dolor sit amet'},
+];
 
-const mapStateToProps = state => ({
-  mainRequest: state.mapMain,
-});
+const mapStateToProps = state => {
+  return {DetailRequest: state.detail};
+};
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(MainCreators, dispatch);
+  bindActionCreators(DetailCreators, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNavigation(Main));
+)(withNavigation(Detail));
