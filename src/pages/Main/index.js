@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {ROUTE_NAMES} from '../Main/routes';
 import {Path, Svg} from 'react-native-svg';
 import {queryUser} from '../../database/allSchemas';
 import {

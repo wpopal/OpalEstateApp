@@ -332,7 +332,7 @@ class HomeLocator extends Component {
                           </Text>
                         </ImageBackground>
                         <MapView.Callout
-                          onPress={() => console.log('xxxxxxxxxxxxxxxxxxxx')}
+                          onPress={() => this.props.navigation.navigate('DETAIL', {item:item})}
                         >
                           <View style={{width:250,height:200,alignItems: 'center',    justifyContent: 'center'}}>
                             <Text style={{top:-85}}>

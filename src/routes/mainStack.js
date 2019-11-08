@@ -5,8 +5,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import MainRoutes from '../pages/Main/routes';
-import search from '../pages/Search';
 import MapRoutes from '../pages/Maps/routes';
 import user from '../pages/User/routes';
 import agent from '../pages/Agent/routes';
@@ -16,7 +14,6 @@ import isEqualsOrLargestThanIphoneX from '../utils/isEqualsOrLargestThanIphoneX'
 import appStyles from '../styles';
 
 export const ROUTE_NAMES = {
-  INDEX: 'INDEX',
   MAPMAIN: 'MAPMAIN',
   USER: 'USER',
   AGENCY: 'AGENCY',
@@ -55,12 +52,6 @@ const ApplicationTabs = createMaterialTopTabNavigator(
       screen: user,
       navigationOptions: {
         tabBarIcon: getTabIcon('account'),
-      },
-    },
-    [ROUTE_NAMES.INDEX]: {
-      screen: search,
-      navigationOptions: {
-        tabBarIcon: getTabIcon('magnify'),
       },
     },
   },

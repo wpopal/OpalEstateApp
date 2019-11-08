@@ -39,6 +39,7 @@ class Detail extends Component<Props, State> {
 
   componentWillMount(): void {
     const full = [];
+
     const da = this.props.navigation.state.params.item.full_info;
 
     for (let keyx in Object.keys(da)) {
@@ -585,7 +586,7 @@ class Detail extends Component<Props, State> {
                   </Text>
                 </ReadMore>
               </View>
-              <View style={{width: '90%', marginTop: 10,marginBottom:100}}>
+              <View style={{width: '90%', marginTop: 10, marginBottom: 100}}>
                 {this.state.AccordionData.map((item, key) => (
                   <Expandable_ListView
                     key={item.category_Name}
