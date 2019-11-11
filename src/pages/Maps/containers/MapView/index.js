@@ -98,6 +98,7 @@ class HomeLocator extends Component {
       if (posts.data.status !== 200) {
         return [];
       } else {
+        console.log('posts', posts);
         this.setState({
           info: Array.from(posts.data.fields.info),
         });
@@ -253,21 +254,28 @@ class HomeLocator extends Component {
               </View>
             </View>
             <View style={{marginRight: '2%'}}>
-              <Svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={RFPercentage(5)}
-                height={RFPercentage(3)}
-                fill="none"
-                viewBox="0 0 20 17">
-                <G fill="#6923E7" clip-path="url(#clip0)">
-                  <Path d="M4 8C1.75 8 0 6.167 0 4s1.75-4 4-4c1.75 0 3.25 1.083 3.75 2.833v.084h11.167C19.5 2.917 20 3.417 20 4s-.5 1.083-1.083 1.083H7.833v.084C7.25 6.833 5.75 8 4 8zm0-5.833C3 2.167 2.167 3 2.167 4S3 5.833 4 5.833 5.833 5 5.833 4 5 2.167 4 2.167zM16 16.417c-1.75 0-3.25-1.084-3.75-2.834V13.5H1.083C.5 13.5 0 13.083 0 12.5s.5-1.083 1.083-1.083H12.25v-.084C12.75 9.667 14.333 8.5 16 8.5c2.167 0 4 1.75 4 4s-1.75 3.917-4 3.917zm0-5.75c-1 0-1.833.833-1.833 1.833S15 14.333 16 14.333s1.833-.833 1.833-1.833S17 10.667 16 10.667z" />
-                </G>
-                <Defs>
-                  <ClipPath id="clip0">
-                    <Path fill="#fff" d="M0 0H20V16.417H0z" />
-                  </ClipPath>
-                </Defs>
-              </Svg>
+              <TouchableOpacity
+                disabled={false}
+                onPress={() =>
+                  this.props.navigation.navigate('SETTING',this.state.info)
+                }
+                activeOpacity={0.7}>
+                <Svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={RFPercentage(5)}
+                  height={RFPercentage(3)}
+                  fill="none"
+                  viewBox="0 0 20 17">
+                  <G fill="#6923E7" clip-path="url(#clip0)">
+                    <Path d="M4 8C1.75 8 0 6.167 0 4s1.75-4 4-4c1.75 0 3.25 1.083 3.75 2.833v.084h11.167C19.5 2.917 20 3.417 20 4s-.5 1.083-1.083 1.083H7.833v.084C7.25 6.833 5.75 8 4 8zm0-5.833C3 2.167 2.167 3 2.167 4S3 5.833 4 5.833 5.833 5 5.833 4 5 2.167 4 2.167zM16 16.417c-1.75 0-3.25-1.084-3.75-2.834V13.5H1.083C.5 13.5 0 13.083 0 12.5s.5-1.083 1.083-1.083H12.25v-.084C12.75 9.667 14.333 8.5 16 8.5c2.167 0 4 1.75 4 4s-1.75 3.917-4 3.917zm0-5.75c-1 0-1.833.833-1.833 1.833S15 14.333 16 14.333s1.833-.833 1.833-1.833S17 10.667 16 10.667z" />
+                  </G>
+                  <Defs>
+                    <ClipPath id="clip0">
+                      <Path fill="#fff" d="M0 0H20V16.417H0z" />
+                    </ClipPath>
+                  </Defs>
+                </Svg>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -332,17 +340,35 @@ class HomeLocator extends Component {
                           </Text>
                         </ImageBackground>
                         <MapView.Callout
-                          onPress={() => this.props.navigation.navigate('DETAIL', {item:item})}
-                        >
-                          <View style={{width:250,height:200,alignItems: 'center',    justifyContent: 'center'}}>
-                            <Text style={{top:-85}}>
+                          onPress={() =>
+                            this.props.navigation.navigate('DETAIL', {
+                              item: item,
+                            })
+                          }>
+                          <View
+                            style={{
+                              width: 250,
+                              height: 200,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            <Text style={{top: -85}}>
                               <Image
-                                style={{width:250,height:250}}
+                                style={{width: 250, height: 250}}
                                 source={{uri: item.thumbnail}}
                               />
                             </Text>
-                             <Text style={{top:-85,fontWeight:'bold'}}>{item.name}</Text>
-                             <Text style={{top:-85,fontWeight:'bold',color:'#706e72'}}>{item.address}</Text>
+                            <Text style={{top: -85, fontWeight: 'bold'}}>
+                              {item.name}
+                            </Text>
+                            <Text
+                              style={{
+                                top: -85,
+                                fontWeight: 'bold',
+                                color: '#706e72',
+                              }}>
+                              {item.address}
+                            </Text>
                           </View>
                         </MapView.Callout>
                       </Marker>

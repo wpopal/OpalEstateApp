@@ -9,11 +9,13 @@ import {
 import Map from './containers/MapView';
 import Search from './components/Search';
 import Detail from './components/Detail';
+import Setting from './components/Setting';
 
 export const ROUTE_NAMES = {
   MAP: 'MAP',
   DETAIL: 'DETAIL',
   SEARCH: 'SEARCH',
+  SETTING: 'SETTING',
 };
 
 const RootStack = createStackNavigator(
@@ -28,6 +30,10 @@ const RootStack = createStackNavigator(
     },
     [ROUTE_NAMES.SEARCH]: {
       screen: Search,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.SETTING]: {
+      screen: Setting,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
   },

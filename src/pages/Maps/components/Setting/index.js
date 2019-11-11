@@ -66,6 +66,7 @@ class Search extends React.Component {
   };
 
   render() {
+      console.log(this.props)
     const data = [
       {id: 1, label: 'Money'},
       {id: 2, label: 'Credit card'},
@@ -75,84 +76,7 @@ class Search extends React.Component {
     ];
     return (
       <View style={styles.container}>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              height: 60,
-            }}>
-            <TextInput
-              style={{
-                paddingHorizontal: 16,
-                alignItems: 'center',
-                flexDirection: 'row',
-                margin: 10,
-                width: '80%',
-                borderWidth: 1,
-                borderColor: '#000',
-                height: 40,
-              }}
-              onChangeText={text => this.searchMaps(text)}
-              value={this.state.text}
-            />
-          </View>
-          <KeyboardAvoidingView behavior="padding">
-            <ScrollView
-              style={{
-                maxHeight: 200,
-                marginTop: 60,
-                marginLeft: '5%',
-                marginRight: '5%',
-              }}>
-              {this.state.dataSource ? (
-                this.state.dataSource.map(item => (
-                  <TouchableOpacity
-                    key={item.place_id}
-                    onPress={() =>
-                      this.getplace(item.place_id, item.description)
-                    }>
-                    <Text
-                      style={{
-                        margin: 7,
-                        fontSize: 14,
-                      }}>
-                      {item.description}
-                    </Text>
-                  </TouchableOpacity>
-                ))
-              ) : (
-                <View />
-              )}
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </View>
-        <View
-          style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-          <Slider
-            step={0.5}
-            maximumValue={15}
-            minimumValue={1}
-            value={this.state.value}
-            onValueChange={value => this.setState({value})}
-          /><Text>Value: {this.state.value}</Text></View>
 
-        <TagSelect
-          ref={tag => {
-            this.tag = tag;
-          }}
-          onItemPress={() => {
-            Alert.alert(
-              'Selected items:',
-              JSON.stringify(this.tag.itemsSelected),
-            );
-          }}
-          data={data}
-          itemStyle={styles.item}
-          itemLabelStyle={styles.label}
-          itemStyleSelected={styles.itemSelected}
-          itemLabelStyleSelected={styles.labelSelected}
-        />
       </View>
     );
   }
