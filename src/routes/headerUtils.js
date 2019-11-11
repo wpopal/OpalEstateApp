@@ -92,6 +92,13 @@ export const setHiddenHeaderLayout = (navigation: Object): Object => {
   };
 };
 
+export const setHiddenHeaderLayoutNoArrow = (navigation: Object): Object => {
+  return {
+    headerTransparent: true,
+    headerLeft: null,
+  };
+};
+
 export const setDefaultHeaderLayout = (
   navigation: Object,
   title: string,

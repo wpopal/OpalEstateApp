@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 
 import {
   setHiddenHeaderLayout,
-  setDefaultHeaderLayout,
+  setHiddenHeaderLayoutNoArrow,
 } from '../../routes/headerUtils';
 
 import Map from './containers/MapView';
@@ -34,7 +34,7 @@ const RootStack = createStackNavigator(
     },
     [ROUTE_NAMES.SETTING]: {
       screen: Setting,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) => setHiddenHeaderLayoutNoArrow(navigation),
     },
   },
   {

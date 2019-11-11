@@ -78,6 +78,7 @@ class HomeLocator extends Component {
 
   componentDidMount() {
     this.getFillter();
+    SplashScreen.hide();
   }
 
   async getFillter() {
@@ -112,7 +113,6 @@ class HomeLocator extends Component {
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     }
-    SplashScreen.hide();
   }
 
   _draggedValue = new Animated.Value(30);
@@ -257,7 +257,7 @@ class HomeLocator extends Component {
               <TouchableOpacity
                 disabled={false}
                 onPress={() =>
-                  this.props.navigation.navigate('SETTING',this.state.info)
+                  this.props.navigation.navigate('SETTING', this.state.info)
                 }
                 activeOpacity={0.7}>
                 <Svg

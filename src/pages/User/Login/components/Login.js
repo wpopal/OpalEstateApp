@@ -5,7 +5,6 @@ import {TouchableOpacity, Animated, View, Text, Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 import Input from './Input';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faFacebookF, faGoogle} from '@fortawesome/free-brands-svg-icons';
 import LinearGradient from 'react-native-linear-gradient';
 import {withNavigation} from 'react-navigation';

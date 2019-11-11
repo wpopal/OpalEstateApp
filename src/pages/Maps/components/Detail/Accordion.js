@@ -9,7 +9,6 @@ import {
   Image,
 } from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {Path, Svg} from 'react-native-svg';
 
 class Accordion extends Component {

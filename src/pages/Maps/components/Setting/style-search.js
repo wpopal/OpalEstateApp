@@ -21,9 +21,7 @@ const entryBorderRadius = 8;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
-    marginTop: 50,
-    marginLeft: 15,
+    backgroundColor: '#fff',
   },
   buttonContainer: {
     padding: 15,
