@@ -11,6 +11,7 @@ import styles from './style-search';
 import {Path, Svg} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import ChonseSelect from './chonseSelect';
+import ChonseSelectRooms from './chonseSelectRooms';
 import RNPickerSelect from 'react-native-picker-select';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
@@ -36,6 +37,9 @@ class Search extends React.Component {
     dataSource: [],
     text: 'local',
     gender: '0',
+    Bedrooms: '0',
+    Bathrooms: '0',
+    CarSpace: '0',
     types: [],
     typesValue: '',
     max_price: '',
@@ -257,7 +261,8 @@ class Search extends React.Component {
                 }}>
                 <View style={{marginBottom: 10}}>
                   <Text style={{marginTop: 10}}>
-                    Price: ${this.state.min_area} - ${this.state.max_area}
+                    Land Size (sqft): {this.state.min_area} -{' '}
+                    {this.state.max_area}
                   </Text>
                 </View>
                 <MultiSlider
@@ -309,6 +314,107 @@ class Search extends React.Component {
             ) : (
               <View />
             )}
+
+            <Text style={{marginTop: 20}}>Bedrooms</Text>
+            <ChonseSelectRooms
+              style={{width: '100%', marginTop: 10}}
+              height={40}
+              data={[
+                {
+                  value: '0',
+                  label: 'Any',
+                },
+                {
+                  value: '1',
+                  label: '+1',
+                },
+                {
+                  value: '2',
+                  label: '+2',
+                },
+                {
+                  value: '3',
+                  label: '+3',
+                },
+                {
+                  value: '4',
+                  label: '+4',
+                },
+                {
+                  value: '5',
+                  label: '+5',
+                },
+              ]}
+              initValue={this.state.Bedrooms}
+              onPress={item => this.setState({Bedrooms: item.value})}
+            />
+
+            <Text style={{marginTop: 20}}>Bathrooms</Text>
+            <ChonseSelectRooms
+              style={{width: '100%', marginTop: 10}}
+              height={40}
+              data={[
+                {
+                  value: '0',
+                  label: 'Any',
+                },
+                {
+                  value: '1',
+                  label: '+1',
+                },
+                {
+                  value: '2',
+                  label: '+2',
+                },
+                {
+                  value: '3',
+                  label: '+3',
+                },
+                {
+                  value: '4',
+                  label: '+4',
+                },
+                {
+                  value: '5',
+                  label: '+5',
+                },
+              ]}
+              initValue={this.state.Bathrooms}
+              onPress={item => this.setState({Bathrooms: item.value})}
+            />
+            <Text style={{marginTop: 20}}>Car Space</Text>
+            <ChonseSelectRooms
+              style={{width: '100%', marginTop: 10}}
+              height={40}
+              data={[
+                {
+                  value: '0',
+                  label: 'Any',
+                },
+                {
+                  value: '1',
+                  label: '+1',
+                },
+                {
+                  value: '2',
+                  label: '+2',
+                },
+                {
+                  value: '3',
+                  label: '+3',
+                },
+                {
+                  value: '4',
+                  label: '+4',
+                },
+                {
+                  value: '5',
+                  label: '+5',
+                },
+              ]}
+              initValue={this.state.CarSpace}
+              onPress={item => this.setState({CarSpace: item.value})}
+            />
           </ScrollView>
         </View>
       </View>

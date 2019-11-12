@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '30%',
+    width: '20%',
   },
   wrapStartActive: {
     borderWidth: 1,
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '30%',
+    width: '20%',
   },
   wrap: {
-    width: '30%',
+    width: '20%',
     borderWidth: 1,
     borderColor: '#EEEEEE',
     paddingVertical: 5,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapActive: {
-    width: '30%',
+    width: '20%',
     borderWidth: 1,
     borderColor: '#EEEEEE',
     backgroundColor: '#6923E7',
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapEnd: {
-    width: '30%',
+    width: '20%',
     borderWidth: 1,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapEndActive: {
-    width: '30%',
+    width: '20%',
     borderWidth: 1,
     backgroundColor: '#6923E7',
     borderTopRightRadius: 5,
