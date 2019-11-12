@@ -1,10 +1,18 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import styles from './style-search';
 import {Path, Svg} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import ChonseSelect from './chonseSelect';
 import RNPickerSelect from 'react-native-picker-select';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 const data = [
   {
@@ -16,61 +24,82 @@ const data = [
     label: 'Female',
   },
 ];
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
+var params = {min_price: 0, max_price: 10000, min_area: 0, max_area: 10000};
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  getplace(place, descriptio) {
-    this.state.dataSource = [];
-    this.state.text = descriptio;
-    this.setState(this.state);
-
-    fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?placeid=${place}&fields=name,geometry&key=AIzaSyCrIDrz7VQItGYcnVrESlr0ADCq6SYxAzI`,
-      {
-        method: 'GET',
-      },
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.state.dataPlace = responseJson;
-        this.state.longitude = responseJson.result.geometry.location.lng;
-        this.state.latitude = responseJson.result.geometry.location.lat;
-        this.state.forceRefresh = !this.state.forceRefresh;
-        this.setState(this.state);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  searchMaps(e) {
-    this.setState({text: e});
-    fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${e}&key=AIzaSyCrIDrz7VQItGYcnVrESlr0ADCq6SYxAzI&sessiontoken=1234567890`,
-      {
-        method: 'GET',
-      },
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.state.dataSource = responseJson.predictions;
-        this.setState(this.state);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
   state = {
     dataSource: [],
     text: 'local',
     gender: '0',
+    types: [],
+    typesValue: '',
+    max_price: '',
+    max_area: '',
+    min_price: '',
+    min_area: '',
+    dataSetting: {},
   };
 
+  componentWillMount(): void {
+    console.log(this.props.navigation.state.params);
+    if (Object.keys(this.props.navigation.state.params).length) {
+      if (
+        this.props.navigation.state.params.types.enable &&
+        this.props.navigation.state.params.types.data.length
+      ) {
+        let dataSS = this.props.navigation.state.params.types.data;
+        let typesS = [];
+        for (let i in dataSS) {
+          typesS.push({
+            label: dataSS[i].name,
+            value: dataSS[i].slug,
+          });
+        }
+        this.state.types = typesS;
+      }
+
+      if (this.props.navigation.state.params.max_price.enable) {
+        params.max_price = Number(
+          this.props.navigation.state.params.max_price.default,
+        );
+        params.min_price = Number(
+          this.props.navigation.state.params.min_price.default,
+        );
+        this.state.max_price = Number(
+          this.props.navigation.state.params.max_price.default,
+        );
+        this.state.min_price = Number(
+          this.props.navigation.state.params.min_price.default,
+        );
+      }
+
+      if (this.props.navigation.state.params.max_area.enable) {
+        params.max_area = Number(
+          this.props.navigation.state.params.max_area.default,
+        );
+        params.min_area = Number(
+          this.props.navigation.state.params.min_area.default,
+        );
+        this.state.max_area = Number(
+          this.props.navigation.state.params.max_area.default,
+        );
+        this.state.min_area = Number(
+          this.props.navigation.state.params.min_area.default,
+        );
+      }
+    }
+
+    this.setState(this.state);
+    // this.setState({dataSetting: this.props.navigation.state.params});
+  }
+
   render() {
+    console.log(this.state);
     const data = [
       {
         value: '0',
@@ -130,81 +159,156 @@ class Search extends React.Component {
               initValue={this.state.gender}
               onPress={item => this.setState({gender: item.value})}
             />
-            <Text style={{marginTop: 20}}>Property Type</Text>
-            <View
-              style={{
-                marginTop: 5,
-                height: 45,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderStyle: 'solid',
 
-                borderWidth: 1,
-                borderColor: '#EEEEEE',
-                backgroundColor: '#FFF',
-              }}>
-              <RNPickerSelect
-                onValueChange={value => console.log(value)}
-                items={[
-                  {label: 'Football', value: 'football'},
-                  {label: 'Baseball', value: 'baseball'},
-                  {label: 'Hockey', value: 'hockey'},
-                ]}
-              />
-            </View>
-            <View
-              style={{
-                marginTop: 20,
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <View style={{width: '45%'}}>
-                <Text>Min Price</Text>
+            {this.state.types.length ? (
+              <View>
+                <Text style={{marginTop: 20}}>Property Type</Text>
                 <View
                   style={{
+                    marginTop: 5,
                     height: 45,
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderColor: '#EEEEEE',
                     backgroundColor: '#FFF',
                   }}>
                   <RNPickerSelect
-                    onValueChange={value => console.log(value)}
-                    items={[
-                      {label: 'Football', value: 'football'},
-                      {label: 'Baseball', value: 'baseball'},
-                      {label: 'Hockey', value: 'hockey'},
-                    ]}
+                    value={this.state.typesValue}
+                    onValueChange={value => {
+                      params.types = value;
+                      this.setState({typesValue: value});
+                    }}
+                    items={this.state.types}
                   />
                 </View>
               </View>
-              <View style={{width: '45%'}}>
-                <Text>Max Price</Text>
-                <View
-                  style={{
-                    height: 45,
-                    justifyContent: 'center',
+            ) : (
+              <View />
+            )}
+            {this.state.max_price !== '' && this.state.max_price !== 0 ? (
+              <View
+                style={{
+                  marginTop: 10,
+                  width: '100%',
+
+                  height: 'auto',
+                }}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={{marginTop: 10}}>
+                    Price: ${this.state.min_price} - ${this.state.max_price}
+                  </Text>
+                </View>
+                <MultiSlider
+                  selectedStyle={{
+                    backgroundColor: 'rgb(144,134,193)',
+                    width: '100%',
+                  }}
+                  unselectedStyle={{
+                    backgroundColor: 'silver',
+                    width: '100%',
+                  }}
+                  containerStyle={{
                     alignItems: 'center',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: '#EEEEEE',
-                    backgroundColor: '#FFF',
-                  }}>
-                  <RNPickerSelect
-                    onValueChange={value => console.log(value)}
-                    items={[
-                      {label: 'Football', value: 'football'},
-                      {label: 'Baseball', value: 'baseball'},
-                      {label: 'Hockey', value: 'hockey'},
-                    ]}
-                  />
-                </View>
+                    width: '100%',
+                    paddingBottom: 10,
+                    height: 'auto',
+                  }}
+                  trackStyle={{
+                    height: 8,
+                    width: '100%',
+                  }}
+                  customMarker={() => (
+                    <Image
+                      style={{
+                        top: 5,
+                        height: 23,
+                        width: 23,
+                      }}
+                      source={require('./MarKerSlider.png')}
+                      resizeMode="contain"
+                    />
+                  )}
+                  values={[this.state.min_price, this.state.max_price]}
+                  onValuesChange={item => {
+                    this.setState({min_price: item[0], max_price: item[1]});
+                  }}
+                  step={1000}
+                  min={params.min_price}
+                  max={params.max_price}
+                  touchDimensions={{
+                    height: 80,
+                    width: 40,
+                    borderRadius: 20,
+                    slipDisplacement: 60,
+                  }}
+                  sliderLength={viewportWidth - 63}
+                />
               </View>
-            </View>
+            ) : (
+              <View />
+            )}
+            {this.state.max_area !== '' && this.state.max_area !== 0 ? (
+              <View
+                style={{
+                  marginTop: 10,
+                  width: '100%',
+
+                  height: 'auto',
+                }}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={{marginTop: 10}}>
+                    Price: ${this.state.min_area} - ${this.state.max_area}
+                  </Text>
+                </View>
+                <MultiSlider
+                  selectedStyle={{
+                    backgroundColor: 'rgb(144,134,193)',
+                    width: '100%',
+                  }}
+                  unselectedStyle={{
+                    backgroundColor: 'silver',
+                    width: '100%',
+                  }}
+                  containerStyle={{
+                    alignItems: 'center',
+                    width: '100%',
+                    paddingBottom: 10,
+                    height: 'auto',
+                  }}
+                  trackStyle={{
+                    height: 8,
+                    width: '100%',
+                  }}
+                  customMarker={() => (
+                    <Image
+                      style={{
+                        top: 5,
+                        height: 23,
+                        width: 23,
+                      }}
+                      source={require('./MarKerSlider.png')}
+                      resizeMode="contain"
+                    />
+                  )}
+                  values={[this.state.min_area, this.state.max_area]}
+                  onValuesChange={item => {
+                    this.setState({min_area: item[0], max_area: item[1]});
+                  }}
+                  step={10}
+                  min={params.min_area}
+                  max={params.max_area}
+                  touchDimensions={{
+                    height: 80,
+                    width: 40,
+                    borderRadius: 20,
+                    slipDisplacement: 60,
+                  }}
+                  sliderLength={viewportWidth - 63}
+                />
+              </View>
+            ) : (
+              <View />
+            )}
           </ScrollView>
         </View>
       </View>

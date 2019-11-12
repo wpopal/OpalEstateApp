@@ -32,7 +32,7 @@ const latitudeDelta = 0.8;
 const longitudeDelta = 0.8;
 const {height: viewportHeight} = Dimensions.get('window');
 let scrollYPos = 0;
-
+var dataSetting = {};
 class HomeLocator extends Component {
   static defaultProps = {
     draggableRange: {top: viewportHeight - 70, bottom: 30},
@@ -100,6 +100,7 @@ class HomeLocator extends Component {
         return [];
       } else {
         console.log('posts', posts);
+        dataSetting = posts.data.fields;
         this.setState({
           info: Array.from(posts.data.fields.info),
         });
@@ -257,7 +258,7 @@ class HomeLocator extends Component {
               <TouchableOpacity
                 disabled={false}
                 onPress={() =>
-                  this.props.navigation.navigate('SETTING', this.state.info)
+                  this.props.navigation.navigate('SETTING', dataSetting)
                 }
                 activeOpacity={0.7}>
                 <Svg
