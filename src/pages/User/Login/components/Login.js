@@ -5,7 +5,6 @@ import {TouchableOpacity, Animated, View, Text, Dimensions} from 'react-native';
 
 import styled from 'styled-components';
 import Input from './Input';
-import {faFacebookF, faGoogle} from '@fortawesome/free-brands-svg-icons';
 import LinearGradient from 'react-native-linear-gradient';
 import {withNavigation} from 'react-navigation';
 import {ROUTE_NAMES} from '../routes';
@@ -239,11 +238,7 @@ class LoginComponent extends Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <FontAwesomeIcon
-              style={{color: '#fff'}}
-              size={20}
-              icon={faFacebookF}
-            />
+
           </View>
           <Text
             style={{
@@ -270,11 +265,7 @@ class LoginComponent extends Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <FontAwesomeIcon
-              style={{color: '#fff'}}
-              size={20}
-              icon={faGoogle}
-            />
+
           </View>
           <Text
             style={{

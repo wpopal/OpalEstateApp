@@ -111,6 +111,7 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('sdadasdasda',);
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     }

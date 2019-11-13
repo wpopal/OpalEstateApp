@@ -6,6 +6,7 @@ export const Types = {
   GET_FAILURE: 'mapMain/GET_FAILURE',
   SET_GEO: 'mapMain/SET_GEO',
   SET_POP: 'mapMain/SET_POP',
+  SET_SETTING: 'mapMain/SET_SETTING',
 };
 
 const initialState = Immutable({
@@ -14,16 +15,35 @@ const initialState = Immutable({
   data: [],
   geoLocal: {latitude: '', longitude: ''},
   PopularCiti: '',
+  paramsSetting: {
+    amenities: '',
+    cat: '',
+    info: '',
+    types: '',
+    status: '',
+    max_area: '',
+    min_area: '',
+    geo_long: '',
+    geo_lat: '',
+    max_price: '',
+    min_price: '',
+    city: '',
+    search_text: '',
+  },
 });
 
 export const Creators = {
-  getmapMainRequest: () => ({
-    type: Types.GET_REQUEST,
-  }),
-
   getmapMainSuccess: data => {
     return {
       type: Types.GET_SUCCESS,
+      payload: {data},
+    };
+  },
+
+  setSettingmapMainSuccess: data => {
+    console.log('data', data);
+    return {
+      type: Types.SET_SETTING,
       payload: {data},
     };
   },
@@ -60,6 +80,15 @@ const mapMain = (state = initialState, action) => {
         loading: false,
       };
     }
+
+    case Types.SET_SETTING: {
+      return {
+        ...state,
+        paramsSetting: action.payload.data,
+        loading: false,
+      };
+    }
+
     case Types.SET_GEO: {
       console.log(action.payload.data);
       return {

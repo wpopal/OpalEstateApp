@@ -442,9 +442,7 @@ class Main extends Component<Props, State> {
             height: '55%',
           }}>
           <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('DETAIL', l)
-            }>
+            onPress={() => this.props.navigation.navigate('DETAIL', l)}>
             <ImageBackground
               imageStyle={{
                 borderTopLeftRadius: 10,
@@ -531,9 +529,7 @@ class Main extends Component<Props, State> {
             })}
           </View>
           <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('DETAIL', l)
-            }>
+            onPress={() => this.props.navigation.navigate('DETAIL', l)}>
             <Text
               style={{
                 marginTop: 20,
@@ -624,6 +620,7 @@ class Main extends Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('nextProps', nextProps);
     params.geo_long = nextProps.mainRequest.geoLocal.longitude;
     params.geo_lat = nextProps.mainRequest.geoLocal.latitude;
     params.city = nextProps.mainRequest.PopularCiti;

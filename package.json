@@ -21,6 +21,7 @@
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-action-button": "2.8.5",
+    "react-native-check-box": "^2.1.7",
     "react-native-chonse-select": "^1.0.5",
     "react-native-document-picker": "3.2.4",
     "react-native-elements": "1.2.0",

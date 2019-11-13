@@ -8,12 +8,20 @@ import {
   Dimensions,
 } from 'react-native';
 import styles from './style-search';
-import {Path, Svg} from 'react-native-svg';
+import {Path, Svg, Circle} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import ChonseSelect from './chonseSelect';
 import ChonseSelectRooms from './chonseSelectRooms';
 import RNPickerSelect from 'react-native-picker-select';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import CheckBox from 'react-native-check-box';
+import {updateParams, queryParams} from '../../../../database/allSchemas';
+import {Button} from 'react-native-elements';
+import RNRestart from 'react-native-restart';
+import {bindActionCreators} from 'redux';
+import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
+import {connect} from 'react-redux';
+import {withNavigation} from 'react-navigation';
 
 const data = [
   {
@@ -26,11 +34,26 @@ const data = [
   },
 ];
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
-var params = {min_price: 0, max_price: 10000, min_area: 0, max_area: 10000};
+var params = {
+  min_price: 0,
+  max_price: 10000,
+  min_area: 0,
+  max_area: 10000,
+  geo_radius: '',
+  amenities: '',
+  cat: '',
+  info: '',
+  types: '',
+  status: '',
+  geo_long: '',
+  geo_lat: '',
+  search_text: '',
+};
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
+    this.SearchBack = this.SearchBack.bind(this);
   }
 
   state = {
@@ -38,6 +61,7 @@ class Search extends React.Component {
     text: 'local',
     gender: '0',
     Bedrooms: '0',
+    checked: true,
     Bathrooms: '0',
     CarSpace: '0',
     types: [],
@@ -47,6 +71,7 @@ class Search extends React.Component {
     min_price: '',
     min_area: '',
     dataSetting: {},
+    dataMoreOp: [],
   };
 
   componentWillMount(): void {
@@ -96,14 +121,35 @@ class Search extends React.Component {
           this.props.navigation.state.params.min_area.default,
         );
       }
+      {
+        if (this.props.navigation.state.params.amenities.enable) {
+          const dda = this.props.navigation.state.params.amenities.data;
+          console.log('dda', dda);
+          for (let i in dda) {
+            dda[i].checked = false;
+          }
+          this.state.dataMoreOp = dda;
+        }
+      }
     }
 
     this.setState(this.state);
     // this.setState({dataSetting: this.props.navigation.state.params});
   }
 
+  async SearchBack() {
+    params.geo_long = this.props.mapMainRequest.geoLocal.longitude;
+    params.geo_lat = this.props.mapMainRequest.geoLocal.latitude;
+    params.city = this.props.mapMainRequest.PopularCiti;
+    await updateParams(params)
+      .then(item => {
+        this.props.setSettingmapMainSuccess(item);
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
+  }
   render() {
-    console.log(this.state);
     const data = [
       {
         value: '0',
@@ -151,6 +197,7 @@ class Search extends React.Component {
         </View>
         <View
           style={{
+            height: viewportHeight - 185,
             backgroundColor: '#F9F9FB',
             paddingLeft: 20,
             paddingRight: 20,
@@ -222,15 +269,12 @@ class Search extends React.Component {
                     width: '100%',
                   }}
                   customMarker={() => (
-                    <Image
-                      style={{
-                        top: 5,
-                        height: 23,
-                        width: 23,
-                      }}
-                      source={require('./MarKerSlider.png')}
-                      resizeMode="contain"
-                    />
+                    <Svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="23">
+                      <Circle cx="18" cy="11.5" r="11.5" fill="#6923E7" />
+                    </Svg>
                   )}
                   values={[this.state.min_price, this.state.max_price]}
                   onValuesChange={item => {
@@ -245,7 +289,7 @@ class Search extends React.Component {
                     borderRadius: 20,
                     slipDisplacement: 60,
                   }}
-                  sliderLength={viewportWidth - 63}
+                  sliderLength={viewportWidth - 70}
                 />
               </View>
             ) : (
@@ -285,15 +329,12 @@ class Search extends React.Component {
                     width: '100%',
                   }}
                   customMarker={() => (
-                    <Image
-                      style={{
-                        top: 5,
-                        height: 23,
-                        width: 23,
-                      }}
-                      source={require('./MarKerSlider.png')}
-                      resizeMode="contain"
-                    />
+                    <Svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="23">
+                      <Circle cx="18" cy="11.5" r="11.5" fill="#6923E7" />
+                    </Svg>
                   )}
                   values={[this.state.min_area, this.state.max_area]}
                   onValuesChange={item => {
@@ -308,7 +349,7 @@ class Search extends React.Component {
                     borderRadius: 20,
                     slipDisplacement: 60,
                   }}
-                  sliderLength={viewportWidth - 63}
+                  sliderLength={viewportWidth - 70}
                 />
               </View>
             ) : (
@@ -415,11 +456,67 @@ class Search extends React.Component {
               initValue={this.state.CarSpace}
               onPress={item => this.setState({CarSpace: item.value})}
             />
+            {this.state.dataMoreOp.length > 0 ? (
+              this.state.dataMoreOp.map((item, index) => {
+                console.log('index', this.state.dataMoreOp[index]);
+                return (
+                  <CheckBox
+                    key={index}
+                    style={{flex: 1, paddingTop: 10, paddingBottom: 10}}
+                    checkBoxColor={'#7159C1'}
+                    checkedCheckBoxColor={'#7159C1'}
+                    onClick={() => {
+                      this.state.dataMoreOp[index].checked = !this.state
+                        .dataMoreOp[index].checked;
+                      this.setState(this.state);
+                    }}
+                    isChecked={this.state.dataMoreOp[index].checked}
+                    leftText={item.name}
+                  />
+                );
+              })
+            ) : (
+              <View />
+            )}
           </ScrollView>
+        </View>
+        <View
+          style={{
+            width: '100%',
+            paddingRight: 20,
+            paddingLeft: 20,
+            paddingTop: 10,
+            height: 123,
+            zIndex: 999999,
+          }}>
+          <Button
+            title="APPLY"
+            onPress={this.SearchBack}
+            buttonStyle={{marginBottom: 10, backgroundColor: '#6923E7'}}
+          />
+          <Button
+            title="Save this search"
+            type="outline"
+            titleStyle={{color: '#6923E7'}}
+            buttonStyle={{borderColor: '#6923E7', borderWidth: 2}}
+          />
         </View>
       </View>
     );
   }
 }
 
-export default Search;
+const mapStateToProps = state => {
+  console.log('state', state);
+  return {
+    mapMainRequest: state.mapMain,
+  };
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(mapMainCreators, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withNavigation(Search));

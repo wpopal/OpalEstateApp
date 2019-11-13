@@ -22,6 +22,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
   },
   buttonContainer: {
     padding: 15,

@@ -47,7 +47,6 @@ var params = {
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.SearchBack = this.SearchBack.bind(this);
     this.setLocal = this.setLocal.bind(this);
   }
 
@@ -189,7 +188,6 @@ class Search extends React.Component {
           Accept: 'application/json',
         },
       });
-      console.log('postsxxxxxxxxxxxxx', posts);
       if (posts.data.status !== 200) {
         return [];
       } else {
@@ -200,43 +198,7 @@ class Search extends React.Component {
     }
   }
 
-  objToQueryString(obj) {
-    const keyValuePairs = [];
-    for (const key in obj) {
-      keyValuePairs.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]),
-      );
-    }
-    return keyValuePairs.join('&');
-  }
 
-  SearchBack() {
-    dataGet = {};
-    for (let c in params) {
-      if (params[c] === '') {
-        delete params[c];
-      }
-    }
-    const queryString = this.objToQueryString(params);
-
-    fetch(
-      `http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties/search/?${queryString}`,
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log('adasasdasdasdasdasdasdsa', this.props, responseJson);
-        if (responseJson.status === 200) {
-          this.props.navigation.state.params.getdataMap({
-            local: {geo_long: params.geo_long, geo_lat: params.geo_lat},
-            data: responseJson.collection,
-          });
-          this.props.navigation.goBack();
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
 
   findCoordinates = () => {
     Geolocation.getCurrentPosition(info => this.setLocal(info));

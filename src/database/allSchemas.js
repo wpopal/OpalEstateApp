@@ -1,6 +1,7 @@
 import Realm from 'realm';
 
 export const DATA_SET = 'dataSeting';
+export const PARAM_DATA_SET = 'dataParams';
 
 export const TodoLisrSchema = {
   name: DATA_SET,
@@ -17,9 +18,30 @@ export const TodoLisrSchema = {
   },
 };
 
+export const DataParams = {
+  name: PARAM_DATA_SET,
+  primaryKey: 'id',
+  properties: {
+    id: 'int',
+    amenities: 'string',
+    cat: 'string',
+    info: 'string',
+    types: 'string',
+    status: 'string',
+    max_area: 'int',
+    min_area: 'int',
+    geo_long: 'string',
+    geo_lat: 'string',
+    max_price: 'int',
+    min_price: 'int',
+    city: 'string',
+    search_text: 'string',
+  },
+};
+
 const databaseOption = {
   path: 'dataSetApp.realm',
-  schema: [TodoLisrSchema],
+  schema: [TodoLisrSchema, DataParams],
   schemaVersion: 0,
 };
 
@@ -44,6 +66,49 @@ export const updateUser = newUser =>
           );
           resolve(newUser);
         });
+      })
+      .catch(error => reject(error));
+  });
+
+export const updateParams = newParams => {
+  console.log(newParams);
+  return new Promise((resolve, reject) => {
+    Realm.open(databaseOption)
+      .then(realm => {
+        realm.write(() => {
+          realm.create(
+            PARAM_DATA_SET,
+            {
+              id: 0,
+              amenities: newParams.amenities,
+              cat: newParams.cat,
+              info: newParams.info,
+              types: newParams.types,
+              status: newParams.status,
+              max_area: newParams.max_area,
+              min_area: newParams.min_area,
+              geo_long: newParams.geo_long,
+              geo_lat: newParams.geo_lat,
+              max_price: newParams.max_price,
+              min_price: newParams.min_price,
+              search_text: newParams.search_text,
+              city: newParams.city,
+            },
+            true,
+          );
+          resolve(newParams);
+        });
+      })
+      .catch(error => reject(error));
+  });
+};
+
+export const queryParams = () =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOption)
+      .then(realm => {
+        let allDataSets = realm.objects(PARAM_DATA_SET);
+        resolve(allDataSets);
       })
       .catch(error => reject(error));
   });
