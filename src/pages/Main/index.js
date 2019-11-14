@@ -67,11 +67,18 @@ class Main extends Component<Props, State> {
   }
 
   async fetchPosts(): Promise<[Post]> {
-    console.log('params', params);
+    const dataParams = {};
+    for (let i in Object.keys(params)) {
+      if (params[Object.keys(params)[i]] !== '') {
+        dataParams[Object.keys(params)[i]] = params[Object.keys(params)[i]];
+      }
+    }
+    dataParams.info = {parking: 100};
+
+    console.log('dataParams', dataParams);
     try {
       const posts = await axios({
-        method: 'get',
-        params: params,
+        params: dataParams,
         url:
           'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties/search',
         headers: {
@@ -80,6 +87,7 @@ class Main extends Component<Props, State> {
           Accept: 'application/json',
         },
       });
+      console.log('adasdasdsadasdasda', posts);
       if (posts.data.status !== 200) {
         return [];
       } else {
@@ -620,10 +628,18 @@ class Main extends Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    console.log('nextProps', nextProps);
+    params = Object.assign(params, nextProps.mainRequest.paramsSetting);
     params.geo_long = nextProps.mainRequest.geoLocal.longitude;
     params.geo_lat = nextProps.mainRequest.geoLocal.latitude;
     params.city = nextProps.mainRequest.PopularCiti;
+    const dataParams = {};
+    for (let i in Object.keys(params)) {
+      if (params[Object.keys(params)[i]] !== '') {
+        dataParams[Object.keys(params)[i]] = params[Object.keys(params)[i]];
+      }
+    }
+    params = Object.assign({}, dataParams);
+    console.log('paramsxxxxxxxxxxxxxxxxx', params);
     this.loadData(true);
   }
 

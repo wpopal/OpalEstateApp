@@ -45,6 +45,7 @@ var params = {
   info: '',
   types: '',
   status: '',
+  labels: '',
   geo_long: '',
   geo_lat: '',
   search_text: '',
@@ -69,6 +70,7 @@ class Search extends React.Component {
     max_price: '',
     max_area: '',
     min_price: '',
+    info: [],
     min_area: '',
     dataSetting: {},
     dataMoreOp: [],
@@ -121,14 +123,24 @@ class Search extends React.Component {
           this.props.navigation.state.params.min_area.default,
         );
       }
-      {
-        if (this.props.navigation.state.params.amenities.enable) {
-          const dda = this.props.navigation.state.params.amenities.data;
-          console.log('dda', dda);
-          for (let i in dda) {
-            dda[i].checked = false;
-          }
-          this.state.dataMoreOp = dda;
+
+      if (this.props.navigation.state.params.amenities.enable) {
+        const dda = this.props.navigation.state.params.amenities.data;
+        console.log('dda', dda);
+        for (let i in dda) {
+          dda[i].checked = false;
+        }
+        this.state.dataMoreOp = dda;
+      }
+
+      if (this.props.navigation.state.params.info.length) {
+        let infox = this.props.navigation.state.params.info;
+        for (let z in infox) {
+          this.state.info.push({
+            key: infox[z].key,
+            name: infox[z].name,
+            value: '0',
+          });
         }
       }
     }
@@ -144,24 +156,29 @@ class Search extends React.Component {
     await updateParams(params)
       .then(item => {
         this.props.setSettingmapMainSuccess(item);
+        this.props.navigation.goBack();
       })
       .catch(error => {
         console.log('error !', error);
       });
   }
+
   render() {
     const data = [
       {
         value: '0',
-        label: 'BUY',
+        label: 'All',
+        slug: '',
       },
       {
         value: '1',
         label: 'RENT',
+        slug: 'rented',
       },
       {
         value: '2',
         label: 'SOLD',
+        slug: 'sold',
       },
     ];
     return (
@@ -208,7 +225,10 @@ class Search extends React.Component {
               height={50}
               data={data}
               initValue={this.state.gender}
-              onPress={item => this.setState({gender: item.value})}
+              onPress={item => {
+                params.labels = item.slug;
+                this.setState({gender: item.value});
+              }}
             />
 
             {this.state.types.length ? (
@@ -227,6 +247,7 @@ class Search extends React.Component {
                     value={this.state.typesValue}
                     onValueChange={value => {
                       params.types = value;
+
                       this.setState({typesValue: value});
                     }}
                     items={this.state.types}
@@ -278,6 +299,8 @@ class Search extends React.Component {
                   )}
                   values={[this.state.min_price, this.state.max_price]}
                   onValuesChange={item => {
+                    params.min_price = item[0];
+                    params.max_price = item[1];
                     this.setState({min_price: item[0], max_price: item[1]});
                   }}
                   step={1000}
@@ -338,6 +361,8 @@ class Search extends React.Component {
                   )}
                   values={[this.state.min_area, this.state.max_area]}
                   onValuesChange={item => {
+                    params.min_area = item[0];
+                    params.max_area = item[1];
                     this.setState({min_area: item[0], max_area: item[1]});
                   }}
                   step={10}
@@ -355,110 +380,123 @@ class Search extends React.Component {
             ) : (
               <View />
             )}
+            {this.state.info.length ? (
+              this.state.info.map(item => (
+                <View>
+                  <Text style={{marginTop: 20}}>{item.name}</Text>
+                  <ChonseSelectRooms
+                    style={{width: '100%', marginTop: 10}}
+                    height={40}
+                    data={[
+                      {
+                        value: '0',
+                        label: 'Any',
+                      },
+                      {
+                        value: '1',
+                        label: '+1',
+                      },
+                      {
+                        value: '2',
+                        label: '+2',
+                      },
+                      {
+                        value: '3',
+                        label: '+3',
+                      },
+                      {
+                        value: '4',
+                        label: '+4',
+                      },
+                      {
+                        value: '5',
+                        label: '+5',
+                      },
+                    ]}
+                    initValue={item.value}
+                    onPress={xx => {
+                      for (let t in this.state.info) {
+                        if (this.state.info[t].key === item.key) {
+                          this.state.info[t].value = xx.value;
+                        }
+                      }
+                      this.setState(this.state);
+                    }}
+                  />
+                </View>
+              ))
+            ) : (
+              <View />
+            )}
 
-            <Text style={{marginTop: 20}}>Bedrooms</Text>
-            <ChonseSelectRooms
-              style={{width: '100%', marginTop: 10}}
-              height={40}
-              data={[
-                {
-                  value: '0',
-                  label: 'Any',
-                },
-                {
-                  value: '1',
-                  label: '+1',
-                },
-                {
-                  value: '2',
-                  label: '+2',
-                },
-                {
-                  value: '3',
-                  label: '+3',
-                },
-                {
-                  value: '4',
-                  label: '+4',
-                },
-                {
-                  value: '5',
-                  label: '+5',
-                },
-              ]}
-              initValue={this.state.Bedrooms}
-              onPress={item => this.setState({Bedrooms: item.value})}
-            />
-
-            <Text style={{marginTop: 20}}>Bathrooms</Text>
-            <ChonseSelectRooms
-              style={{width: '100%', marginTop: 10}}
-              height={40}
-              data={[
-                {
-                  value: '0',
-                  label: 'Any',
-                },
-                {
-                  value: '1',
-                  label: '+1',
-                },
-                {
-                  value: '2',
-                  label: '+2',
-                },
-                {
-                  value: '3',
-                  label: '+3',
-                },
-                {
-                  value: '4',
-                  label: '+4',
-                },
-                {
-                  value: '5',
-                  label: '+5',
-                },
-              ]}
-              initValue={this.state.Bathrooms}
-              onPress={item => this.setState({Bathrooms: item.value})}
-            />
-            <Text style={{marginTop: 20}}>Car Space</Text>
-            <ChonseSelectRooms
-              style={{width: '100%', marginTop: 10}}
-              height={40}
-              data={[
-                {
-                  value: '0',
-                  label: 'Any',
-                },
-                {
-                  value: '1',
-                  label: '+1',
-                },
-                {
-                  value: '2',
-                  label: '+2',
-                },
-                {
-                  value: '3',
-                  label: '+3',
-                },
-                {
-                  value: '4',
-                  label: '+4',
-                },
-                {
-                  value: '5',
-                  label: '+5',
-                },
-              ]}
-              initValue={this.state.CarSpace}
-              onPress={item => this.setState({CarSpace: item.value})}
-            />
+            {/*<Text style={{marginTop: 20}}>Bathrooms</Text>*/}
+            {/*<ChonseSelectRooms*/}
+            {/*  style={{width: '100%', marginTop: 10}}*/}
+            {/*  height={40}*/}
+            {/*  data={[*/}
+            {/*    {*/}
+            {/*      value: '0',*/}
+            {/*      label: 'Any',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '1',*/}
+            {/*      label: '+1',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '2',*/}
+            {/*      label: '+2',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '3',*/}
+            {/*      label: '+3',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '4',*/}
+            {/*      label: '+4',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '5',*/}
+            {/*      label: '+5',*/}
+            {/*    },*/}
+            {/*  ]}*/}
+            {/*  initValue={this.state.Bathrooms}*/}
+            {/*  onPress={item => this.setState({Bathrooms: item.value})}*/}
+            {/*/>*/}
+            {/*<Text style={{marginTop: 20}}>Car Space</Text>*/}
+            {/*<ChonseSelectRooms*/}
+            {/*  style={{width: '100%', marginTop: 10}}*/}
+            {/*  height={40}*/}
+            {/*  data={[*/}
+            {/*    {*/}
+            {/*      value: '0',*/}
+            {/*      label: 'Any',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '1',*/}
+            {/*      label: '+1',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '2',*/}
+            {/*      label: '+2',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '3',*/}
+            {/*      label: '+3',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '4',*/}
+            {/*      label: '+4',*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*      value: '5',*/}
+            {/*      label: '+5',*/}
+            {/*    },*/}
+            {/*  ]}*/}
+            {/*  initValue={this.state.CarSpace}*/}
+            {/*  onPress={item => this.setState({CarSpace: item.value})}*/}
+            {/*/>*/}
             {this.state.dataMoreOp.length > 0 ? (
               this.state.dataMoreOp.map((item, index) => {
-                console.log('index', this.state.dataMoreOp[index]);
                 return (
                   <CheckBox
                     key={index}

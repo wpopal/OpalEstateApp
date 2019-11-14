@@ -62,6 +62,7 @@ class HomeLocator extends Component {
       defaultValue: true,
       select: '',
     };
+    SplashScreen.hide();
   }
 
   scrollToB = () => {
@@ -78,7 +79,7 @@ class HomeLocator extends Component {
 
   componentDidMount() {
     this.getFillter();
-    SplashScreen.hide();
+
   }
 
   async getFillter() {
