@@ -42,7 +42,7 @@ var params = {
   geo_radius: '',
   amenities: '',
   cat: '',
-  info: '',
+  info: {},
   types: '',
   status: '',
   labels: '',
@@ -153,7 +153,10 @@ class Search extends React.Component {
     params.geo_long = this.props.mapMainRequest.geoLocal.longitude;
     params.geo_lat = this.props.mapMainRequest.geoLocal.latitude;
     params.city = this.props.mapMainRequest.PopularCiti;
-    await updateParams(params)
+    const dataUpdates = Object.assign({}, params);
+    dataUpdates.info = JSON.stringify(params.info);
+
+    await updateParams(dataUpdates)
       .then(item => {
         this.props.setSettingmapMainSuccess(item);
         this.props.navigation.goBack();
@@ -382,7 +385,7 @@ class Search extends React.Component {
             )}
             {this.state.info.length ? (
               this.state.info.map(item => (
-                <View>
+                <View key={item.key}>
                   <Text style={{marginTop: 20}}>{item.name}</Text>
                   <ChonseSelectRooms
                     style={{width: '100%', marginTop: 10}}
@@ -418,6 +421,7 @@ class Search extends React.Component {
                       for (let t in this.state.info) {
                         if (this.state.info[t].key === item.key) {
                           this.state.info[t].value = xx.value;
+                          params.info[item.key] = xx.value;
                         }
                       }
                       this.setState(this.state);
@@ -428,73 +432,6 @@ class Search extends React.Component {
             ) : (
               <View />
             )}
-
-            {/*<Text style={{marginTop: 20}}>Bathrooms</Text>*/}
-            {/*<ChonseSelectRooms*/}
-            {/*  style={{width: '100%', marginTop: 10}}*/}
-            {/*  height={40}*/}
-            {/*  data={[*/}
-            {/*    {*/}
-            {/*      value: '0',*/}
-            {/*      label: 'Any',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '1',*/}
-            {/*      label: '+1',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '2',*/}
-            {/*      label: '+2',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '3',*/}
-            {/*      label: '+3',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '4',*/}
-            {/*      label: '+4',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '5',*/}
-            {/*      label: '+5',*/}
-            {/*    },*/}
-            {/*  ]}*/}
-            {/*  initValue={this.state.Bathrooms}*/}
-            {/*  onPress={item => this.setState({Bathrooms: item.value})}*/}
-            {/*/>*/}
-            {/*<Text style={{marginTop: 20}}>Car Space</Text>*/}
-            {/*<ChonseSelectRooms*/}
-            {/*  style={{width: '100%', marginTop: 10}}*/}
-            {/*  height={40}*/}
-            {/*  data={[*/}
-            {/*    {*/}
-            {/*      value: '0',*/}
-            {/*      label: 'Any',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '1',*/}
-            {/*      label: '+1',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '2',*/}
-            {/*      label: '+2',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '3',*/}
-            {/*      label: '+3',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '4',*/}
-            {/*      label: '+4',*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*      value: '5',*/}
-            {/*      label: '+5',*/}
-            {/*    },*/}
-            {/*  ]}*/}
-            {/*  initValue={this.state.CarSpace}*/}
-            {/*  onPress={item => this.setState({CarSpace: item.value})}*/}
-            {/*/>*/}
             {this.state.dataMoreOp.length > 0 ? (
               this.state.dataMoreOp.map((item, index) => {
                 return (

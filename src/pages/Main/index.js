@@ -73,8 +73,6 @@ class Main extends Component<Props, State> {
         dataParams[Object.keys(params)[i]] = params[Object.keys(params)[i]];
       }
     }
-    dataParams.info = {parking: 100};
-
     console.log('dataParams', dataParams);
     try {
       const posts = await axios({
