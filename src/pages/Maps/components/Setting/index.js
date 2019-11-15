@@ -450,9 +450,11 @@ class Search extends React.Component {
                       this.setState(this.state);
                       params.amenities = [];
                       for (let x in this.state.dataMoreOp) {
-
                         if (this.state.dataMoreOp[x].checked) {
-                           console.log('this.state.dataMoreOp', this.state.dataMoreOp[x].checked);
+                          console.log(
+                            'this.state.dataMoreOp',
+                            this.state.dataMoreOp[x].checked,
+                          );
                           params.amenities.push(this.state.dataMoreOp[x].slug);
                           console.log('paramsMORE', params);
                         }
@@ -482,12 +484,12 @@ class Search extends React.Component {
             onPress={this.SearchBack}
             buttonStyle={{marginBottom: 10, backgroundColor: '#6923E7'}}
           />
-          <Button
-            title="Save this search"
-            type="outline"
-            titleStyle={{color: '#6923E7'}}
-            buttonStyle={{borderColor: '#6923E7', borderWidth: 2}}
-          />
+          {/*<Button*/}
+          {/*  title="Save this search"*/}
+          {/*  type="outline"*/}
+          {/*  titleStyle={{color: '#6923E7'}}*/}
+          {/*  buttonStyle={{borderColor: '#6923E7', borderWidth: 2}}*/}
+          {/*/>*/}
         </View>
       </View>
     );

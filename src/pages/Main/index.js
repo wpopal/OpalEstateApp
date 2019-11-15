@@ -40,7 +40,7 @@ interface Post {
 var params = {
   consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
   consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
-  per_page: 5,
+  per_page: 10,
   page: 1,
 };
 class Main extends Component<Props, State> {
@@ -95,7 +95,7 @@ class Main extends Component<Props, State> {
         return posts.data.collection;
       }
     } catch (error) {
-      console.log('error', error);
+      console.log(error);
       return [];
     }
   }
