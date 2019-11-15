@@ -39,8 +39,8 @@ var params = {
   max_price: 10000,
   min_area: 0,
   max_area: 10000,
+  amenities: [],
   geo_radius: '',
-  amenities: '',
   cat: '',
   info: {},
   types: '',
@@ -154,7 +154,11 @@ class Search extends React.Component {
     params.geo_lat = this.props.mapMainRequest.geoLocal.latitude;
     params.city = this.props.mapMainRequest.PopularCiti;
     const dataUpdates = Object.assign({}, params);
+    console.log('params2222222', params);
     dataUpdates.info = JSON.stringify(params.info);
+    dataUpdates.amenities = JSON.stringify(params.amenities);
+    console.log('params11111', params);
+    console.log('dataUpdates', dataUpdates);
 
     await updateParams(dataUpdates)
       .then(item => {
@@ -444,6 +448,15 @@ class Search extends React.Component {
                       this.state.dataMoreOp[index].checked = !this.state
                         .dataMoreOp[index].checked;
                       this.setState(this.state);
+                      params.amenities = [];
+                      for (let x in this.state.dataMoreOp) {
+
+                        if (this.state.dataMoreOp[x].checked) {
+                           console.log('this.state.dataMoreOp', this.state.dataMoreOp[x].checked);
+                          params.amenities.push(this.state.dataMoreOp[x].slug);
+                          console.log('paramsMORE', params);
+                        }
+                      }
                     }}
                     isChecked={this.state.dataMoreOp[index].checked}
                     leftText={item.name}

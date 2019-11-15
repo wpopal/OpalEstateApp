@@ -73,6 +73,9 @@ class Main extends Component<Props, State> {
         dataParams[Object.keys(params)[i]] = params[Object.keys(params)[i]];
       }
     }
+    if (typeof dataParams.amenities === 'string') {
+      dataParams.amenities = JSON.parse(dataParams.amenities);
+    }
     console.log('dataParams', dataParams);
     try {
       const posts = await axios({
