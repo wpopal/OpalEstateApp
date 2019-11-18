@@ -198,8 +198,6 @@ class Search extends React.Component {
     }
   }
 
-
-
   findCoordinates = () => {
     Geolocation.getCurrentPosition(info => this.setLocal(info));
   };
@@ -236,8 +234,12 @@ class Search extends React.Component {
   }
 
   _selectedValue(index, name) {
+    console.log(' this.state.selectedText', this.state.selectedText);
+    params.search_text = name;
+    this.props.setSettingmapMainSuccess(params);
     this.setState({selectedText: name});
     console.log('ssadsdas', index, name);
+    this.props.navigation.navigate('MAP');
   }
 
   render() {

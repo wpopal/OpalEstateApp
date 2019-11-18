@@ -64,14 +64,23 @@ export default class RNModalPicker extends PureComponent {
     dropDownImageStyle,
     dropDownImage,
   ) {
+    console.log('defaultText', defaultText);
     return (
       <View style={pickerStyle}>
+        <View style={dropDownImageStyle}>
+          <Svg
+            width={RFPercentage(3.5)}
+            height={RFPercentage(3)}
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <Path
+              d="M17.7 16.425L14.4 13.125C16.95 9.975 16.725 5.25 13.8 2.4C12.3 0.9 10.275 0 8.1 0C5.925 0 3.9 0.825 2.4 2.4C0.9 3.9 0 5.925 0 8.1C0 10.275 0.825 12.3 2.4 13.8C3.9 15.3 5.925 16.2 8.1 16.2C9.9 16.2 11.7 15.6 13.125 14.4L16.425 17.7C16.575 17.85 16.8 18 17.025 18C17.25 18 17.475 17.925 17.625 17.7C18.075 17.325 18.075 16.8 17.7 16.425ZM14.4 8.025C14.4 9.675 13.725 11.25 12.6 12.45C11.475 13.65 9.825 14.25 8.175 14.25C6.525 14.25 4.95 13.575 3.75 12.45C2.55 11.325 1.8 9.75 1.8 8.025C1.8 6.3 2.475 4.8 3.6 3.6C4.725 2.4 6.375 1.8 8.025 1.8C9.675 1.8 11.25 2.475 12.45 3.6C13.65 4.725 14.4 6.375 14.4 8.025Z"
+              fill="#AEB3BA"
+            />
+          </Svg>
+        </View>
         <Text style={textStyle}>{defaultText}</Text>
-        <Image
-          style={dropDownImageStyle}
-          resizeMode="contain"
-          source={dropDownImage}
-        />
       </View>
     );
   }
@@ -159,7 +168,7 @@ export default class RNModalPicker extends PureComponent {
                 {RNModalPicker._setSelectedValue(
                   this.props.selectedLabel,
                   this.props.pickerStyle,
-                  this.props.selectLabelTextStyle,
+                  this.props.placeHolderTextStyle,
                   this.props.dropDownImageStyle,
                   this.props.dropDownImage,
                 )}
