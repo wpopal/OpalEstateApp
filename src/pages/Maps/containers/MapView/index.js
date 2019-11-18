@@ -43,6 +43,7 @@ class HomeLocator extends Component {
     this.state = {
       forceRefresh: true,
       Changeicon: true,
+      notFound: false,
       info: [],
       screenHeight: Dimensions.get('window').height,
       screenWidth: Dimensions.get('window').width,
@@ -79,7 +80,6 @@ class HomeLocator extends Component {
 
   componentDidMount() {
     this.getFillter();
-
   }
 
   async getFillter() {
@@ -112,9 +112,12 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    console.log('sdadasdasda',);
+    console.log('sdadasdasda');
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
+    } else {
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      this.setState({notFound: true});
     }
   }
 
@@ -123,6 +126,7 @@ class HomeLocator extends Component {
   reRenderMap = data => {
     if (data.geoLocal.latitude !== '') {
       this.setState({
+        notFound: false,
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
         region: {
@@ -134,6 +138,7 @@ class HomeLocator extends Component {
       });
     } else {
       this.setState({
+        notFound: false,
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
         region: {
@@ -295,9 +300,17 @@ class HomeLocator extends Component {
           }}>
           <View style={[styles.screen, styles.screenA]}>
             <View style={styles.mapWrapper}>
-              {region.latitude === 0 ? (
-                <View>
-                  <Text>loading...</Text>
+              {this.state.notFound ? (
+                <View
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{fontSize: 20, color: '#ccc'}}>
+                    There are no matches !
+                  </Text>
                 </View>
               ) : (
                 <MapViewZoom

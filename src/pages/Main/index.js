@@ -408,7 +408,7 @@ class Main extends Component<Props, State> {
         this.setState(previousState => {
           return {
             loadingMore: false,
-            posts: refresh ? posts : previousState.posts.concat(posts),
+            posts: posts,
             nextPage: 1,
           };
         });
