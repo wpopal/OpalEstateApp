@@ -112,13 +112,13 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-    console.log('sdadasdasda');
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     } else {
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
       this.setState({notFound: true});
     }
+
+
   }
 
   _draggedValue = new Animated.Value(30);
@@ -166,12 +166,7 @@ class HomeLocator extends Component {
       outputRange: [1, 0],
       extrapolate: 'clamp',
     });
-    const options = [
-      {value: 0, label: '0'},
-      {value: 1, label: '1'},
-      {value: 2, label: '2'},
-      {value: 3, label: '3'},
-    ];
+
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />

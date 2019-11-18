@@ -78,6 +78,7 @@ class Search extends React.Component {
 
   componentWillMount(): void {
     console.log(this.props.navigation.state.params);
+    console.log(this.props.mapMainRequest.paramsSetting);
     if (Object.keys(this.props.navigation.state.params).length) {
       if (
         this.props.navigation.state.params.types.enable &&
@@ -95,52 +96,90 @@ class Search extends React.Component {
       }
 
       if (this.props.navigation.state.params.max_price.enable) {
-        params.max_price = Number(
-          this.props.navigation.state.params.max_price.default,
-        );
-        params.min_price = Number(
-          this.props.navigation.state.params.min_price.default,
-        );
-        this.state.max_price = Number(
-          this.props.navigation.state.params.max_price.default,
-        );
-        this.state.min_price = Number(
-          this.props.navigation.state.params.min_price.default,
-        );
+        params.max_price =
+          this.props.mapMainRequest.paramsSetting.max_price === ''
+            ? Number(this.props.navigation.state.params.max_price.default)
+            : this.props.mapMainRequest.paramsSetting.max_price;
+        params.min_price =
+          this.props.mapMainRequest.paramsSetting.min_price === ''
+            ? Number(this.props.navigation.state.params.min_price.default)
+            : this.props.mapMainRequest.paramsSetting.min_price;
+
+        this.state.max_price =
+          this.props.mapMainRequest.paramsSetting.max_price === ''
+            ? Number(this.props.navigation.state.params.max_price.default)
+            : this.props.mapMainRequest.paramsSetting.max_price;
+        this.state.min_price =
+          this.props.mapMainRequest.paramsSetting.min_price === ''
+            ? Number(this.props.navigation.state.params.min_price.default)
+            : this.props.mapMainRequest.paramsSetting.min_price;
       }
 
       if (this.props.navigation.state.params.max_area.enable) {
-        params.max_area = Number(
-          this.props.navigation.state.params.max_area.default,
-        );
-        params.min_area = Number(
-          this.props.navigation.state.params.min_area.default,
-        );
-        this.state.max_area = Number(
-          this.props.navigation.state.params.max_area.default,
-        );
-        this.state.min_area = Number(
-          this.props.navigation.state.params.min_area.default,
-        );
+        params.max_area =
+          this.props.mapMainRequest.paramsSetting.max_area === ''
+            ? Number(this.props.navigation.state.params.max_area.default)
+            : this.props.mapMainRequest.paramsSetting.max_area;
+        params.min_area =
+          this.props.mapMainRequest.paramsSetting.min_area === ''
+            ? Number(this.props.navigation.state.params.min_area.default)
+            : this.props.mapMainRequest.paramsSetting.min_area;
+
+        this.state.max_area =
+          this.props.mapMainRequest.paramsSetting.max_area === ''
+            ? Number(this.props.navigation.state.params.max_area.default)
+            : this.props.mapMainRequest.paramsSetting.max_area;
+        this.state.min_area =
+          this.props.mapMainRequest.paramsSetting.min_area === ''
+            ? Number(this.props.navigation.state.params.min_area.default)
+            : this.props.mapMainRequest.paramsSetting.min_area;
       }
 
       if (this.props.navigation.state.params.amenities.enable) {
         const dda = this.props.navigation.state.params.amenities.data;
-        console.log('dda', dda);
+        const dataAmen =
+          this.props.mapMainRequest.paramsSetting.amenities !== ''
+            ? JSON.parse(this.props.mapMainRequest.paramsSetting.amenities)
+            : '';
+        console.log('dataAmen', dataAmen);
         for (let i in dda) {
-          dda[i].checked = false;
+          if (dataAmen.indexOf(dda[i].slug) >= 0) {
+            console.log(dataAmen.indexOf(dda[i].slug),'---',dda[i].slug);
+            dda[i].checked = true;
+          } else {
+            dda[i].checked = false;
+          }
         }
         this.state.dataMoreOp = dda;
       }
+      this.state.gender =
+        this.props.mapMainRequest.paramsSetting.labels === 'rented'
+          ? '1'
+          : this.props.mapMainRequest.paramsSetting.labels === 'sold'
+          ? '2'
+          : '0';
+      this.state.typesValue = this.props.mapMainRequest.paramsSetting.types;
 
       if (this.props.navigation.state.params.info.length) {
         let infox = this.props.navigation.state.params.info;
+
         for (let z in infox) {
-          this.state.info.push({
-            key: infox[z].key,
-            name: infox[z].name,
-            value: '0',
-          });
+          if (this.props.mapMainRequest.paramsSetting.info !== '') {
+            const dataInfo = JSON.parse(
+              this.props.mapMainRequest.paramsSetting.info,
+            );
+            this.state.info.push({
+              key: infox[z].key,
+              name: infox[z].name,
+              value: dataInfo[infox[z].key],
+            });
+          } else {
+            this.state.info.push({
+              key: infox[z].key,
+              name: infox[z].name,
+              value: '0',
+            });
+          }
         }
       }
     }
@@ -149,16 +188,17 @@ class Search extends React.Component {
     // this.setState({dataSetting: this.props.navigation.state.params});
   }
 
+  componentDidMount(): void {
+    console.log('this.props.mapMainRequest', this.props.mapMainRequest);
+  }
+
   async SearchBack() {
     params.geo_long = this.props.mapMainRequest.geoLocal.longitude;
     params.geo_lat = this.props.mapMainRequest.geoLocal.latitude;
     params.city = this.props.mapMainRequest.PopularCiti;
     const dataUpdates = Object.assign({}, params);
-    console.log('params2222222', params);
     dataUpdates.info = JSON.stringify(params.info);
     dataUpdates.amenities = JSON.stringify(params.amenities);
-    console.log('params11111', params);
-    console.log('dataUpdates', dataUpdates);
 
     await updateParams(dataUpdates)
       .then(item => {
@@ -311,8 +351,12 @@ class Search extends React.Component {
                     this.setState({min_price: item[0], max_price: item[1]});
                   }}
                   step={1000}
-                  min={params.min_price}
-                  max={params.max_price}
+                  min={Number(
+                    this.props.navigation.state.params.min_price.default,
+                  )}
+                  max={Number(
+                    this.props.navigation.state.params.max_price.default,
+                  )}
                   touchDimensions={{
                     height: 80,
                     width: 40,
@@ -373,8 +417,12 @@ class Search extends React.Component {
                     this.setState({min_area: item[0], max_area: item[1]});
                   }}
                   step={10}
-                  min={params.min_area}
-                  max={params.max_area}
+                  min={Number(
+                    this.props.navigation.state.params.min_area.default,
+                  )}
+                  max={Number(
+                    this.props.navigation.state.params.max_area.default,
+                  )}
                   touchDimensions={{
                     height: 80,
                     width: 40,
