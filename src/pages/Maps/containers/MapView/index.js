@@ -112,11 +112,13 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     } else {
       this.setState({notFound: true});
     }
+    // this.setState({selectedText:this.p})
 
 
   }
@@ -127,6 +129,7 @@ class HomeLocator extends Component {
     if (data.geoLocal.latitude !== '') {
       this.setState({
         notFound: false,
+        selectedText:'You Location',
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
         region: {
@@ -137,8 +140,10 @@ class HomeLocator extends Component {
         },
       });
     } else {
+      console.log(this.props.mapMainRequest);
       this.setState({
         notFound: false,
+        selectedText:this.props.mapMainRequest.PopularCiti,
         forceRefresh: !this.state.forceRefresh,
         dataMap: data.data,
         region: {
