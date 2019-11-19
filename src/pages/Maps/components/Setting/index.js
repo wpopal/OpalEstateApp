@@ -117,7 +117,6 @@ class Search extends React.Component {
     params.status = '';
     params.labels = '';
 
-    console.log('sjsjsjsjsjsjsjsjsjs', params);
   };
 
   componentWillMount(): void {
