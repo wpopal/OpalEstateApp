@@ -76,6 +76,50 @@ class Search extends React.Component {
     dataMoreOp: [],
   };
 
+  reSetSetting = () => {
+    const reAmen = this.state.dataMoreOp;
+    const reInfor = this.state.info;
+
+    for (let i in reAmen) {
+      reAmen[i].checked = false;
+    }
+    this.state.dataMoreOp = reAmen;
+
+    for (let o in reInfor) {
+      reInfor[o].value = '0';
+    }
+
+    this.state.gender = '0';
+    this.state.typesValue = '';
+    this.state.max_price = Number(
+      this.props.navigation.state.params.max_price.default,
+    );
+    this.state.max_area = Number(
+      this.props.navigation.state.params.max_area.default,
+    );
+    this.state.min_price = Number(
+      this.props.navigation.state.params.min_price.default,
+    );
+    this.state.min_area = Number(
+      this.props.navigation.state.params.min_area.default,
+    );
+    this.state.info = reInfor;
+    this.setState(this.state);
+    params.min_price =  this.props.navigation.state.params.min_price.default;
+    params.max_price = this.props.navigation.state.params.max_price.default;
+    params.min_area =  this.props.navigation.state.params.min_area.default;
+    params.max_area = this.props.navigation.state.params.max_area.default;
+    params.amenities = [];
+    params.geo_radius = '';
+    params.cat = '';
+    params.info = {};
+    params.types = '';
+    params.status = '';
+    params.labels = '';
+
+    console.log('sjsjsjsjsjsjsjsjsjs', params);
+  };
+
   componentWillMount(): void {
     console.log(this.props.navigation.state.params);
     console.log(this.props.mapMainRequest.paramsSetting);
@@ -144,7 +188,7 @@ class Search extends React.Component {
         console.log('dataAmen', dataAmen);
         for (let i in dda) {
           if (dataAmen.indexOf(dda[i].slug) >= 0) {
-            console.log(dataAmen.indexOf(dda[i].slug),'---',dda[i].slug);
+            console.log(dataAmen.indexOf(dda[i].slug), '---', dda[i].slug);
             dda[i].checked = true;
           } else {
             dda[i].checked = false;
@@ -200,6 +244,10 @@ class Search extends React.Component {
     dataUpdates.info = JSON.stringify(params.info);
     dataUpdates.amenities = JSON.stringify(params.amenities);
 
+    if (!params.types){
+      params.types = ''
+    }
+    console.log('paramsparamsparams', params);
     await updateParams(dataUpdates)
       .then(item => {
         this.props.setSettingmapMainSuccess(item);
@@ -255,7 +303,7 @@ class Search extends React.Component {
             </Svg>
           </TouchableOpacity>
           <Text style={{fontSize: RFPercentage(3)}}>FILTERS</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.reSetSetting}>
             <Text style={{color: '#6923E7'}}>RESET</Text>
           </TouchableOpacity>
         </View>

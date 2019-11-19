@@ -83,7 +83,7 @@ export const updateParams = newParams => {
               amenities: newParams.amenities,
               cat: newParams.cat,
               info: newParams.info,
-              types: newParams.types,
+              types: newParams.types ? newParams.types : '',
               status: newParams.status,
               max_area: newParams.max_area,
               min_area: newParams.min_area,
