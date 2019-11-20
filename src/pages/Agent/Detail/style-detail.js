@@ -19,6 +19,35 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const entryBorderRadius = 8;
 
 export default StyleSheet.create({
+  statust: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    paddingTop: '3%',
+  },
+  listing: {
+    width: (viewportWidth / 100) * 85,
+    height: (viewportHeight / 100) * 55,
+    marginBottom: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    borderStyle: 'solid',
+    borderColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
@@ -66,21 +95,5 @@ export default StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  listing: {
-    width: (viewportWidth / 100) * 90,
-    height: (viewportHeight / 100) * 28,
-    marginBottom: 100,
-  },
-  statust: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingLeft: '5%',
-    paddingRight: '5%',
-    paddingTop: '3%',
   },
 });
