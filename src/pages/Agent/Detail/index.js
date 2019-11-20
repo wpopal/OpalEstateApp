@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withNavigation} from 'react-navigation';
 import {ROUTE_NAMES} from '../routes';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
@@ -24,6 +24,8 @@ import styles from './style-detail.js';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Circle, ClipPath, Defs, G, Path, Rect, Svg} from 'react-native-svg';
+import MapViewZoom from 'react-native-map-clustering';
+import MapView, {Marker} from 'react-native-maps';
 
 class Detail extends Component<Props, State> {
   constructor(props) {
@@ -32,54 +34,121 @@ class Detail extends Component<Props, State> {
     this.state = {
       index: 0,
       routes: [
-        {key: 'first', title: 'First'},
-        {key: 'second', title: 'Second'},
+        {key: 'listingMap', title: 'listing Map'},
+        {key: 'listingList', title: 'listing List'},
       ],
-      position: 1,
-      interval: null,
-      dataSource: [
-        {
-          title: 'Title 1',
-          caption: 'Caption 1',
-          url:
-            'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-05.jpg',
-        },
-        {
-          title: 'Title 2',
-          caption: 'Caption 2',
-          url:
-            'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-27.jpg',
-        },
-        {
-          title: 'Title 3',
-          caption: 'Caption 3',
-          url:
-            'http://demo2.themelexus.com/housey/wp-content/uploads/2019/08/property-26.jpg',
-        },
-      ],
+      region: {
+        longitude: -118.3108551,
+        latitude: 33.9877578,
+        latitudeDelta: 0.8,
+        longitudeDelta: 0.8,
+      },
+      dataSource: {},
     };
   }
   renderIcon = () => {
     return <Icon name="google-maps" style={styles.actionButtonIcon} />;
   };
   componentWillMount() {
+    const dataM = this.props.navigation.state.params.listing;
     this.setState({
-      interval: setInterval(() => {
-        this.setState({
-          position:
-            this.state.position === this.state.dataSource.length
-              ? 0
-              : this.state.position + 1,
-        });
-      }, 10000),
+      dataSource: this.props.navigation.state.params,
+      region: {
+        longitude: dataM.length ? Number(dataM[0].map.longitude) : -118.3108661,
+        latitude: dataM.length ? Number(dataM[0].map.latitude) : 33.9877342,
+        latitudeDelta: 0.8,
+        longitudeDelta: 0.8,
+      },
     });
+    console.log(' this.state this.state', this.state);
   }
 
-  FirstRoute = () => {
-    return <Text>xxxxxxxxxx</Text>;
+  FirstRoute = data => {
+    console.log('state', this.state.dataSource);
+    console.log(' this.state this.state', this.state);
+    const itemxx = this.state.dataSource.listing;
+    if (Object.keys(this.state.dataSource).length) {
+      return (
+        <MapViewZoom
+          key={this.state.forceRefresh}
+          region={this.state.region}
+          style={{width: '100%', height: '100%'}}
+          loadingEnabled={true}>
+          {itemxx.map(item => {
+            return (
+              <Marker
+                key={item.id}
+                style={{
+                  height: 50,
+                  width: 50,
+                }}
+                coordinate={{
+                  latitude: Number(item.map.latitude),
+                  longitude: Number(item.map.longitude),
+                }}>
+                <ImageBackground
+                  style={{
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  resizeMode="contain"
+                  source={require('../../Maps/assets/images/Vector.png')}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: '#fff',
+                      fontWeight: 'bold',
+                      bottom: 6,
+                    }}>
+                    {Number(
+                      item.price
+                        .replace('&#36;', '')
+                        .replace(',', '')
+                        .replace('.', ''),
+                    ) / 1000000}
+                    {' M'}
+                  </Text>
+                </ImageBackground>
+                <MapView.Callout>
+                  <View
+                    style={{
+                      width: 250,
+                      height: 200,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{top: -85}}>
+                      <Image
+                        style={{width: 250, height: 250}}
+                        source={{uri: item.thumbnail}}
+                      />
+                    </Text>
+                    <Text style={{top: -85, fontWeight: 'bold'}}>
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        top: -85,
+                        fontWeight: 'bold',
+                        color: '#706e72',
+                      }}>
+                      {item.address}
+                    </Text>
+                  </View>
+                </MapView.Callout>
+              </Marker>
+            );
+          })}
+        </MapViewZoom>
+      );
+    } else {
+      return <View />;
+    }
   };
 
-  SecondRoute = () => {
+  SecondRoute = data => {
     return <Text>yyyyyyyyy</Text>;
   };
 
@@ -88,6 +157,7 @@ class Detail extends Component<Props, State> {
     const data = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <Image
           source={{uri: data.thumbnail}}
           style={{
@@ -134,24 +204,36 @@ class Detail extends Component<Props, State> {
           {data.listing_count}
           {' Listings'}
         </Text>
-        <View style={{width: '100%', height: 500}}>
+        <View style={{width: '100%', height: 500, marginTop: 30}}>
           <TabView
+            renderTabBar={props => (
+              <TabBar
+                {...props}
+                indicatorStyle={{backgroundColor: '#6923E7'}}
+                labelStyle={{color: '#5F6870'}}
+                style={{backgroundColor: '#FFF'}}
+                onTabPress={({route, preventDefault}) => {
+                  console.log('route', route);
+                  console.log('preventDefault', preventDefault);
+                }}
+              />
+            )}
             navigationState={this.state}
             renderScene={SceneMap({
-              first: this.FirstRoute,
-              second: this.SecondRoute,
+              listingMap: this.FirstRoute,
+              listingList: this.SecondRoute,
             })}
             onIndexChange={index => this.setState({index})}
             initialLayout={{width: Dimensions.get('window').width}}
           />
         </View>
-        <ActionButton
-          buttonColor="#8e5cf1"
-          onPress={() => {
-            navigation.navigate(ROUTE_NAMES.MAPS);
-          }}
-          renderIcon={this.renderIcon}
-        />
+        {/*<ActionButton*/}
+        {/*  buttonColor="#8e5cf1"*/}
+        {/*  onPress={() => {*/}
+        {/*    navigation.navigate(ROUTE_NAMES.MAPS);*/}
+        {/*  }}*/}
+        {/*  renderIcon={this.renderIcon}*/}
+        {/*/>*/}
       </View>
     );
   }
