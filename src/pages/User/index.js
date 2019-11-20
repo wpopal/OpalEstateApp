@@ -17,15 +17,11 @@ class User extends React.Component {
       token: false,
       list2: [
         {
-          title: 'Profile',
-          icon: 'chrome-reader-mode',
-        },
-        {
-          title: 'Bookmarks',
+          title: 'Contact Us',
           icon: 'library-books',
         },
         {
-          title: 'Settings',
+          title: 'About Us',
           icon: 'settings-applications',
         },
         {
@@ -35,15 +31,11 @@ class User extends React.Component {
       ],
       list: [
         {
-          title: 'Profile',
-          icon: 'chrome-reader-mode',
-        },
-        {
-          title: 'Bookmarks',
+          title: 'Contact Us',
           icon: 'library-books',
         },
         {
-          title: 'Settings',
+          title: 'About Us',
           icon: 'settings-applications',
         },
         {
@@ -66,25 +58,23 @@ class User extends React.Component {
         console.log('error !', error);
       });
   }
+
   logout = () => {};
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
     console.log('nextProps', nextProps);
     if (nextProps.loginRequest.fu !== 'nânnanannanana') {
-      this.setState({data:{avatar:nextProps.loginRequest.fu}})
+      this.setState({data: {avatar: nextProps.loginRequest.fu}});
     }
   }
 
   redirects = item => {
     switch (item) {
-      case 'Profile':
+      case 'Contact Us':
         this.props.navigation.navigate('PRO_FILE');
         break;
-      case 'Bookmarks':
+      case 'About Us':
         console.log('Bookmarks');
-        break;
-      case 'Settings':
-        console.log('Settings');
         break;
       case 'Login':
         this.props.navigation.navigate('LOGIN');
@@ -112,8 +102,6 @@ class User extends React.Component {
     return avatar_url;
   }
   render() {
-    console.log('xxxxxxxxxxxxxxxxx');
-
     const {navigation} = this.props;
     if (this.state.token !== false) {
       return (

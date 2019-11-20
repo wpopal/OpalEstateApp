@@ -4,6 +4,7 @@ import {Platform} from 'react-native';
 import {
   setHiddenHeaderLayout,
   setDefaultHeaderLayout,
+  setHiddenHeaderLayoutNoArrow,
 } from '../../routes/headerUtils';
 
 import User from './index';
@@ -35,20 +36,15 @@ const RootStack = createStackNavigator(
     [ROUTE_NAMES.LOGIN]: {
       screen: Login,
       navigationOptions: ({navigation}) =>
-        setHiddenHeaderLayout(
-          navigation,
-          'Opal Estate App!',
-          'Modesta-Script',
-          27,
-        ),
+        setHiddenHeaderLayoutNoArrow(navigation),
     },
     [ROUTE_NAMES.SIGNUP]: {
       screen: SignUp,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) => setHiddenHeaderLayoutNoArrow(navigation),
     },
     [ROUTE_NAMES.FORGOT]: {
       screen: ForgotPass,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) => setHiddenHeaderLayoutNoArrow(navigation),
     },
     [ROUTE_NAMES.PRO_FILE]: {
       screen: Profile,

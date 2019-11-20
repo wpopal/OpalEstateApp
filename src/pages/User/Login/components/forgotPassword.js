@@ -16,13 +16,14 @@ import {withNavigation} from 'react-navigation';
 import Input from './Input';
 import {NavigationActions} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
+import {Path, Svg} from 'react-native-svg';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 var {height} = Dimensions.get('window');
 
 const Container = styled(View)`
   height: ${height};
-  background-color: #fff;
-  padding-top: ${StatusBar.currentHeight + 30}px;
+  background-color: #ccc;
 `;
 const TEXTERR = styled(Text)`
   color: #ffbf35;
@@ -57,7 +58,7 @@ const renderInput = (
   iconName: string,
   type: string,
 ): Object => (
-  <Input placeholder={placeholder} iconName={iconName} type={type}/>
+  <Input placeholder={placeholder} iconName={iconName} type={type} />
 );
 
 class forgotPass extends Component {
@@ -78,36 +79,33 @@ class forgotPass extends Component {
     const {navigation} = this.props;
     return (
       <Container>
-        <NavigationTitleWrapper>
-          <Animated.Text
-            style={{
-              textAlign: 'center',
-              fontFamily: 'Roboto-Bold',
-              color: this._loginFontSize.interpolate({
-                inputRange: [0, 1],
-                outputRange: [
-                  '#000',
-                  '#000',
-                ],
-                extrapolate: 'clamp',
-              }),
-              fontSize: this._loginFontSize.interpolate({
-                inputRange: [0, 1],
-                outputRange: [20, 30],
-                extrapolate: 'clamp',
-              }),
-            }}>
-            Forgot Password
-          </Animated.Text>
-          <Text
-            activeOpacity={2}
-            style={{
-              textAlign: 'center',
-              color: '#aaa',
-            }}>
-            Enter your email and will send you instructions on how to reset it.
-          </Text>
-        </NavigationTitleWrapper>
+        <View
+          style={{
+            width: '100%',
+            height: 70,
+            flexDirection: 'row',
+            backgroundColor: '#fff',
+            paddingRight: 20,
+            paddingLeft: 20,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <Svg
+              width="20"
+              height="16"
+              viewBox="0 0 20 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <Path
+                d="M7.5 15.1667C7.25 15.1667 7 15.0833 6.83333 14.8333L0.25 8.16667C-0.0833333 7.83333 -0.0833333 7.25 0.25 6.91667L6.83333 0.25C7.08333 0.0833333 7.25 0 7.5 0C7.75 0 8 0.0833333 8.16667 0.25C8.33333 0.416667 8.41667 0.666667 8.41667 0.916667C8.41667 1.16667 8.33333 1.41667 8.16667 1.58333L3.08333 6.66667H19.0833C19.5833 6.66667 20 7.08333 20 7.58333C20 8.08333 19.5833 8.5 19.0833 8.5H3.08333L8.16667 13.5833C8.58333 14 8.5 14.5833 8.16667 14.9167C8 15.0833 7.75 15.1667 7.5 15.1667Z"
+                fill="#6923E7"
+              />
+            </Svg>
+          </TouchableOpacity>
+          <Text style={{fontSize: RFPercentage(2.5)}}>RECOVERY PASSWORD</Text>
+          <TouchableOpacity />
+        </View>
         <View
           style={{
             width: '100%',
@@ -135,7 +133,7 @@ class forgotPass extends Component {
                 x: 1,
                 y: 0,
               }}
-              colors={['#ffbf35', '#ffa538', '#F67254']}
+              colors={['#a685e7', '#9733e7', '#6923E7']}
               style={{
                 width: '100%',
                 justifyContent: 'center',

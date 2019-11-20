@@ -31,7 +31,7 @@ const getTabIcon = (icon: string): Object => ({tintColor}: Props) => {
 const ApplicationTabs = createMaterialTopTabNavigator(
   {
     [ROUTE_NAMES.MAPMAIN]: {
-      screen: agent,
+      screen: user,
       navigationOptions: {
         tabBarIcon: getTabIcon('map-search'),
       },

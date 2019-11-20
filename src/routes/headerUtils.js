@@ -107,21 +107,23 @@ export const setDefaultHeaderLayout = (
 ): Object => ({
   title,
   headerTitleStyle: {
-    color: appStyles.colors.defaultWhite,
+    color: appStyles.colors.intermediateDarkLayer,
+
     fontWeight: undefined,
     fontFamily,
   },
-  headerTintColor: appStyles.colors.defaultWhite,
+  headerTintColor: appStyles.colors.violet,
   headerStyle: {
-    backgroundColor: appStyles.colors.primaryColor,
+    backgroundColor: appStyles.colors.defaultWhite,
     borderBottomWidth: 0,
   },
   ...Platform.select({
     android: {
       headerStyle: {
-        backgroundColor: appStyles.colors.primaryColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: appStyles.colors.defaultWhite,
         elevation: title === 'Near You' ? 0 : 4,
-        marginTop: StatusBar.currentHeight,
       },
     },
   }),

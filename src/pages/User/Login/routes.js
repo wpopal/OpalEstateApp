@@ -20,15 +20,18 @@ const RootStack = createStackNavigator(
   {
     [ROUTE_NAMES.LOGIN]: {
       screen: () => <Login />,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) =>
+        setDefaultHeaderLayout(navigation, 'LOGIN'),
     },
     [ROUTE_NAMES.SIGNUP]: {
       screen: () => <SignUp />,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) =>
+        setDefaultHeaderLayout(navigation, 'SING UP'),
     },
     [ROUTE_NAMES.FORGOT]: {
       screen: () => <ForgotPass />,
-      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+      navigationOptions: ({navigation}) =>
+        setDefaultHeaderLayout(navigation, 'RECOVERY PASSWORD'),
     },
   },
   {

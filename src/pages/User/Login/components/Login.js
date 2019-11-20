@@ -23,21 +23,22 @@ const Container = styled(View)`
 `;
 
 const TEXTERR = styled(Text)`
-  color: #ffbf35;
+  color: #6923e7;
   font-family: Roboto-Bold;
 `;
 
 const SocialButtonWrapper = styled(TouchableOpacity)`
-  width: 45%;
+  width: 100%;
   height: ${(viewportHeight / 100) * 8}px;
   border: solid 1px #e5e5e5;
-  border-top-right-radius: 50px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  background-color: #0083ff;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   flex-direction: row;
   padding-left: 4%;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -226,49 +227,9 @@ class LoginComponent extends Component {
           onPress={() =>
             this.props.navigation.navigate(ROUTE_NAMES.MAIN_STACK)
           }>
-          <View
-            style={{
-              height: '75%',
-              aspectRatio: 1 / 1,
-              backgroundColor: '#0083ff',
-              borderTopRightRadius: 50,
-              borderTopLeftRadius: 50,
-              borderBottomLeftRadius: 50,
-              borderBottomRightRadius: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-
-          </View>
           <Text
             style={{
-              paddingLeft: 10,
-              fontFamily: 'Roboto-Bold',
-            }}>
-            Facebook
-          </Text>
-        </SocialButtonWrapper>
-
-        <SocialButtonWrapper
-          onPress={() =>
-            this.props.navigation.navigate(ROUTE_NAMES.MAIN_STACK)
-          }>
-          <View
-            style={{
-              height: '75%',
-              aspectRatio: 1 / 1,
-              backgroundColor: '#c93d36',
-              borderTopRightRadius: 50,
-              borderTopLeftRadius: 50,
-              borderBottomLeftRadius: 50,
-              borderBottomRightRadius: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-
-          </View>
-          <Text
-            style={{
+              color: '#fff',
               paddingLeft: 10,
               fontFamily: 'Roboto-Bold',
             }}>
@@ -282,7 +243,22 @@ class LoginComponent extends Component {
   render() {
     return (
       <Container>
-        <View style={{width: '100%'}}>
+        <View
+          style={{
+            width: '100%',
+            borderRadius: 15,
+            backgroundColor: '#fff',
+            padding: 30,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.18,
+            shadowRadius: 1.0,
+
+            elevation: 1,
+          }}>
           <Animated.View>
             {this.renderInput('E-mail', 'envelope', 'emailAddress', {
               backgroundColor: '#fff',
@@ -329,7 +305,7 @@ class LoginComponent extends Component {
                 x: 1,
                 y: 0,
               }}
-              colors={['#ffbf35', '#ffa538', '#F67254']}
+              colors={['#a685e7', '#9733e7', '#6923E7']}
               style={{
                 width: '100%',
                 justifyContent: 'center',
