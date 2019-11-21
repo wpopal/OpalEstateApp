@@ -22,11 +22,15 @@ class User extends React.Component {
         },
         {
           title: 'About Us',
-          icon: 'settings-applications',
+          icon: 'account-balance',
+        },
+        {
+          title: 'Language',
+          icon: 'language',
         },
         {
           title: 'Login',
-          icon: 'settings-applications',
+          icon: 'people',
         },
       ],
       list: [
@@ -36,11 +40,15 @@ class User extends React.Component {
         },
         {
           title: 'About Us',
-          icon: 'settings-applications',
+          icon: 'account-balance',
+        },
+        {
+          title: 'Language',
+          icon: 'language',
         },
         {
           title: 'Logout',
-          icon: 'settings-applications',
+          icon: 'block',
         },
       ],
     };
@@ -71,7 +79,7 @@ class User extends React.Component {
   redirects = item => {
     switch (item) {
       case 'Contact Us':
-        this.props.navigation.navigate('PRO_FILE');
+        // this.props.navigation.navigate('PRO_FILE');
         break;
       case 'About Us':
         console.log('Bookmarks');
@@ -106,7 +114,6 @@ class User extends React.Component {
     if (this.state.token !== false) {
       return (
         <View style={styles.container}>
-          <Text>{this.props.loginRequest.fu}</Text>
           <View style={styles.avatar}>
             <Avatar
               title="NU"
@@ -114,7 +121,6 @@ class User extends React.Component {
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
               rounded
-              onEditPress={() => console.log('Works!')}
               source={{
                 uri: this.state.data.avatar,
               }}
