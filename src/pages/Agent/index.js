@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {ROUTE_NAMES} from '../Agent/routes';
+import {Base_url, consumer_secret, consumer_key} from '../../config/setting';
 import {
   Text,
   Dimensions,
@@ -64,13 +65,12 @@ class Agent extends Component<Props, State> {
       const posts = await axios({
         method: 'get',
         params: {
-          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          consumer_key: consumer_key,
+          consumer_secret: consumer_secret,
           per_page: perPage,
           page: page,
         },
-        url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/agents',
+        url: Base_url + '/wp-json/estate-api/v1/agents',
         headers: {
           'X-Custom-Header': 'foobar',
           Authorization: 'Bearer ' + this.state.token,

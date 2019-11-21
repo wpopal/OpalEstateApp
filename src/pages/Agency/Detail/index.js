@@ -53,8 +53,6 @@ class Detail extends Component<Props, State> {
   };
   componentWillMount() {
     const dataM = this.props.navigation.state.params.listings;
-    console.log('dataM', this.props.navigation.state.params);
-    console.log('dataM', dataM);
     this.setState({
       dataSource: this.props.navigation.state.params,
       region: {
@@ -352,7 +350,6 @@ class Detail extends Component<Props, State> {
 
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info;
-    console.log('sdadasdasdasdasdasdasdasdasdas', l);
     return (
       <View style={{width: 300, height: 300, backgroundColor: '#ccc'}}>
         <View style={styles.listing}>

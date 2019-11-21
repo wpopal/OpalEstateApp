@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Path, Svg} from 'react-native-svg';
 import {queryUser} from '../../database/allSchemas';
+import {Base_url, consumer_key, consumer_secret} from '../../config/setting';
 import {
   View,
   ImageBackground,
@@ -38,8 +39,8 @@ interface Post {
   thumbnailUrl: string;
 }
 var params = {
-  consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-  consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+  consumer_key: consumer_key,
+  consumer_secret: consumer_secret,
   per_page: 10,
   page: 1,
 };
@@ -80,8 +81,7 @@ class Main extends Component<Props, State> {
     try {
       const posts = await axios({
         params: dataParams,
-        url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/properties/search',
+        url: Base_url + '/wp-json/estate-api/v1/properties/search',
         headers: {
           Authorization: 'Bearer ' + this.state.token,
           'X-Custom-Header': 'foobar',

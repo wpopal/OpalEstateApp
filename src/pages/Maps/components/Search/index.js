@@ -27,6 +27,11 @@ import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
 import {connect} from 'react-redux';
 import {upDateGeoLocal} from '../../../../database/allSchemas';
 import RNRestart from 'react-native-restart';
+import {
+  Base_url,
+  consumer_key,
+  consumer_secret,
+} from '../../../../config/setting';
 
 var params = {
   geo_radius: '',
@@ -178,11 +183,10 @@ class Search extends React.Component {
       const posts = await axios({
         method: 'get',
         params: {
-          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          consumer_key: consumer_key,
+          consumer_secret: consumer_secret,
         },
-        url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/terms',
+        url: Base_url + '/wp-json/estate-api/v1/terms',
         headers: {
           'X-Custom-Header': 'foobar',
           Accept: 'application/json',

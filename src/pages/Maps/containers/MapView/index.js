@@ -26,6 +26,7 @@ import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
+import {Base_url} from "../../../../config/setting";
 import MapViewZoom from 'react-native-map-clustering';
 
 const latitudeDelta = 0.8;
@@ -91,7 +92,7 @@ class HomeLocator extends Component {
           consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
         },
         url:
-          'http://10.0.2.2/wordpress/latehome_free/wp-json/estate-api/v1/search-form',
+          Base_url + '/wp-json/estate-api/v1/search-form',
         headers: {
           'X-Custom-Header': 'foobar',
           Accept: 'application/json',

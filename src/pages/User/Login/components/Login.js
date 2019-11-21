@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {withNavigation} from 'react-navigation';
 import {ROUTE_NAMES} from '../routes';
 import {updateUser} from '../../../../database/allSchemas';
-
+import {Base_url} from '../../../../config/setting';
 const {height: viewportHeight} = Dimensions.get('window');
 import RNRestart from 'react-native-restart'; // Import package from node modules
 const Container = styled(View)`
@@ -118,20 +118,17 @@ class LoginComponent extends Component {
   }
 
   async Clicklogin() {
-    const posts = await fetch(
-      'http://10.0.2.2/wordpress/latehome_free/wp-json/jwt-auth/v1/token',
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: data.Email,
-          password: data.Password,
-        }),
+    const posts = await fetch(Base_url + '/wp-json/jwt-auth/v1/token', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-    )
+      body: JSON.stringify({
+        username: data.Email,
+        password: data.Password,
+      }),
+    })
       .then(response => response.json())
       .catch(errer => {
         console.log('errer', errer);
@@ -145,15 +142,12 @@ class LoginComponent extends Component {
   async CheckToken(data) {
     console.log('data', data);
     const x = data.token;
-    await fetch(
-      'http://10.0.2.2/wordpress/latehome_free/wp-json/jwt-auth/v1/token/validate',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer ' + x,
-        },
+    await fetch(Base_url + '/wp-json/jwt-auth/v1/token/validate', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + x,
       },
-    ).then(response => {
+    }).then(response => {
       this.setToken(data);
     });
   }
