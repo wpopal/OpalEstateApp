@@ -83,7 +83,7 @@ class Main extends Component<Props, State> {
         params: dataParams,
         url: Base_url + '/wp-json/estate-api/v1/properties/search',
         headers: {
-          Authorization: 'Bearer ' + this.state.token,
+          // Authorization: 'Bearer ' + this.state.token,
           'X-Custom-Header': 'foobar',
           Accept: 'application/json',
         },
