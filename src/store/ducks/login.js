@@ -45,7 +45,6 @@ const login = (state = initialState, action) => {
         loading: true,
       };
     case Types.UPDATE_FU: {
-      console.log('lololololo', action);
       return {
         ...state,
         loading: true,

@@ -61,33 +61,26 @@ class Agent extends Component<Props, State> {
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    console.log('this.state.token', this.state.token);
-    if (this.state.token) {
-      const posts = await axios({
-        method: 'get',
-        params: {
-          consumer_key: consumer_key,
-          consumer_secret: consumer_secret,
-          per_page: perPage,
-          page: page,
-        },
-        url: Base_url + '/wp-json/estate-api/v1/agents',
-        headers: {
-          'X-Custom-Header': 'foobar',
-          Authorization: 'Bearer ' + this.state.token,
-          Accept: 'application/json',
-        },
-      });
-
-      console.log('posts', posts);
-      SplashScreen.hide();
-      if (posts.data.status !== 200) {
-        return [];
-      } else {
-        return posts.data.collection;
-      }
-    } else {
+    const posts = await axios({
+      method: 'get',
+      params: {
+        consumer_key: consumer_key,
+        consumer_secret: consumer_secret,
+        per_page: perPage,
+        page: page,
+      },
+      url: Base_url + '/wp-json/estate-api/v1/agents',
+      headers: {
+        'X-Custom-Header': 'foobar',
+        // Authorization: 'Bearer ' + this.state.token,
+        Accept: 'application/json',
+      },
+    });
+    SplashScreen.hide();
+    if (posts.data.status !== 200) {
       return [];
+    } else {
+      return posts.data.collection;
     }
   }
 
@@ -221,7 +214,7 @@ class Agent extends Component<Props, State> {
     );
   }
 
-  componentDidMount(): void {
+  componentWillMount(): void {
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
@@ -229,6 +222,7 @@ class Agent extends Component<Props, State> {
         this.loadData(true);
       })
       .catch(error => {
+        this.loadData(true);
         console.log('error !', error);
       });
   }

@@ -82,7 +82,7 @@ const mapMain = (state = initialState, action) => {
     }
 
     case Types.SET_SETTING: {
-      console.log('actionactionactionactionaction', action);
+
       return {
         ...state,
         paramsSetting: action.payload.data,
@@ -91,7 +91,7 @@ const mapMain = (state = initialState, action) => {
     }
 
     case Types.SET_GEO: {
-      console.log(action.payload.data);
+
       return {
         ...state,
         PopularCiti: '',
@@ -99,7 +99,7 @@ const mapMain = (state = initialState, action) => {
       };
     }
     case Types.SET_POP: {
-      console.log(action.payload.data);
+
       return {
         ...state,
         geoLocal: {latitude: '', longitude: ''},

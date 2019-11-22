@@ -62,12 +62,9 @@ class Detail extends Component<Props, State> {
         longitudeDelta: 0.8,
       },
     });
-    console.log(' this.state this.state', this.state);
   }
 
   FirstRoute = data => {
-    console.log('state', this.state.dataSource);
-    console.log(' this.state this.state', this.state);
     const itemxx = this.state.dataSource.listing;
     if (Object.keys(this.state.dataSource).length) {
       return (
@@ -160,189 +157,198 @@ class Detail extends Component<Props, State> {
           alignItems: 'center',
         }}>
         <ScrollView>
-          {this.state.dataSource.listing.map(l => (
-            <View style={styles.listing} key={l.id}>
-              <View
-                style={{
-                  width: '100%',
-                  height: '55%',
-                }}>
-                <TouchableOpacity>
-                  <ImageBackground
-                    imageStyle={{
-                      borderTopLeftRadius: 10,
-                      borderTopRightRadius: 10,
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                    }}
-                    source={{
-                      uri: l.thumbnail,
-                    }}>
-                    <View style={styles.statust}>
-                      <View
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          flexDirection: 'row-reverse',
-                        }}>
-                        {/*<View*/}
-                        {/*  style={{*/}
-                        {/*    justifyContent: 'center',*/}
-                        {/*    alignItems: 'center',*/}
-                        {/*    width: '12%',*/}
-                        {/*    height: '12%',*/}
-                        {/*    backgroundColor: '#fff',*/}
-                        {/*    paddingTop: 6,*/}
-                        {/*    paddingBottom: 6,*/}
-                        {/*    paddingRight: 6,*/}
-                        {/*    paddingLeft: 6,*/}
-                        {/*    borderRadius: 50,*/}
-                        {/*  }}>*/}
-                        {/*  <Svg*/}
-                        {/*    width="80%"*/}
-                        {/*    height="80%"*/}
-                        {/*    viewBox="0 0 16 15"*/}
-                        {/*    fill="none"*/}
-                        {/*    xmlns="http://www.w3.org/2000/svg">*/}
-                        {/*    <Path*/}
-                        {/*      d="M8 14.1333C7.86667 14.1333 7.73333 14.1333 7.66667 14.0667C4.8 12.6 0 9.46667 0 5C0 2.26667 1.93333 0.0666667 4.4 0.0666667C6.06667 0.0666667 7.26667 0.866667 8 1.53333L8.06667 1.46667C8.8 0.8 9.93333 0 11.6667 0C14.0667 0.0666667 16 2.26667 16 5C16 9.46667 11.2 12.6 8.33333 14.0667C8.26667 14.1333 8.13333 14.1333 8 14.1333ZM4.4 1.53333C2.53333 1.53333 1.53333 3.33333 1.53333 5C1.53333 8.53333 5.6 11.2667 8 12.5333C10.4667 11.2667 14.5333 8.53333 14.5333 5C14.5333 3.33333 13.5333 1.53333 11.6667 1.53333C9.73333 1.53333 8.73333 3 8.66667 3.06667C8.53333 3.26667 8.26667 3.4 8.06667 3.4C7.8 3.4 7.6 3.26667 7.46667 3.06667C6.86667 2.33333 5.73333 1.53333 4.4 1.53333Z"*/}
-                        {/*      fill="#6923E7"*/}
-                        {/*    />*/}
-                        {/*  </Svg>*/}
-                        {/*</View>*/}
-                      </View>
-                    </View>
-                  </ImageBackground>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  height: '45%',
-                  paddingLeft: 15,
-                  paddingRight: 15,
-                }}>
+          {this.state.dataSource.listing.map(l => {
+            console.log('llllllll', l);
+            return (
+              <View style={styles.listing} key={l.id}>
                 <View
                   style={{
-                    position: 'absolute',
-                    flexDirection: 'row',
-                    top: -15,
-                    height: 23,
-                    left: 20,
-                    width: viewportWidth,
-                  }}>
-                  {l.labels.map(item => {
-                    return (
-                      <View
-                        key={item.term_id}
-                        style={{
-                          marginRight: 10,
-                          backgroundColor: `${
-                            item.meta.opalestate_label_lb_bg
-                          }`,
-                          height: 23,
-                          width: 60,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 4,
-                        }}>
-                        <Text style={{color: '#fff'}}>{item.name}</Text>
-                      </View>
-                    );
-                  })}
-                </View>
-                <TouchableOpacity>
-                  <Text
-                    style={{
-                      marginTop: 10,
-                      fontWeight: 'bold',
-                      fontSize: RFPercentage(2),
-                      color: '#272B2E',
-                    }}>
-                    {l.address}
-                  </Text>
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flexDirection: 'row',
                     width: '100%',
+                    height: '55%',
                   }}>
-                  <Text style={{color: '#5F6870'}}>House </Text>
-                  {l.statuses.map(item => {
-                    return (
-                      <View
-                        key={item.term_id}
-                        style={{
-                          height: 23,
-                          width: 'auto',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Text style={{color: '#5F6870'}}>
-                          {'  |  '}
-                          {item.name}
-                        </Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('DETAILPROPER', {item: l})
+                    }>
+                    <ImageBackground
+                      imageStyle={{
+                        borderTopLeftRadius: 10,
+                        borderTopRightRadius: 10,
+                        borderWidth: 1,
+                        borderColor: '#fff',
+                      }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      source={{
+                        uri: l.thumbnail,
+                      }}>
+                      <View style={styles.statust}>
+                        <View
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            flexDirection: 'row-reverse',
+                          }}>
+                          {/*<View*/}
+                          {/*  style={{*/}
+                          {/*    justifyContent: 'center',*/}
+                          {/*    alignItems: 'center',*/}
+                          {/*    width: '12%',*/}
+                          {/*    height: '12%',*/}
+                          {/*    backgroundColor: '#fff',*/}
+                          {/*    paddingTop: 6,*/}
+                          {/*    paddingBottom: 6,*/}
+                          {/*    paddingRight: 6,*/}
+                          {/*    paddingLeft: 6,*/}
+                          {/*    borderRadius: 50,*/}
+                          {/*  }}>*/}
+                          {/*  <Svg*/}
+                          {/*    width="80%"*/}
+                          {/*    height="80%"*/}
+                          {/*    viewBox="0 0 16 15"*/}
+                          {/*    fill="none"*/}
+                          {/*    xmlns="http://www.w3.org/2000/svg">*/}
+                          {/*    <Path*/}
+                          {/*      d="M8 14.1333C7.86667 14.1333 7.73333 14.1333 7.66667 14.0667C4.8 12.6 0 9.46667 0 5C0 2.26667 1.93333 0.0666667 4.4 0.0666667C6.06667 0.0666667 7.26667 0.866667 8 1.53333L8.06667 1.46667C8.8 0.8 9.93333 0 11.6667 0C14.0667 0.0666667 16 2.26667 16 5C16 9.46667 11.2 12.6 8.33333 14.0667C8.26667 14.1333 8.13333 14.1333 8 14.1333ZM4.4 1.53333C2.53333 1.53333 1.53333 3.33333 1.53333 5C1.53333 8.53333 5.6 11.2667 8 12.5333C10.4667 11.2667 14.5333 8.53333 14.5333 5C14.5333 3.33333 13.5333 1.53333 11.6667 1.53333C9.73333 1.53333 8.73333 3 8.66667 3.06667C8.53333 3.26667 8.26667 3.4 8.06667 3.4C7.8 3.4 7.6 3.26667 7.46667 3.06667C6.86667 2.33333 5.73333 1.53333 4.4 1.53333Z"*/}
+                          {/*      fill="#6923E7"*/}
+                          {/*    />*/}
+                          {/*  </Svg>*/}
+                          {/*</View>*/}
+                        </View>
                       </View>
-                    );
-                  })}
-                </View>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  <Text
-                    style={{
-                      color: '#6923E7',
-                      fontWeight: 'bold',
-                      fontSize: RFPercentage(3),
-                    }}>
-                    ${l.price.replace('&#36;', '')}
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: RFPercentage(2),
-                      color: '#5F6870',
-                    }}>
-                    /month
-                  </Text>
+                    </ImageBackground>
+                  </TouchableOpacity>
                 </View>
                 <View
                   style={{
-                    height: 85,
-                    marginTop: 3,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
+                    flex: 1,
+                    height: '45%',
+                    paddingLeft: 15,
+                    paddingRight: 15,
                   }}>
-                  {Object.keys(l.short_info).map(key => {
-                    return (
-                      <View
-                        key={key}
-                        style={{
-                          paddingRight: 20,
-                          marginRight: 15,
-                          marginTop: 5,
-                          height: RFPercentage(2.5),
-                          flexDirection: 'row',
-                        }}>
-                        {this.renIcon(l.short_info[key], key)}
-                        <Text
+                  <View
+                    style={{
+                      position: 'absolute',
+                      flexDirection: 'row',
+                      top: -15,
+                      height: 23,
+                      left: 20,
+                      width: viewportWidth,
+                    }}>
+                    {l.labels.map(item => {
+                      return (
+                        <View
+                          key={item.term_id}
                           style={{
-                            color: '#AEB3BA',
-                            fontSize: RFPercentage(2),
-                            marginLeft: 4,
+                            marginRight: 10,
+                            backgroundColor: `${
+                              item.meta.opalestate_label_lb_bg
+                            }`,
+                            height: 23,
+                            width: 60,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 4,
                           }}>
-                          {l.short_info[key].value}
-                        </Text>
-                        {this.renName(l.short_info[key], key)}
-                      </View>
-                    );
-                  })}
+                          <Text style={{color: '#fff'}}>{item.name}</Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('DETAILPROPER', {item: l})
+                    }>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontWeight: 'bold',
+                        fontSize: RFPercentage(2),
+                        color: '#272B2E',
+                      }}>
+                      {l.address}
+                    </Text>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '100%',
+                    }}>
+                    <Text style={{color: '#5F6870'}}>House </Text>
+                    {l.statuses.map(item => {
+                      return (
+                        <View
+                          key={item.term_id}
+                          style={{
+                            height: 23,
+                            width: 'auto',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text style={{color: '#5F6870'}}>
+                            {'  |  '}
+                            {item.name}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
+                    <Text
+                      style={{
+                        color: '#6923E7',
+                        fontWeight: 'bold',
+                        fontSize: RFPercentage(3),
+                      }}>
+                      ${l.price.replace('&#36;', '')}
+                    </Text>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: RFPercentage(2),
+                        color: '#5F6870',
+                      }}>
+                      /month
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 85,
+                      marginTop: 3,
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                    }}>
+                    {Object.keys(l.short_info).map(key => {
+                      return (
+                        <View
+                          key={key}
+                          style={{
+                            paddingRight: 20,
+                            marginRight: 15,
+                            marginTop: 5,
+                            height: RFPercentage(2.5),
+                            flexDirection: 'row',
+                          }}>
+                          {this.renIcon(l.short_info[key], key)}
+                          <Text
+                            style={{
+                              color: '#AEB3BA',
+                              fontSize: RFPercentage(2),
+                              marginLeft: 4,
+                            }}>
+                            {l.short_info[key].value}
+                          </Text>
+                          {this.renName(l.short_info[key], key)}
+                        </View>
+                      );
+                    })}
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </ScrollView>
       </View>
     );
@@ -350,7 +356,6 @@ class Detail extends Component<Props, State> {
 
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info;
-    console.log('sdadasdasdasdasdasdasdasdasdas', l);
     return (
       <View style={{width: 300, height: 300, backgroundColor: '#ccc'}}>
         <View style={styles.listing}>

@@ -1,17 +1,17 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {Platform} from 'react-native';
 
-import {
-  setHiddenHeaderLayout,
-} from '../../routes/headerUtils';
+import {setHiddenHeaderLayout} from '../../routes/headerUtils';
 
 import Home from './index';
 import Detail from './Detail';
 import Maps from './maps';
+import DetailProperties from '../Maps/components/Detail/';
 
 export const ROUTE_NAMES = {
   HOME: 'HOME',
   DETAIL: 'DETAIL',
+  DETAILPROPER: 'DETAILPROPER',
   MAPS: 'MAPS',
 };
 
@@ -19,6 +19,10 @@ const RootStack = createStackNavigator(
   {
     [ROUTE_NAMES.HOME]: {
       screen: Home,
+      navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
+    },
+    [ROUTE_NAMES.DETAILPROPER]: {
+      screen: DetailProperties,
       navigationOptions: ({navigation}) => setHiddenHeaderLayout(navigation),
     },
     [ROUTE_NAMES.DETAIL]: {

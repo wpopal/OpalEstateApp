@@ -18,6 +18,7 @@ import axios from 'axios';
 import {queryUser} from '../../database/allSchemas';
 import {Circle, ClipPath, Defs, G, Path, Rect, Svg} from 'react-native-svg';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import SplashScreen from "react-native-splash-screen";
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
@@ -59,31 +60,26 @@ class Agency extends Component<Props, State> {
   }
 
   async fetchPosts(page: number, perPage: number = 5): Promise<[Post]> {
-    console.log('this.state.token', this.state.token);
-    if (this.state.token) {
-      const posts = await axios({
-        method: 'get',
-        params: {
-          consumer_key: consumer_key,
-          consumer_secret: consumer_secret,
-          per_page: perPage,
-          page: page,
-        },
-        url: Base_url + '/wp-json/estate-api/v1/agencies',
-        headers: {
-          'X-Custom-Header': 'foobar',
-          Authorization: 'Bearer ' + this.state.token,
-          Accept: 'application/json',
-        },
-      });
-      console.log('posts', posts);
-      if (posts.data.status !== 200) {
-        return [];
-      } else {
-        return posts.data.collection;
-      }
-    } else {
+    const posts = await axios({
+      method: 'get',
+      params: {
+        consumer_key: consumer_key,
+        consumer_secret: consumer_secret,
+        per_page: perPage,
+        page: page,
+      },
+      url: Base_url + '/wp-json/estate-api/v1/agents',
+      headers: {
+        'X-Custom-Header': 'foobar',
+        // Authorization: 'Bearer ' + this.state.token,
+        Accept: 'application/json',
+      },
+    });
+    SplashScreen.hide();
+    if (posts.data.status !== 200) {
       return [];
+    } else {
+      return posts.data.collection;
     }
   }
 
@@ -218,7 +214,7 @@ class Agency extends Component<Props, State> {
     );
   }
 
-  componentDidMount(): void {
+  componentWillMount(): void {
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
@@ -226,7 +222,7 @@ class Agency extends Component<Props, State> {
         this.loadData(true);
       })
       .catch(error => {
-        console.log('error !', error);
+        this.loadData(true);
       });
   }
 

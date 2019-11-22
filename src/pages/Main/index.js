@@ -58,12 +58,10 @@ class Main extends Component<Props, State> {
   }
 
   onRefresh() {
-    console.log('1111');
     this.loadData(true);
   }
 
   onEndReached() {
-    console.log('2222');
     this.loadData(false);
   }
 
@@ -77,7 +75,6 @@ class Main extends Component<Props, State> {
     if (typeof dataParams.amenities === 'string') {
       dataParams.amenities = JSON.parse(dataParams.amenities);
     }
-    console.log('dataParams', dataParams);
     try {
       const posts = await axios({
         params: dataParams,
@@ -88,7 +85,6 @@ class Main extends Component<Props, State> {
           Accept: 'application/json',
         },
       });
-      console.log('adasdasdsadasdasda', posts);
       if (posts.data.status !== 200) {
         return [];
       } else {
@@ -403,7 +399,6 @@ class Main extends Component<Props, State> {
           delete params.geo_long;
         }
         const posts = await this.fetchPosts(params);
-        console.log('posts', posts);
         this.props.getmapMainSuccess(posts);
         this.setState(previousState => {
           return {
@@ -640,7 +635,6 @@ class Main extends Component<Props, State> {
       }
     }
     params = Object.assign({}, dataParams);
-    console.log('paramsxxxxxxxxxxxxxxxxx', params);
     this.loadData(true);
   }
 
@@ -665,6 +659,7 @@ class Main extends Component<Props, State> {
         this.loadData(true);
       })
       .catch(error => {
+        this.loadData(true);
         console.log('error !', error);
       });
   }
