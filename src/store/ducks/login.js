@@ -5,6 +5,7 @@ export const Types = {
   GET_SUCCESS: 'login/GET_SUCCESS',
   GET_FAILURE: 'login/GET_FAILURE',
   UPDATE_FU: 'user/UPDATE_FU',
+  SET_LANG: 'user/SET_LANG',
 };
 
 const initialState = Immutable({
@@ -18,7 +19,10 @@ export const Creators = {
   getloginRequest: () => ({
     type: Types.GET_REQUEST,
   }),
-
+  setLang: data => ({
+    type: Types.SET_LANG,
+    payload: {data},
+  }),
   updateFu: data => ({
     type: Types.UPDATE_FU,
     payload: {data},
@@ -40,12 +44,14 @@ const login = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-    case Types.UPDATE_FU:
+    case Types.UPDATE_FU: {
+      console.log('lololololo', action);
       return {
         ...state,
         loading: true,
         fu: action.payload.data,
       };
+    }
     case Types.GET_SUCCESS:
       return {
         ...state,

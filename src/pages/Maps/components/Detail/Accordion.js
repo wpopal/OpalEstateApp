@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {Path, Svg} from 'react-native-svg';
+import AppText from '../../../Text-i18n';
 
 class Accordion extends Component {
   constructor() {
@@ -55,9 +56,11 @@ class Accordion extends Component {
           activeOpacity={0.8}
           onPress={this.props.onClickFunction}
           style={styles.category_View}>
-          <Text style={styles.category_Text}>
+          <AppText
+            i18nKey={this.props.item.category_Name}
+            style={styles.category_Text}>
             {this.props.item.category_Name}{' '}
-          </Text>
+          </AppText>
           {this.props.item.expanded ? (
             <Svg
               className="icon"

@@ -82,6 +82,7 @@ const mapMain = (state = initialState, action) => {
     }
 
     case Types.SET_SETTING: {
+      console.log('actionactionactionactionaction', action);
       return {
         ...state,
         paramsSetting: action.payload.data,

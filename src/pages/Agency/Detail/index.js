@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {withNavigation} from 'react-navigation';
 import {ROUTE_NAMES} from '../routes';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-
+import AppText from '../../Text-i18n';
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
 import Slideshow from 'react-native-image-slider-show';
@@ -869,10 +869,16 @@ class Detail extends Component<Props, State> {
           )}
         </View>
         <Text style={{color: '#5F6870'}}>{data.company}</Text>
-        <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
-          {data.listing_count}
-          {' Listings'}
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
+            {data.listing_count}{' '}
+          </Text>
+          <AppText
+            style={{color: '#6923E7', fontSize: 16}}
+            i18nKey={'AGENCYS_LISTINGS'}>
+            Listings
+          </AppText>
+        </View>
         <View style={{width: '100%', height: 500, marginTop: 30}}>
           <TabView
             renderTabBar={props => (

@@ -20,6 +20,7 @@ import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import {Path, Svg} from 'react-native-svg';
 import Expandable_ListView from './Accordion';
+import AppText from '../../../Text-i18n';
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
@@ -51,17 +52,17 @@ class Detail extends Component<Props, State> {
       AccordionData: [
         {
           expanded: false,
-          category_Name: 'Amenities',
+          category_Name: 'DETAIL_AMENNIS',
           sub_Category: this.props.navigation.state.params.item.amenities,
         },
         {
           expanded: false,
-          category_Name: 'Facts & Features',
+          category_Name: 'DETAIL_FACTS',
           sub_Category: full,
         },
         {
           expanded: false,
-          category_Name: 'Facilities',
+          category_Name: 'DETAIL_FECILI',
           sub_Category: this.props.navigation.state.params.item.facilities,
         },
       ],
@@ -358,21 +359,23 @@ class Detail extends Component<Props, State> {
 
   _renderTruncatedFooter = handlePress => {
     return (
-      <Text
+      <AppText
+        i18nKey={'DETAIL_SHOWMORE'}
         style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
         onPress={handlePress}>
         + Show more
-      </Text>
+      </AppText>
     );
   };
 
   _renderRevealedFooter = handlePress => {
     return (
-      <Text
+      <AppText
+        i18nKey={'DETAIL_SHOWLESS'}
         style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
         onPress={handlePress}>
         - Show less
-      </Text>
+      </AppText>
     );
   };
 
@@ -563,14 +566,15 @@ class Detail extends Component<Props, State> {
                   paddingLeft: 20,
                   width: '90%',
                 }}>
-                <Text
+                <AppText
+                  i18nKey={'DETAIL_DESC'}
                   style={{
                     fontSize: RFPercentage(2.8),
                     fontWeight: 'bold',
                     marginBottom: 5,
                   }}>
                   Description
-                </Text>
+                </AppText>
                 <ReadMore
                   numberOfLines={8}
                   renderTruncatedFooter={this._renderTruncatedFooter}

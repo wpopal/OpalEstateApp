@@ -9,7 +9,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-
 import styled from 'styled-components';
 import SignUpComponent from './components/SignUp';
 import LoginComponent from './components/Login';
@@ -19,7 +18,7 @@ import {Creators as LoginCreators} from '../../../store/ducks/login';
 import SplashScreen from 'react-native-splash-screen';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {Path, Svg} from 'react-native-svg';
-
+import AppText from '../../Text-i18n';
 const {height: viewportHeight} = Dimensions.get('window');
 const Container = styled(View)`
   flex: 1;
@@ -84,14 +83,15 @@ class Login extends Component {
               />
             </Svg>
           </TouchableOpacity>
-          <Text
+          <AppText
+            i18nKey={'USER_LOGIN'}
             style={{
               left: -20,
               fontSize: RFPercentage(2.5),
               fontWeight: 'bold',
             }}>
-            LOGIN
-          </Text>
+            This is home screen
+          </AppText>
           <TouchableOpacity />
         </View>
         <Wrapper>{this.renderContent()}</Wrapper>

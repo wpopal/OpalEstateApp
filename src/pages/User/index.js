@@ -8,6 +8,9 @@ import {View} from 'react-native';
 import {Text, ListItem} from 'react-native-elements';
 import {queryUser, deleteDataUser} from '../../database/allSchemas';
 import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNPickerSelect from 'react-native-picker-select';
+import AppText from '../Text-i18n';
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 class User extends React.Component {
   constructor(props: Props) {
@@ -17,37 +20,37 @@ class User extends React.Component {
       token: false,
       list2: [
         {
-          title: 'Contact Us',
+          title: 'USER_CONTACT',
           icon: 'library-books',
         },
         {
-          title: 'About Us',
+          title: 'USER_ABOUT',
           icon: 'account-balance',
         },
+        // {
+        //   title: 'Language',
+        //   icon: 'language',
+        // },
         {
-          title: 'Language',
-          icon: 'language',
-        },
-        {
-          title: 'Login',
+          title: 'USER_LOGIN',
           icon: 'people',
         },
       ],
       list: [
         {
-          title: 'Contact Us',
+          title: 'USER_CONTACT',
           icon: 'library-books',
         },
         {
-          title: 'About Us',
+          title: 'USER_ABOUT',
           icon: 'account-balance',
         },
+        // {
+        //   title: 'Language',
+        //   icon: 'language',
+        // },
         {
-          title: 'Language',
-          icon: 'language',
-        },
-        {
-          title: 'Logout',
+          title: 'USER_LOGOUT',
           icon: 'block',
         },
       ],
@@ -60,7 +63,6 @@ class User extends React.Component {
       .then(item => {
         const dataUser = Array.from(item);
         this.setState({token: dataUser[0].token, data: dataUser[0]});
-        console.log('bbbbbbbbbbbb', this.state.data);
       })
       .catch(error => {
         console.log('error !', error);
@@ -78,16 +80,16 @@ class User extends React.Component {
 
   redirects = item => {
     switch (item) {
-      case 'Contact Us':
+      case 'USER_CONTACT':
         // this.props.navigation.navigate('PRO_FILE');
         break;
-      case 'About Us':
+      case 'USER_ABOUT':
         console.log('Bookmarks');
         break;
-      case 'Login':
+      case 'USER_LOGIN':
         this.props.navigation.navigate('LOGIN');
         break;
-      case 'Logout':
+      case 'USER_LOGOUT':
         deleteDataUser()
           .then(res => {
             setTimeout(function() {
@@ -108,6 +110,9 @@ class User extends React.Component {
     let avatar_url = l;
     avatar_url = avatar_url.replace('localhost', '10.0.2.2');
     return avatar_url;
+  }
+  setLang(lang) {
+    this.props.setLang(lang);
   }
   render() {
     const {navigation} = this.props;
@@ -137,12 +142,23 @@ class User extends React.Component {
                 onPress={() => {
                   this.redirects(item.title);
                 }}
-                title={item.title}
+                title={() => {
+                  return <AppText i18nKey={item.title}>{item.title}</AppText>;
+                }}
                 leftIcon={{name: item.icon}}
                 bottomDivider
                 chevron
               />
             ))}
+          </View>
+          <View style={{width: '100%', height: 100}}>
+            <RNPickerSelect
+              onValueChange={value => this.setLang(value)}
+              items={[
+                {label: 'English', value: 'en'},
+                {label: 'Vietnamese', value: 'vi'},
+              ]}
+            />
           </View>
         </View>
       );
@@ -172,12 +188,23 @@ class User extends React.Component {
                 onPress={() => {
                   this.redirects(item.title);
                 }}
-                title={item.title}
+                title={() => {
+                  return <AppText i18nKey={item.title}>{item.title}</AppText>;
+                }}
                 leftIcon={{name: item.icon}}
                 bottomDivider
                 chevron
               />
             ))}
+          </View>
+          <View style={{width: '100%', height: 100}}>
+            <RNPickerSelect
+              onValueChange={value => this.setLang(value)}
+              items={[
+                {label: 'English', value: 'en'},
+                {label: 'Vietnamese', value: 'vi'},
+              ]}
+            />
           </View>
         </View>
       );

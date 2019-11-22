@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {ROUTE_NAMES} from '../Agency/routes';
-import {Base_url,consumer_key,consumer_secret} from '../../config/setting';
+import {Base_url, consumer_key, consumer_secret} from '../../config/setting';
 import {Creators as AgencyCreators} from '../../store/ducks/agency';
+import AppText from '../Text-i18n';
 import {
   Text,
   Image,
@@ -201,10 +202,16 @@ class Agency extends Component<Props, State> {
             <Text numberOfLines={2} style={{color: '#767676', fontSize: 16}}>
               {l.address}
             </Text>
-            <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
-              {l.listing_count}
-              {' Listings'}
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
+                {l.listing_count}{' '}
+              </Text>
+              <AppText
+                style={{color: '#6923E7', fontSize: 16}}
+                i18nKey={'AGENCYS_LISTINGS'}>
+                Listings
+              </AppText>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -239,7 +246,11 @@ class Agency extends Component<Props, State> {
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()} />
-          <Text style={{fontSize: RFPercentage(2.5)}}>AGENCYS</Text>
+          <AppText
+            i18nKey={'AGENCYS_TITLE'}
+            style={{fontSize: RFPercentage(2.5)}}>
+            AGENCYS
+          </AppText>
           <TouchableOpacity />
         </View>
         <Grid

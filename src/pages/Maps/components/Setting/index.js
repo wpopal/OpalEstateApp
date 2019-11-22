@@ -22,6 +22,7 @@ import {bindActionCreators} from 'redux';
 import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
 import {connect} from 'react-redux';
 import {withNavigation} from 'react-navigation';
+import AppText from '../../../Text-i18n';
 
 const data = [
   {
@@ -105,10 +106,18 @@ class Search extends React.Component {
     );
     this.state.info = reInfor;
     this.setState(this.state);
-    params.min_price =  this.props.navigation.state.params.min_price.default;
-    params.max_price = this.props.navigation.state.params.max_price.default;
-    params.min_area =  this.props.navigation.state.params.min_area.default;
-    params.max_area = this.props.navigation.state.params.max_area.default;
+    params.min_price = Number(
+      this.props.navigation.state.params.min_price.default,
+    );
+    params.max_price = Number(
+      this.props.navigation.state.params.max_price.default,
+    );
+    params.min_area = Number(
+      this.props.navigation.state.params.min_area.default,
+    );
+    params.max_area = Number(
+      this.props.navigation.state.params.max_area.default,
+    );
     params.amenities = [];
     params.geo_radius = '';
     params.cat = '';
@@ -116,7 +125,6 @@ class Search extends React.Component {
     params.types = '';
     params.status = '';
     params.labels = '';
-
   };
 
   componentWillMount(): void {
@@ -243,8 +251,8 @@ class Search extends React.Component {
     dataUpdates.info = JSON.stringify(params.info);
     dataUpdates.amenities = JSON.stringify(params.amenities);
 
-    if (!params.types){
-      params.types = ''
+    if (!params.types) {
+      params.types = '';
     }
     console.log('paramsparamsparams', params);
     await updateParams(dataUpdates)
@@ -301,9 +309,15 @@ class Search extends React.Component {
               />
             </Svg>
           </TouchableOpacity>
-          <Text style={{fontSize: RFPercentage(3)}}>FILTERS</Text>
+          <AppText
+            i18nKey={'SETTINGS_FILTERS'}
+            style={{fontSize: RFPercentage(3)}}>
+            FILTERS
+          </AppText>
           <TouchableOpacity onPress={this.reSetSetting}>
-            <Text style={{color: '#6923E7'}}>RESET</Text>
+            <AppText i18nKey={'SETTINGS_RESET'} style={{color: '#6923E7'}}>
+              RESET
+            </AppText>
           </TouchableOpacity>
         </View>
         <View

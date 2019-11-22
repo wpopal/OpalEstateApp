@@ -22,6 +22,7 @@ import axios from 'axios';
 import {queryUser} from '../../database/allSchemas';
 import SplashScreen from 'react-native-splash-screen';
 import {Path, Svg, Circle, Rect, ClipPath, G, Defs} from 'react-native-svg';
+import AppText from '../Text-i18n';
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 interface Props {}
 
@@ -204,10 +205,16 @@ class Agent extends Component<Props, State> {
             <Text numberOfLines={2} style={{color: '#767676', fontSize: 16}}>
               {l.address}
             </Text>
-            <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
-              {l.listing_count}
-              {' Listings'}
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
+                {l.listing_count}{' '}
+              </Text>
+              <AppText
+                style={{color: '#6923E7', fontSize: 16}}
+                i18nKey={'AGENT_LISTINGS'}>
+                Listings
+              </AppText>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -242,7 +249,11 @@ class Agent extends Component<Props, State> {
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()} />
-          <Text style={{fontSize: RFPercentage(2.5)}}>AGENTS</Text>
+          <AppText
+            i18nKey={'AGENT_TITLE'}
+            style={{fontSize: RFPercentage(2.5)}}>
+            AGENCYS
+          </AppText>
           <TouchableOpacity />
         </View>
         <Grid

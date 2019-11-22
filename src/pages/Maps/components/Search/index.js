@@ -13,6 +13,7 @@ import {
 import styles from './style-search';
 import {Slider} from 'react-native-elements';
 import {Path, Svg} from 'react-native-svg';
+import AppText from '../../../Text-i18n';
 import {TagSelect} from 'react-native-tag-select';
 import RNPickerSelect from 'react-native-picker-select';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -307,7 +308,9 @@ class Search extends React.Component {
               </Svg>
             </View>
             <View style={{width: '90%'}}>
-              <Text>Use my current location</Text>
+              <AppText i18nKey={'SEARCH_LOCAL'}>
+                Use my current location
+              </AppText>
             </View>
           </TouchableOpacity>
           <View
@@ -333,7 +336,7 @@ class Search extends React.Component {
               </Svg>
             </View>
             <View style={{width: '90%'}}>
-              <Text>Popular Cities</Text>
+              <AppText i18nKey={'SEARCH_POPULAR'}>Popular Cities</AppText>
             </View>
           </View>
           <View style={styles.container}>

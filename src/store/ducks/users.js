@@ -5,16 +5,20 @@ export const Types = {
   GET_SUCCESS: 'user/GET_SUCCESS',
   GET_FAILURE: 'user/GET_FAILURE',
   UPDATE_FU: 'user/UPDATE_FU',
+  SET_LANG: 'user/SET_LANG',
 };
 
 const initialState = Immutable({
   loading: false,
   error: false,
-
   data: [],
 });
 
 export const Creators = {
+  setLang: data => ({
+    type: Types.SET_LANG,
+    payload: {data},
+  }),
   getuserRequest: () => ({
     type: Types.GET_REQUEST,
   }),

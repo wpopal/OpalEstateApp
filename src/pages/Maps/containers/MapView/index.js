@@ -26,7 +26,11 @@ import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
-import {Base_url} from "../../../../config/setting";
+import {
+  Base_url,
+  consumer_key,
+  consumer_secret,
+} from '../../../../config/setting';
 import MapViewZoom from 'react-native-map-clustering';
 
 const latitudeDelta = 0.8;
@@ -88,11 +92,10 @@ class HomeLocator extends Component {
       const posts = await axios({
         method: 'get',
         params: {
-          consumer_key: 'ck_bd09789959d94c7021ec1719df2965d4b0053698',
-          consumer_secret: 'cs_66aa5aad77dade62fb399435cff32dca3824ed9a',
+          consumer_key: consumer_key,
+          consumer_secret: consumer_secret,
         },
-        url:
-          Base_url + '/wp-json/estate-api/v1/search-form',
+        url: Base_url + '/wp-json/estate-api/v1/search-form',
         headers: {
           'X-Custom-Header': 'foobar',
           Accept: 'application/json',

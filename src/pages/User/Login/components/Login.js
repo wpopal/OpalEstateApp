@@ -11,7 +11,8 @@ import {ROUTE_NAMES} from '../routes';
 import {updateUser} from '../../../../database/allSchemas';
 import {Base_url} from '../../../../config/setting';
 const {height: viewportHeight} = Dimensions.get('window');
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
+import AppText from '../../../Text-i18n';
 const Container = styled(View)`
   width: 100%;
   height: 100%;
@@ -87,6 +88,9 @@ class LoginComponent extends Component {
   constructor(props: Props) {
     super(props);
   }
+  state = {
+    errorLog: '',
+  };
 
   componentDidMount() {
     Animated.stagger(100, [
@@ -133,9 +137,11 @@ class LoginComponent extends Component {
       .catch(errer => {
         console.log('errer', errer);
       });
-    console.log('posts.token', posts.token);
+    console.log('posts.token', posts);
     if (posts.token) {
       this.CheckToken(posts);
+    } else {
+      this.setState({errorLog: 'LOGIN_ERROR_NAMEORPASS'});
     }
   }
 
@@ -235,6 +241,7 @@ class LoginComponent extends Component {
   };
 
   render() {
+    console.log('ádhqiwuhdqhdiuqwudhqiwhdiwquh', this.state.errorLog);
     return (
       <Container>
         <View
@@ -269,6 +276,16 @@ class LoginComponent extends Component {
               border: 'solid 1px #e5e5e5',
             })}
           </Animated.View>
+          {
+            (this.state.errorLog = '' ? (
+              <View />
+            ) : (
+              <AppText
+                style={{color: 'rgba(204,37,0,0.85)', marginBottom: 20}}
+                i18nKey={this.state.errorLog}>
+              </AppText>
+            ))
+          }
           <View
             style={{
               flexDirection: 'row',
@@ -276,7 +293,7 @@ class LoginComponent extends Component {
               alignItems: 'center',
               width: '100%',
             }}>
-            <Text>Don’t have an account?</Text>
+            <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
             {this.renderSignUp()}
           </View>
           <Button
