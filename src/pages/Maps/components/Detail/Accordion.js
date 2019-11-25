@@ -92,7 +92,7 @@ class Accordion extends Component {
             paddingLeft: 20,
             paddingRight: 20,
           }}>
-          {this.props.item.category_Name === 'Amenities' ? (
+          {this.props.item.category_Name === 'DETAIL_AMENNIS' ? (
             this.props.item.sub_Category.map((item, key) => {
               return (
                 <View
@@ -109,7 +109,7 @@ class Accordion extends Component {
                 </View>
               );
             })
-          ) : this.props.item.category_Name === 'Facts & Features' ? (
+          ) : this.props.item.category_Name === 'DETAIL_FACTS' ? (
             this.props.item.sub_Category.map((item, key) => {
               return (
                 <View
@@ -124,7 +124,7 @@ class Accordion extends Component {
                 </View>
               );
             })
-          ) : this.props.item.category_Name === 'Facilities' ? (
+          ) : this.props.item.category_Name === 'DETAIL_FECILI' ? (
             this.props.item.sub_Category.map((item, key) => {
               return (
                 <View

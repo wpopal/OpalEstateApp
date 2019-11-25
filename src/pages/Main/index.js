@@ -438,12 +438,13 @@ class Main extends Component<Props, State> {
 
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info;
+    console.log('lllll', l);
     return (
       <View style={styles.listing}>
         <View
           style={{
             width: '100%',
-            height: '55%',
+            height: '50%',
           }}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DETAIL', l)}>

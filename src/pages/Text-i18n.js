@@ -15,33 +15,27 @@ class AppText extends React.Component {
 
   componentWillMount() {
     const language = this.props.i18nMain.i18nKey;
-    console.log('language', language);
     if (language) {
       this.setMainLocaleLanguage(language);
     }
   }
 
   componentWillReceiveProps = nextProps => {
-    console.log('nextProps', nextProps);
     const language = nextProps.i18nMain.i18nKey;
     if (language) {
       this.setMainLocaleLanguage(language);
     }
   };
 
-  componentDidMount(): void {
-    console.log('fuckkkkkk', this.props);
-  }
+  componentDidMount(): void {}
 
   setMainLocaleLanguage = language => {
-    console.log('88888888888888888888888888888');
     let i18n = this.state.i18n;
     i18n.locale = language;
     this.setState({i18n: i18n});
   };
 
   render() {
-    console.log('222222222222');
     const {i18nKey, style} = this.props;
     const {i18n} = this.state;
     return (

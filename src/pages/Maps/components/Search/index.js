@@ -248,7 +248,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log('this.props;', this.state.popular.length);
     return (
       <ScrollView>
         <View style={styles.container}>

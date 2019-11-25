@@ -26,6 +26,7 @@ import {Path, Svg, G, Defs, ClipPath} from 'react-native-svg';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import axios from 'axios';
 import MainList from '../../../Main/index';
+import NetInfo from '@react-native-community/netinfo';
 import {
   Base_url,
   consumer_key,
@@ -66,6 +67,7 @@ class HomeLocator extends Component {
       openModal: false,
       selectedFlag: false,
       defaultValue: true,
+      isConnected:true,
       select: '',
     };
   }
@@ -81,6 +83,14 @@ class HomeLocator extends Component {
   };
 
   onSelectedItemsChange = (key, value) => {};
+
+  componentWillMount(): void {
+    NetInfo.fetch().then(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      this.setState({isConnected:state.isConnected})
+    });
+  }
 
   componentDidMount() {
     SplashScreen.hide();
@@ -174,7 +184,8 @@ class HomeLocator extends Component {
     });
 
     return (
-      <View style={styles.container}>
+      this.state.isConnected ?
+          (  <View style={styles.container}>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <View
           style={{
@@ -199,9 +210,9 @@ class HomeLocator extends Component {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <View style={{marginLeft: '2%'}}>
+            <View style={{marginLeft: '2%',height:'100%',width:'12%', alignItems: 'center',  justifyContent: 'center'}}>
               {this.state.Changeicon ? (
-                <TouchableOpacity onPress={this.scrollToB}>
+                <TouchableOpacity onPress={this.scrollToB} style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}>
                   <Svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={RFPercentage(5)}
@@ -215,7 +226,7 @@ class HomeLocator extends Component {
                   </Svg>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity onPress={this.scrollToTop}>
+                <TouchableOpacity onPress={this.scrollToTop} style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}>
                   <Svg
                     width={RFPercentage(5)}
                     height={RFPercentage(3)}
@@ -230,7 +241,7 @@ class HomeLocator extends Component {
                 </TouchableOpacity>
               )}
             </View>
-            <View style={{width: '77%'}}>
+            <View style={{width: '76%'}}>
               <View>
                 <TouchableOpacity
                   disabled={false}
@@ -262,12 +273,13 @@ class HomeLocator extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={{marginRight: '2%'}}>
+            <View style={{paddingRight: '2%',height:'100%',width:'12%', alignItems: 'center',  justifyContent: 'center'}}>
               <TouchableOpacity
                 disabled={false}
                 onPress={() =>
                   this.props.navigation.navigate('SETTING', dataSetting)
                 }
+                style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}
                 activeOpacity={0.7}>
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -401,6 +413,12 @@ class HomeLocator extends Component {
           </View>
         </ScrollView>
       </View>
+          ) : (
+              <View style={styles.container}>
+        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+          <Text>No Internet</Text>
+      </View>
+          )
     );
   }
 }

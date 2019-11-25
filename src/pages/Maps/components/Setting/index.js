@@ -92,32 +92,35 @@ class Search extends React.Component {
 
     this.state.gender = '0';
     this.state.typesValue = '';
-    this.state.max_price = Number(
-      this.props.navigation.state.params.max_price.default,
-    );
-    this.state.max_area = Number(
-      this.props.navigation.state.params.max_area.default,
-    );
-    this.state.min_price = Number(
-      this.props.navigation.state.params.min_price.default,
-    );
-    this.state.min_area = Number(
-      this.props.navigation.state.params.min_area.default,
-    );
+
+    console.log('this.props', this.props);
+    this.state.max_price = this.props.navigation.state.params.max_price
+      ? Number(this.props.navigation.state.params.max_price.default)
+      : 10000;
+    this.state.max_area = this.props.navigation.state.params.max_area
+      ? Number(this.props.navigation.state.params.max_area.default)
+      : 10000;
+    this.state.min_price = this.props.navigation.state.params.min_price
+      ? Number(this.props.navigation.state.params.min_price.default)
+      : 0;
+    this.state.min_area = this.props.navigation.state.params.min_area
+      ? Number(this.props.navigation.state.params.min_area.default)
+      : 0;
     this.state.info = reInfor;
     this.setState(this.state);
-    params.min_price = Number(
-      this.props.navigation.state.params.min_price.default,
-    );
-    params.max_price = Number(
-      this.props.navigation.state.params.max_price.default,
-    );
-    params.min_area = Number(
-      this.props.navigation.state.params.min_area.default,
-    );
-    params.max_area = Number(
-      this.props.navigation.state.params.max_area.default,
-    );
+    params.min_price = this.props.navigation.state.params.min_price
+      ? Number(this.props.navigation.state.params.min_price.default)
+      : 0;
+    params.max_price = this.props.navigation.state.params.max_price
+      ? Number(this.props.navigation.state.params.max_price.default)
+      : 10000;
+
+    params.min_area = this.props.navigation.state.params.min_area
+      ? Number(this.props.navigation.state.params.min_area.default)
+      : 0;
+    params.max_area = this.props.navigation.state.params.max_area
+      ? Number(this.props.navigation.state.params.max_area.default)
+      : 10000;
     params.amenities = [];
     params.geo_radius = '';
     params.cat = '';
@@ -128,8 +131,6 @@ class Search extends React.Component {
   };
 
   componentWillMount(): void {
-    console.log(this.props.navigation.state.params);
-    console.log(this.props.mapMainRequest.paramsSetting);
     if (Object.keys(this.props.navigation.state.params).length) {
       if (
         this.props.navigation.state.params.types.enable &&
@@ -192,10 +193,8 @@ class Search extends React.Component {
           this.props.mapMainRequest.paramsSetting.amenities !== ''
             ? JSON.parse(this.props.mapMainRequest.paramsSetting.amenities)
             : '';
-        console.log('dataAmen', dataAmen);
         for (let i in dda) {
           if (dataAmen.indexOf(dda[i].slug) >= 0) {
-            console.log(dataAmen.indexOf(dda[i].slug), '---', dda[i].slug);
             dda[i].checked = true;
           } else {
             dda[i].checked = false;
@@ -239,9 +238,7 @@ class Search extends React.Component {
     // this.setState({dataSetting: this.props.navigation.state.params});
   }
 
-  componentDidMount(): void {
-    console.log('this.props.mapMainRequest', this.props.mapMainRequest);
-  }
+  componentDidMount(): void {}
 
   async SearchBack() {
     params.geo_long = this.props.mapMainRequest.geoLocal.longitude;
@@ -254,7 +251,6 @@ class Search extends React.Component {
     if (!params.types) {
       params.types = '';
     }
-    console.log('paramsparamsparams', params);
     await updateParams(dataUpdates)
       .then(item => {
         this.props.setSettingmapMainSuccess(item);
@@ -266,6 +262,7 @@ class Search extends React.Component {
   }
 
   render() {
+    ``;
     const data = [
       {
         value: '0',
@@ -560,12 +557,7 @@ class Search extends React.Component {
                       params.amenities = [];
                       for (let x in this.state.dataMoreOp) {
                         if (this.state.dataMoreOp[x].checked) {
-                          console.log(
-                            'this.state.dataMoreOp',
-                            this.state.dataMoreOp[x].checked,
-                          );
                           params.amenities.push(this.state.dataMoreOp[x].slug);
-                          console.log('paramsMORE', params);
                         }
                       }
                     }}
@@ -606,7 +598,6 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return {
     mapMainRequest: state.mapMain,
   };

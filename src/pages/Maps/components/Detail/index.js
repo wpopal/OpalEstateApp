@@ -9,6 +9,7 @@ import {
   Platform,
   UIManager,
   LayoutAnimation,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import ReadMore from 'react-native-read-more-text';
@@ -359,23 +360,26 @@ class Detail extends Component<Props, State> {
 
   _renderTruncatedFooter = handlePress => {
     return (
-      <AppText
-        i18nKey={'DETAIL_SHOWMORE'}
-        style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
-        onPress={handlePress}>
-        + Show more
-      </AppText>
+      <TouchableOpacity onPress={handlePress}>
+        <AppText
+          i18nKey={'DETAIL_SHOWMORE'}
+          style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}>
+          + Show more
+        </AppText>
+      </TouchableOpacity>
     );
   };
 
   _renderRevealedFooter = handlePress => {
     return (
-      <AppText
-        i18nKey={'DETAIL_SHOWLESS'}
-        style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
-        onPress={handlePress}>
-        - Show less
-      </AppText>
+      <TouchableOpacity onPress={handlePress}>
+        <AppText
+          i18nKey={'DETAIL_SHOWLESS'}
+          style={{color: '#7159c1', marginTop: 5, fontSize: RFPercentage(2.3)}}
+          onPress={handlePress}>
+          - Show less
+        </AppText>
+      </TouchableOpacity>
     );
   };
 

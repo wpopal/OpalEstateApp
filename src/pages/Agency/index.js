@@ -68,7 +68,7 @@ class Agency extends Component<Props, State> {
         per_page: perPage,
         page: page,
       },
-      url: Base_url + '/wp-json/estate-api/v1/agents',
+      url: Base_url + '/wp-json/estate-api/v1/agencies',
       headers: {
         'X-Custom-Header': 'foobar',
         // Authorization: 'Bearer ' + this.state.token,
