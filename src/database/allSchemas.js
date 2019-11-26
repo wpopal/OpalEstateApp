@@ -70,6 +70,32 @@ export const updateUser = newUser =>
       .catch(error => reject(error));
   });
 
+export const createrUser = newUser =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOption)
+      .then(realm => {
+        realm.write(() => {
+          realm.create(
+            DATA_SET,
+            {
+              id: 0,
+              token: '',
+              user_display_name: '',
+              user_email: '',
+              user_nicename: '',
+              avatar: '',
+              user_role: '',
+              geo_local: '',
+            },
+            true,
+          );
+          resolve(newUser);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
+
 export const updateParams = newParams => {
   console.log(newParams);
   return new Promise((resolve, reject) => {

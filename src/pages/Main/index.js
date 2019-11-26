@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Path, Svg} from 'react-native-svg';
-import {queryUser} from '../../database/allSchemas';
+import {
+  queryUser,
+  createrUser,
+  upDateGeoLocal,
+} from '../../database/allSchemas';
 import {Base_url, consumer_key, consumer_secret} from '../../config/setting';
 import {
   View,
@@ -10,6 +14,7 @@ import {
   TouchableOpacity,
   ListRenderItemInfo,
   Dimensions,
+  PermissionsAndroid,
 } from 'react-native';
 import {Text} from 'react-native-elements';
 import {Creators as MainCreators} from '../../store/ducks/mapMain';
@@ -17,7 +22,7 @@ import {RFPercentage} from 'react-native-responsive-fontsize';
 import styles from './style-main';
 import Grid from 'react-native-infinite-scroll-grid';
 import axios from 'axios';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {withNavigation} from 'react-navigation';
 
 const {width: viewportWidth} = Dimensions.get('window');
@@ -639,24 +644,61 @@ class Main extends Component<Props, State> {
     this.loadData(true);
   }
 
-  componentWillMount(): void {
+  async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Example App',
+          message: 'Example App access to your location ',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location');
+        Geolocation.getCurrentPosition(
+          position => {
+            params.geo_long = position.coords.latitude;
+            params.geo_lat = position.coords.longitude;
+          },
+          error => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      } else {
+        console.log('location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+  async componentWillMount(): void {
     if (
       this.props.mainRequest.PopularCiti === '' &&
       this.props.mainRequest.geoLocal.latitude === ''
     ) {
-      Geolocation.getCurrentPosition(info => {
-        params.geo_long = info.coords.latitude;
-        params.geo_lat = info.coords.longitude;
-      });
+      await this.requestLocationPermission();
     }
 
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
+        console.log(dataUser);
+        if (dataUser.length) {
+          this.setState({
+            token: dataUser[0].token,
+          });
+        } else {
+          createrUser('creater')
+            .then(item => {
+              console.log(item);
+            })
+            .catch(error => {
+              console.log('error !', error);
+            });
+        }
 
-        this.setState({
-          token: dataUser[0].token,
-        });
         this.loadData(true);
       })
       .catch(error => {
@@ -673,7 +715,7 @@ class Main extends Component<Props, State> {
     const {loading, error, data} = mainRequest;
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Grid
+          <Grid
           style={{flex: 1, marginTop: 20}}
           key={this.state.numColumns}
           numColumns={this.state.numColumns}

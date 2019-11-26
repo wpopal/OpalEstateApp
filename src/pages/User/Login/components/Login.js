@@ -1,7 +1,14 @@
 // @flow
 
 import React, {Component} from 'react';
-import {TouchableOpacity, Animated, View, Text, Dimensions} from 'react-native';
+import {
+  TouchableOpacity,
+  Animated,
+  View,
+  Text,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 
 import styled from 'styled-components';
 import Input from './Input';
@@ -244,100 +251,102 @@ class LoginComponent extends Component {
     console.log('ádhqiwuhdqhdiuqwudhqiwhdiwquh', this.state.errorLog);
     return (
       <Container>
-        <View
-          style={{
-            width: '100%',
-            borderRadius: 15,
-            backgroundColor: '#fff',
-            padding: 30,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.18,
-            shadowRadius: 1.0,
-
-            elevation: 1,
-          }}>
-          <Animated.View>
-            {this.renderInput('E-mail', 'envelope', 'emailAddress', {
-              backgroundColor: '#fff',
-              border: 'solid 1px #e5e5e5',
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
-            })}
-          </Animated.View>
-          <Animated.View>
-            {this.renderInput('Password', 'unlock-alt', 'password', {
-              backgroundColor: '#fff',
-              border: 'solid 1px #e5e5e5',
-            })}
-          </Animated.View>
-          {
-            (this.state.errorLog = '' ? (
-              <View />
-            ) : (
-              <AppText
-                style={{color: 'rgba(204,37,0,0.85)', marginBottom: 20}}
-                i18nKey={this.state.errorLog}>
-              </AppText>
-            ))
-          }
+        <ScrollView>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
               width: '100%',
+              borderRadius: 15,
+              backgroundColor: '#fff',
+              padding: 30,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.18,
+              shadowRadius: 1.0,
+
+              elevation: 1,
             }}>
-            <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
-            {this.renderSignUp()}
-          </View>
-          <Button
-            style={{
-              marginTop: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-              height: 60,
-            }}
-            onPress={() => {
-              this.Clicklogin();
-            }}>
-            <LinearGradient
-              start={{
-                x: 0,
-                y: 0,
-              }}
-              end={{
-                x: 1,
-                y: 0,
-              }}
-              colors={['#a685e7', '#9733e7', '#6923E7']}
+            <Animated.View>
+              {this.renderInput('E-mail', 'envelope', 'emailAddress', {
+                backgroundColor: '#fff',
+                border: 'solid 1px #e5e5e5',
+                borderTopRightRadius: 20,
+                borderTopLeftRadius: 20,
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              })}
+            </Animated.View>
+            <Animated.View>
+              {this.renderInput('Password', 'unlock-alt', 'password', {
+                backgroundColor: '#fff',
+                border: 'solid 1px #e5e5e5',
+              })}
+            </Animated.View>
+            {
+              (this.state.errorLog = '' ? (
+                <View />
+              ) : (
+                <AppText
+                  style={{color: 'rgba(204,37,0,0.85)', marginBottom: 20}}
+                  i18nKey={this.state.errorLog}
+                />
+              ))
+            }
+            <View
               style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
                 width: '100%',
+              }}>
+              <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
+              {this.renderSignUp()}
+            </View>
+            <Button
+              style={{
+                marginTop: 40,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
                 height: 60,
+              }}
+              onPress={() => {
+                this.Clicklogin();
               }}>
-              <ButtonText>LOGIN</ButtonText>
-            </LinearGradient>
-          </Button>
-          {this.renderForgotPasswordText()}
-        </View>
-        <View
-          style={{
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{color: '#aaa'}}>or</Text>
-          {this.renderSocialButtons()}
-        </View>
+              <LinearGradient
+                start={{
+                  x: 0,
+                  y: 0,
+                }}
+                end={{
+                  x: 1,
+                  y: 0,
+                }}
+                colors={['#a685e7', '#9733e7', '#6923E7']}
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  height: 60,
+                }}>
+                <ButtonText>LOGIN</ButtonText>
+              </LinearGradient>
+            </Button>
+            {this.renderForgotPasswordText()}
+          </View>
+          <View
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{color: '#aaa'}}>or</Text>
+            {this.renderSocialButtons()}
+          </View>
+        </ScrollView>
       </Container>
     );
   }

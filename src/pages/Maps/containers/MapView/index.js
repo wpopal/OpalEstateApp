@@ -85,6 +85,7 @@ class HomeLocator extends Component {
   onSelectedItemsChange = (key, value) => {};
 
   componentWillMount(): void {
+
     NetInfo.fetch().then(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
@@ -414,10 +415,17 @@ class HomeLocator extends Component {
         </ScrollView>
       </View>
           ) : (
-              <View style={styles.container}>
-        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-          <Text>No Internet</Text>
-      </View>
+                <View
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{fontSize: 20, color: '#ccc'}}>
+                    No Internet !
+                  </Text>
+                </View>
           )
     );
   }

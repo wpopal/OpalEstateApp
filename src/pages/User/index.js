@@ -116,7 +116,7 @@ class User extends React.Component {
   }
   render() {
     const {navigation} = this.props;
-    if (this.state.token !== false) {
+    if (this.state.token !== false && this.state.token !== '') {
       return (
         <View style={styles.container}>
           <View style={styles.avatar}>

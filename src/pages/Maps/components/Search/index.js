@@ -8,9 +8,11 @@ import {
   KeyboardAvoidingView,
   Alert,
   Image,
+  PermissionsAndroid,
   ImageBackground,
 } from 'react-native';
 import styles from './style-search';
+import Geolocation from 'react-native-geolocation-service';
 import {Slider} from 'react-native-elements';
 import {Path, Svg} from 'react-native-svg';
 import AppText from '../../../Text-i18n';
@@ -22,7 +24,7 @@ import {Params} from '@fortawesome/fontawesome-svg-core';
 import RNPicker from '../../containers/MapView/RNModalPicker';
 import {withNavigation} from 'react-navigation';
 import GridList from 'react-native-grid-list';
-import Geolocation from '@react-native-community/geolocation';
+
 import {bindActionCreators} from 'redux';
 import {Creators as mapMainCreators} from '../../../../store/ducks/mapMain';
 import {connect} from 'react-redux';
@@ -175,6 +177,38 @@ class Search extends React.Component {
     forceRefresh: false,
   };
 
+  async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Example App',
+          message: 'Example App access to your location ',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location');
+        Geolocation.getCurrentPosition(
+          position => {
+            this.setLocal(position)
+          },
+          error => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      } else {
+        console.log('location permission denied');
+        alert('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  async componentWillMount(): void {}
+
   componentDidMount(): void {
     this.getCity();
   }
@@ -204,7 +238,7 @@ class Search extends React.Component {
   }
 
   findCoordinates = () => {
-    Geolocation.getCurrentPosition(info => this.setLocal(info));
+    this.requestLocationPermission();
   };
 
   findPopularCities = Geolocal => {
