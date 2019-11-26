@@ -248,7 +248,6 @@ class LoginComponent extends Component {
   };
 
   render() {
-    console.log('ádhqiwuhdqhdiuqwudhqiwhdiwquh', this.state.errorLog);
     return (
       <Container>
         <ScrollView>

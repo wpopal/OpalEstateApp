@@ -26,4 +26,5 @@ export default {
 
   DONE_ACC: 'Don’t have an account?',
   LOGIN_ERROR_NAMEORPASS: 'Wrong password or username',
+  LANG: 'Language :',
 };
