@@ -299,7 +299,6 @@ class LoginComponent extends Component {
             </View>
             <View
               style={{
-                backgroundColor: '#ccc',
                 flexDirection: 'row',
                 marginBottom: 10,
                 justifyContent: 'center',
