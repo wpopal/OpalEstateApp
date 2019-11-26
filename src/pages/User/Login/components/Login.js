@@ -249,12 +249,12 @@ class LoginComponent extends Component {
 
   render() {
     return (
-      <Container>
-        <ScrollView>
+      <ScrollView>
+        <Container>
           <View
             style={{
               height: '60%',
-              minHeight: 350,
+              minHeight: 320,
               width: '100%',
               borderRadius: 15,
               backgroundColor: '#fff',
@@ -288,10 +288,14 @@ class LoginComponent extends Component {
             <View>
               {
                 (this.state.errorLog = '' ? (
-                  <View />
+                  <View style={{margin: 0, padding: 0}} />
                 ) : (
                   <AppText
-                    style={{color: 'rgba(204,37,0,0.85)'}}
+                    style={{
+                      color: 'rgba(204,37,0,0.85)',
+                      margin: 0,
+                      padding: 0,
+                    }}
                     i18nKey={this.state.errorLog}
                   />
                 ))
@@ -312,7 +316,7 @@ class LoginComponent extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
-                height: 55,
+                height: 50,
               }}
               onPress={() => {
                 this.Clicklogin();
@@ -332,7 +336,7 @@ class LoginComponent extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: 10,
-                  height: 55,
+                  height: 50,
                 }}>
                 <ButtonText>LOGIN</ButtonText>
               </LinearGradient>
@@ -341,7 +345,6 @@ class LoginComponent extends Component {
           </View>
           <View
             style={{
-              marginTop: 10,
               height: '20%',
               width: '100%',
               justifyContent: 'center',
@@ -350,8 +353,8 @@ class LoginComponent extends Component {
             <Text style={{color: '#aaa'}}>or</Text>
             {this.renderSocialButtons()}
           </View>
-        </ScrollView>
-      </Container>
+        </Container>
+      </ScrollView>
     );
   }
 }

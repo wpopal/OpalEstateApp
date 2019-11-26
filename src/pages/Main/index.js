@@ -391,7 +391,6 @@ class Main extends Component<Props, State> {
     }
     if (refresh) {
       this.setState({refreshing: true});
-      this.setState({posts: []});
       try {
         this.isLoading = true;
         params.page = 1;
@@ -715,7 +714,7 @@ class Main extends Component<Props, State> {
     const {loading, error, data} = mainRequest;
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Grid
+        <Grid
           style={{flex: 1, marginTop: 20}}
           key={this.state.numColumns}
           numColumns={this.state.numColumns}
