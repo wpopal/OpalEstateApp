@@ -253,6 +253,8 @@ class LoginComponent extends Component {
         <ScrollView>
           <View
             style={{
+              height: '60%',
+              minHeight: 350,
               width: '100%',
               borderRadius: 15,
               backgroundColor: '#fff',
@@ -283,33 +285,35 @@ class LoginComponent extends Component {
                 border: 'solid 1px #e5e5e5',
               })}
             </Animated.View>
-            {
-              (this.state.errorLog = '' ? (
-                <View />
-              ) : (
-                <AppText
-                  style={{color: 'rgba(204,37,0,0.85)', marginBottom: 20}}
-                  i18nKey={this.state.errorLog}
-                />
-              ))
-            }
+            <View>
+              {
+                (this.state.errorLog = '' ? (
+                  <View />
+                ) : (
+                  <AppText
+                    style={{color: 'rgba(204,37,0,0.85)'}}
+                    i18nKey={this.state.errorLog}
+                  />
+                ))
+              }
+            </View>
             <View
               style={{
+                backgroundColor: '#ccc',
                 flexDirection: 'row',
+                marginBottom: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%',
               }}>
               <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
               {this.renderSignUp()}
             </View>
             <Button
               style={{
-                marginTop: 40,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
-                height: 60,
+                height: 55,
               }}
               onPress={() => {
                 this.Clicklogin();
@@ -329,7 +333,7 @@ class LoginComponent extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: 10,
-                  height: 60,
+                  height: 55,
                 }}>
                 <ButtonText>LOGIN</ButtonText>
               </LinearGradient>
@@ -338,6 +342,8 @@ class LoginComponent extends Component {
           </View>
           <View
             style={{
+              marginTop: 10,
+              height: '20%',
               width: '100%',
               justifyContent: 'center',
               alignItems: 'center',
