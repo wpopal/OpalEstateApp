@@ -4,7 +4,7 @@ import styles from './style-user';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Creators as userCreators} from '../../store/ducks/login';
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {Text, ListItem} from 'react-native-elements';
 import {queryUser, deleteDataUser} from '../../database/allSchemas';
 import RNRestart from 'react-native-restart'; // Import package from node modules
@@ -118,97 +118,101 @@ class User extends React.Component {
     const {navigation} = this.props;
     if (this.state.token !== false && this.state.token !== '') {
       return (
-        <View style={styles.container}>
-          <View style={styles.avatar}>
-            <Avatar
-              title="NU"
-              size="xlarge"
-              onPress={() => console.log('Works!')}
-              activeOpacity={0.7}
-              rounded
-              source={{
-                uri: this.state.data.avatar,
-              }}
-              showEditButton
-            />
-            <Text h4>{this.state.data.user_display_name}</Text>
-            <Text>{this.state.data.user_email}</Text>
-            <Text>{this.state.data.user_nicename}</Text>
-          </View>
-          <View style={styles.listItem}>
-            {this.state.list.map((item, i) => (
-              <ListItem
-                key={i}
-                onPress={() => {
-                  this.redirects(item.title);
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.avatar}>
+              <Avatar
+                title="NU"
+                size="xlarge"
+                onPress={() => console.log('Works!')}
+                activeOpacity={0.7}
+                rounded
+                source={{
+                  uri: this.state.data.avatar,
                 }}
-                title={() => {
-                  return <AppText i18nKey={item.title}>{item.title}</AppText>;
-                }}
-                leftIcon={{name: item.icon}}
-                bottomDivider
-                chevron
+                showEditButton
               />
-            ))}
+              <Text h4>{this.state.data.user_display_name}</Text>
+              <Text>{this.state.data.user_email}</Text>
+              <Text>{this.state.data.user_nicename}</Text>
+            </View>
+            <View style={styles.listItem}>
+              {this.state.list.map((item, i) => (
+                <ListItem
+                  key={i}
+                  onPress={() => {
+                    this.redirects(item.title);
+                  }}
+                  title={() => {
+                    return <AppText i18nKey={item.title}>{item.title}</AppText>;
+                  }}
+                  leftIcon={{name: item.icon}}
+                  bottomDivider
+                  chevron
+                />
+              ))}
+            </View>
+            <View style={{width: '100%', height: 'auto', padding: 20}}>
+              <AppText i18nKey={'LANG'}>Language :</AppText>
+              <RNPickerSelect
+                onValueChange={value => this.setLang(value)}
+                items={[
+                  {label: 'English', value: 'en'},
+                  {label: 'Vietnamese', value: 'vi'},
+                ]}
+              />
+            </View>
           </View>
-          <View style={{width: '100%', height: 'auto', padding: 20}}>
-            <AppText i18nKey={'LANG'}>Language :</AppText>
-            <RNPickerSelect
-              onValueChange={value => this.setLang(value)}
-              items={[
-                {label: 'English', value: 'en'},
-                {label: 'Vietnamese', value: 'vi'},
-              ]}
-            />
-          </View>
-        </View>
+        </ScrollView>
       );
     } else {
       return (
-        <View style={styles.container}>
-          <View style={styles.avatar}>
-            <Avatar
-              title="NU"
-              size="xlarge"
-              onPress={() => console.log('Works!')}
-              activeOpacity={0.7}
-              rounded
-              onEditPress={() => console.log('Works!')}
-              source={{
-                uri:
-                  'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-              }}
-              showEditButton
-            />
-            <Text h4> Name User </Text>
-          </View>
-          <View style={styles.listItem}>
-            {this.state.list2.map((item, i) => (
-              <ListItem
-                key={i}
-                onPress={() => {
-                  this.redirects(item.title);
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.avatar}>
+              <Avatar
+                title="NU"
+                size="xlarge"
+                onPress={() => console.log('Works!')}
+                activeOpacity={0.7}
+                rounded
+                onEditPress={() => console.log('Works!')}
+                source={{
+                  uri:
+                    'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
                 }}
-                title={() => {
-                  return <AppText i18nKey={item.title}>{item.title}</AppText>;
-                }}
-                leftIcon={{name: item.icon}}
-                bottomDivider
-                chevron
+                showEditButton
               />
-            ))}
+              <Text h4> Name User </Text>
+            </View>
+            <View style={styles.listItem}>
+              {this.state.list2.map((item, i) => (
+                <ListItem
+                  key={i}
+                  onPress={() => {
+                    this.redirects(item.title);
+                  }}
+                  title={() => {
+                    return <AppText i18nKey={item.title}>{item.title}</AppText>;
+                  }}
+                  leftIcon={{name: item.icon}}
+                  bottomDivider
+                  chevron
+                />
+              ))}
+            </View>
+            <View style={{width: '100%', height: 'auto', padding: 20}}>
+              <AppText i18nKey={'LANG'}>Language :</AppText>
+              <RNPickerSelect
+                onValueChange={value => this.setLang(value)}
+                items={[
+                  {label: 'English', value: 'en'},
+                  {label: 'Vietnamese', value: 'vi'},
+                ]}
+              />
+            </View>
           </View>
-          <View style={{width: '100%', height: 'auto', padding: 20}}>
-            <AppText i18nKey={'LANG'}>Language :</AppText>
-            <RNPickerSelect
-              onValueChange={value => this.setLang(value)}
-              items={[
-                {label: 'English', value: 'en'},
-                {label: 'Vietnamese', value: 'vi'},
-              ]}
-            />
-          </View>
-        </View>
+        </ScrollView>
       );
     }
   }

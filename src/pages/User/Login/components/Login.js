@@ -318,7 +318,11 @@ class LoginComponent extends Component {
                     {this.state.spinner ? (
                       <View />
                     ) : (
-                      <AppText i18nKey={'SIGN_UP'}>Sign up</AppText>
+                      <AppText
+                        style={{color: '#6923e7', fontFamily: 'Roboto-Bold'}}
+                        i18nKey={'SIGN_UP'}>
+                        Sign up
+                      </AppText>
                     )}
                   </RecoverTextButton>
                 </ForgotPasswordWrapper>
@@ -351,14 +355,7 @@ class LoginComponent extends Component {
                   borderRadius: 10,
                   height: 50,
                 }}>
-                {!this.state.snippet ? (
-                  <ButtonText>LOGIN</ButtonText>
-                ) : (
-                  <Image
-                    source={require('./ajax-loader.gif')}
-                    style={{width: 25, height: 25}}
-                  />
-                )}
+                <ButtonText>LOGIN</ButtonText>
               </LinearGradient>
             </Button>
             <ForgotPasswordContainer style={{marginTop: 10}}>
@@ -368,7 +365,11 @@ class LoginComponent extends Component {
                   {this.state.spinner ? (
                     <View />
                   ) : (
-                    <AppText i18nKey={'FOR_GOT'}>Forgot Password?</AppText>
+                    <AppText
+                      style={{color: '#6923e7', fontFamily: 'Roboto-Bold'}}
+                      i18nKey={'FOR_GOT'}>
+                      Forgot Password?
+                    </AppText>
                   )}
                 </TouchableOpacity>
               </ForgotPasswordWrapper>
