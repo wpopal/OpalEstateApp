@@ -67,7 +67,7 @@ class HomeLocator extends Component {
       openModal: false,
       selectedFlag: false,
       defaultValue: true,
-      isConnected:true,
+      isConnected: true,
       select: '',
     };
   }
@@ -85,11 +85,10 @@ class HomeLocator extends Component {
   onSelectedItemsChange = (key, value) => {};
 
   componentWillMount(): void {
-
     NetInfo.fetch().then(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
-      this.setState({isConnected:state.isConnected})
+      this.setState({isConnected: state.isConnected});
     });
   }
 
@@ -127,10 +126,25 @@ class HomeLocator extends Component {
   }
 
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    console.log('nextProps.mapMainRequest', nextProps.mapMainRequest);
     if (nextProps.mapMainRequest.data.length > 0) {
       this.reRenderMap(nextProps.mapMainRequest);
     } else {
-      this.setState({notFound: true});
+      if (
+        nextProps.mapMainRequest.paramsSetting.search_text !== '' &&
+        nextProps.mapMainRequest.geoLocal.latitude === ''
+      ) {
+        this.state.selectedText =
+          nextProps.mapMainRequest.paramsSetting.search_text;
+      }
+      if (
+        nextProps.mapMainRequest.paramsSetting.search_text === '' &&
+        nextProps.mapMainRequest.geoLocal.latitude !== ''
+      ) {
+        this.state.selectedText = 'You Location';
+      }
+      this.state.notFound = true;
+      this.setState(this.state);
     }
     // this.setState({selectedText:this.p})
   }
@@ -139,6 +153,7 @@ class HomeLocator extends Component {
 
   reRenderMap = data => {
     if (data.geoLocal.latitude !== '') {
+      console.log('data', data);
       this.setState({
         notFound: false,
         selectedText: 'You Location',
@@ -184,9 +199,8 @@ class HomeLocator extends Component {
       extrapolate: 'clamp',
     });
 
-    return (
-      this.state.isConnected ?
-          (  <View style={styles.container}>
+    return this.state.isConnected ? (
+      <View style={styles.container}>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <View
           style={{
@@ -211,9 +225,23 @@ class HomeLocator extends Component {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <View style={{marginLeft: '2%',height:'100%',width:'12%', alignItems: 'center',  justifyContent: 'center'}}>
+            <View
+              style={{
+                marginLeft: '2%',
+                height: '100%',
+                width: '12%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               {this.state.Changeicon ? (
-                <TouchableOpacity onPress={this.scrollToB} style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}>
+                <TouchableOpacity
+                  onPress={this.scrollToB}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <Svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={RFPercentage(5)}
@@ -227,7 +255,14 @@ class HomeLocator extends Component {
                   </Svg>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity onPress={this.scrollToTop} style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}>
+                <TouchableOpacity
+                  onPress={this.scrollToTop}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <Svg
                     width={RFPercentage(5)}
                     height={RFPercentage(3)}
@@ -274,13 +309,25 @@ class HomeLocator extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={{paddingRight: '2%',height:'100%',width:'12%', alignItems: 'center',  justifyContent: 'center'}}>
+            <View
+              style={{
+                paddingRight: '2%',
+                height: '100%',
+                width: '12%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <TouchableOpacity
                 disabled={false}
                 onPress={() =>
                   this.props.navigation.navigate('SETTING', dataSetting)
                 }
-                style={{height:'100%',width:'100%', alignItems: 'center',  justifyContent: 'center'}}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 activeOpacity={0.7}>
                 <Svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -414,19 +461,16 @@ class HomeLocator extends Component {
           </View>
         </ScrollView>
       </View>
-          ) : (
-                <View
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontSize: 20, color: '#ccc'}}>
-                    No Internet !
-                  </Text>
-                </View>
-          )
+    ) : (
+      <View
+        style={{
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{fontSize: 20, color: '#ccc'}}>No Internet !</Text>
+      </View>
     );
   }
 }

@@ -27,4 +27,7 @@ export default {
   DONE_ACC: 'Bạn không có tài khoản ?',
   LOGIN_ERROR_NAMEORPASS: 'Sai mật khẩu hoặc tên đăng nhập',
   LANG: 'Ngôn ngữ :',
+  LOGIN_ERROR_UNKNOWN: 'Lỗi không xác định',
+  SIGN_UP: 'Đăng kí',
+  FOR_GOT: 'Quên mật khẩu?',
 };

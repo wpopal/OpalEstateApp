@@ -8,7 +8,9 @@ import {
   Text,
   Dimensions,
   ScrollView,
+  Image,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import styled from 'styled-components';
 import Input from './Input';
@@ -98,6 +100,7 @@ class LoginComponent extends Component {
   }
   state = {
     errorLog: '',
+    spinner: false,
   };
 
   componentDidMount() {
@@ -130,6 +133,7 @@ class LoginComponent extends Component {
   }
 
   async Clicklogin() {
+    this.setState({spinner: true});
     const posts = await fetch(Base_url + '/wp-json/jwt-auth/v1/token', {
       method: 'POST',
       headers: {
@@ -145,16 +149,15 @@ class LoginComponent extends Component {
       .catch(errer => {
         console.log('errer', errer);
       });
-    console.log('posts.token', posts);
     if (posts.token) {
+      this.setState({errorLog: '', spinner: false});
       this.CheckToken(posts);
     } else {
-      this.setState({errorLog: 'LOGIN_ERROR_NAMEORPASS'});
+      this.setState({errorLog: 'LOGIN_ERROR_NAMEORPASS', spinner: false});
     }
   }
 
   async CheckToken(data) {
-    console.log('data', data);
     const x = data.token;
     await fetch(Base_url + '/wp-json/jwt-auth/v1/token/validate', {
       method: 'POST',
@@ -167,15 +170,19 @@ class LoginComponent extends Component {
   }
 
   async setToken(data) {
-    console.log('data', data);
     data.user_role = data.user_role.toString();
     await updateUser(data)
       .then(item => {
-        setTimeout(function() {
-          RNRestart.Restart();
-        }, 2000);
+        setTimeout(
+          function() {
+            this.setState({errorLog: '', spinner: false});
+            RNRestart.Restart();
+          }.bind(this),
+          2000,
+        );
       })
       .catch(error => {
+        this.setState({errorLog: '', spinner: false});
         console.log('error !', error);
       });
   }
@@ -204,30 +211,6 @@ class LoginComponent extends Component {
     }
   }
 
-  renderForgotPasswordText = (): Object => {
-    return (
-      <ForgotPasswordContainer style={{marginTop: 10}}>
-        <ForgotPasswordWrapper>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('FORGOT')}>
-            <TEXTERR>Forgot Password?</TEXTERR>
-          </TouchableOpacity>
-        </ForgotPasswordWrapper>
-      </ForgotPasswordContainer>
-    );
-  };
-  renderSignUp = (): Object => {
-    return (
-      <ForgotPasswordContainer>
-        <ForgotPasswordWrapper>
-          <RecoverTextButton
-            onPress={() => this.props.navigation.navigate('SIGNUP')}>
-            <TEXTERR>Sign up</TEXTERR>
-          </RecoverTextButton>
-        </ForgotPasswordWrapper>
-      </ForgotPasswordContainer>
-    );
-  };
   renderSocialButtons = (): Object => {
     return (
       <SocialButtonsContainer>
@@ -252,6 +235,13 @@ class LoginComponent extends Component {
     return (
       <ScrollView>
         <Container>
+          <Spinner
+            visible={this.state.spinner}
+            textContent={'Loading...'}
+            textStyle={{
+              color: '#FFF',
+            }}
+          />
           <View
             style={{
               height: '60%',
@@ -287,7 +277,9 @@ class LoginComponent extends Component {
               })}
             </Animated.View>
             <View>
-              {
+              {this.state.spinner ? (
+                <View />
+              ) : (
                 (this.state.errorLog = '' ? (
                   <View style={{margin: 0, padding: 0}} />
                 ) : (
@@ -300,7 +292,7 @@ class LoginComponent extends Component {
                     i18nKey={this.state.errorLog}
                   />
                 ))
-              }
+              )}
             </View>
             <View
               style={{
@@ -309,8 +301,28 @@ class LoginComponent extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
-              {this.renderSignUp()}
+              {this.state.spinner ? (
+                <View />
+              ) : (
+                (this.state.errorLog = '' ? (
+                  <View style={{margin: 0, padding: 0}} />
+                ) : (
+                  <AppText i18nKey={'DONE_ACC'}>Don’t have an account?</AppText>
+                ))
+              )}
+
+              <ForgotPasswordContainer>
+                <ForgotPasswordWrapper>
+                  <RecoverTextButton
+                    onPress={() => this.props.navigation.navigate('SIGNUP')}>
+                    {this.state.spinner ? (
+                      <View />
+                    ) : (
+                      <AppText i18nKey={'SIGN_UP'}>Sign up</AppText>
+                    )}
+                  </RecoverTextButton>
+                </ForgotPasswordWrapper>
+              </ForgotPasswordContainer>
             </View>
             <Button
               style={{
@@ -339,10 +351,28 @@ class LoginComponent extends Component {
                   borderRadius: 10,
                   height: 50,
                 }}>
-                <ButtonText>LOGIN</ButtonText>
+                {!this.state.snippet ? (
+                  <ButtonText>LOGIN</ButtonText>
+                ) : (
+                  <Image
+                    source={require('./ajax-loader.gif')}
+                    style={{width: 25, height: 25}}
+                  />
+                )}
               </LinearGradient>
             </Button>
-            {this.renderForgotPasswordText()}
+            <ForgotPasswordContainer style={{marginTop: 10}}>
+              <ForgotPasswordWrapper>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('FORGOT')}>
+                  {this.state.spinner ? (
+                    <View />
+                  ) : (
+                    <AppText i18nKey={'FOR_GOT'}>Forgot Password?</AppText>
+                  )}
+                </TouchableOpacity>
+              </ForgotPasswordWrapper>
+            </ForgotPasswordContainer>
           </View>
           <View
             style={{
