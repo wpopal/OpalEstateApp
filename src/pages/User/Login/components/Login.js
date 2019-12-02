@@ -55,6 +55,7 @@ const SocialButtonsContainer = styled(View)`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  margin-top: 10px;
 `;
 
 const ForgotPasswordContainer = styled(Animated.View)`
@@ -345,12 +346,12 @@ class LoginComponent extends Component {
           </View>
           <View
             style={{
+              marginTop: 10,
               height: '20%',
               width: '100%',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{color: '#aaa'}}>or</Text>
             {this.renderSocialButtons()}
           </View>
         </Container>
