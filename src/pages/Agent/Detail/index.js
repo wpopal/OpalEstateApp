@@ -28,6 +28,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Circle, ClipPath, Defs, G, Path, Rect, Svg} from 'react-native-svg';
 import MapViewZoom from 'react-native-map-clustering';
 import MapView, {Marker} from 'react-native-maps';
+import AppText from '../../Text-i18n';
 
 class Detail extends Component<Props, State> {
   constructor(props) {
@@ -155,10 +156,10 @@ class Detail extends Component<Props, State> {
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingBottom: '20%',
         }}>
         <ScrollView>
           {this.state.dataSource.listing.map(l => {
-            console.log('llllllll', l);
             return (
               <View style={styles.listing} key={l.id}>
                 <View
@@ -836,6 +837,7 @@ class Detail extends Component<Props, State> {
         <Image
           source={{uri: data.thumbnail}}
           style={{
+            marginTop: (viewportWidth / 100) * 25,
             height: (viewportWidth / 100) * 30,
             width: (viewportWidth / 100) * 30,
             borderRadius: ((viewportWidth / 100) * 30) / 2,
@@ -875,10 +877,12 @@ class Detail extends Component<Props, State> {
           )}
         </View>
         <Text style={{color: '#5F6870'}}>{data.company}</Text>
-        <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
-          {data.listing_count}
-          {' Listings'}
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text numberOfLines={2} style={{color: '#6923E7', fontSize: 16}}>
+            {data.listing_count}
+            {' Listings'}
+          </Text>
+        </View>
         <View style={{width: '100%', height: 500, marginTop: 30}}>
           <TabView
             renderTabBar={props => (

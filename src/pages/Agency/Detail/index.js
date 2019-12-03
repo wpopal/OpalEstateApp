@@ -158,6 +158,7 @@ class Detail extends Component<Props, State> {
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingBottom: '20%',
         }}>
         <ScrollView>
           {this.state.dataSource.listings.map(l => (

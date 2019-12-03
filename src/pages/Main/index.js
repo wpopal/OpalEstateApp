@@ -25,7 +25,7 @@ import axios from 'axios';
 import Geolocation from 'react-native-geolocation-service';
 import {withNavigation} from 'react-navigation';
 
-const {width: viewportWidth} = Dimensions.get('window');
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
 interface Props {}
 
@@ -450,45 +450,40 @@ class Main extends Component<Props, State> {
             width: '100%',
             height: '50%',
           }}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('DETAIL', l)}>
-            <ImageBackground
-              imageStyle={{
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                borderWidth: 1,
-                borderColor: '#fff',
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-              source={{
-                uri: l.item.thumbnail,
-              }}>
-              <View style={styles.statust}>
-                <View
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    flexDirection: 'row-reverse',
-                  }}>
+          <ImageBackground
+            imageStyle={{
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              borderWidth: 1,
+              borderColor: '#fff',
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            source={{
+              uri: l.item.thumbnail,
+            }}>
+            <View style={styles.statust}>
+              <View
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  flexDirection: 'row-reverse',
+                }}>
+                <TouchableOpacity onPress={() => console.log('like !')}>
                   <View
                     style={{
                       justifyContent: 'center',
                       alignItems: 'center',
-                      width: '12%',
-                      height: '12%',
+                      width: (viewportHeight / 100) * 5,
+                      height: (viewportHeight / 100) * 5,
                       backgroundColor: '#fff',
-                      paddingTop: 6,
-                      paddingBottom: 6,
-                      paddingRight: 6,
-                      paddingLeft: 6,
                       borderRadius: 50,
                     }}>
                     <Svg
-                      width="80%"
-                      height="80%"
+                      width="40%"
+                      height="40%"
                       viewBox="0 0 16 15"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg">
@@ -498,47 +493,48 @@ class Main extends Component<Props, State> {
                       />
                     </Svg>
                   </View>
-                </View>
+                </TouchableOpacity>
               </View>
-            </ImageBackground>
-          </TouchableOpacity>
+            </View>
+          </ImageBackground>
         </View>
-        <View
-          style={{
-            flex: 1,
-            height: '45%',
-            paddingLeft: 20,
-            paddingRight: 20,
-          }}>
+        <TouchableOpacity
+          style={{height: '45%'}}
+          onPress={() => this.props.navigation.navigate('DETAIL', l)}>
           <View
             style={{
-              position: 'absolute',
-              flexDirection: 'row',
-              top: -15,
-              height: 23,
-              left: 20,
-              width: viewportWidth,
+              flex: 1,
+              height: '100%',
+              paddingLeft: 20,
+              paddingRight: 20,
             }}>
-            {l.item.labels.map(item => {
-              return (
-                <View
-                  key={item.term_id}
-                  style={{
-                    marginRight: 10,
-                    backgroundColor: `${item.meta.opalestate_label_lb_bg}`,
-                    height: 23,
-                    width: 60,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 4,
-                  }}>
-                  <Text style={{color: '#fff'}}>{item.name}</Text>
-                </View>
-              );
-            })}
-          </View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('DETAIL', l)}>
+            <View
+              style={{
+                position: 'absolute',
+                flexDirection: 'row',
+                top: -15,
+                height: 23,
+                left: 20,
+                width: viewportWidth,
+              }}>
+              {l.item.labels.map(item => {
+                return (
+                  <View
+                    key={item.term_id}
+                    style={{
+                      marginRight: 10,
+                      backgroundColor: `${item.meta.opalestate_label_lb_bg}`,
+                      height: 23,
+                      width: 60,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 4,
+                    }}>
+                    <Text style={{color: '#fff'}}>{item.name}</Text>
+                  </View>
+                );
+              })}
+            </View>
             <Text
               style={{
                 marginTop: 20,
@@ -548,82 +544,82 @@ class Main extends Component<Props, State> {
               }}>
               {l.item.address}
             </Text>
-          </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-            }}>
-            <Text style={{color: '#5F6870'}}>House </Text>
-            {l.item.statuses.map(item => {
-              return (
-                <View
-                  key={item.term_id}
-                  style={{
-                    height: 23,
-                    width: 'auto',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{color: '#5F6870'}}>
-                    {'  |  '}
-                    {item.name}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text
+            <View
               style={{
-                color: '#6923E7',
-                fontWeight: 'bold',
-                fontSize: RFPercentage(3.8),
+                flexDirection: 'row',
+                width: '100%',
               }}>
-              ${l.item.price.replace('&#36;', '')}
-            </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: RFPercentage(2.8),
-                color: '#5F6870',
-              }}>
-              /month
-            </Text>
-          </View>
-          <View
-            style={{
-              height: 85,
-              marginTop: 6,
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
-            {Object.keys(l.item.short_info).map(key => {
-              return (
-                <View
-                  key={key}
-                  style={{
-                    paddingRight: 20,
-                    marginRight: 15,
-                    marginTop: 5,
-                    height: RFPercentage(3),
-                    flexDirection: 'row',
-                  }}>
-                  {this.renIcon(l.item.short_info[key], key)}
-                  <Text
+              <Text style={{color: '#5F6870'}}>House </Text>
+              {l.item.statuses.map(item => {
+                return (
+                  <View
+                    key={item.term_id}
                     style={{
-                      color: '#AEB3BA',
-                      fontSize: RFPercentage(2.4),
-                      marginLeft: 4,
+                      height: 23,
+                      width: 'auto',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    {l.item.short_info[key].value}
-                  </Text>
-                  {this.renName(l.item.short_info[key], key)}
-                </View>
-              );
-            })}
+                    <Text style={{color: '#5F6870'}}>
+                      {'  |  '}
+                      {item.name}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+            <View style={{flexDirection: 'row', marginTop: 5}}>
+              <Text
+                style={{
+                  color: '#6923E7',
+                  fontWeight: 'bold',
+                  fontSize: RFPercentage(3.8),
+                }}>
+                ${l.item.price.replace('&#36;', '')}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: RFPercentage(2.8),
+                  color: '#5F6870',
+                }}>
+                /month
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 85,
+                marginTop: 6,
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+              }}>
+              {Object.keys(l.item.short_info).map(key => {
+                return (
+                  <View
+                    key={key}
+                    style={{
+                      paddingRight: 20,
+                      marginRight: 15,
+                      marginTop: 5,
+                      height: RFPercentage(3),
+                      flexDirection: 'row',
+                    }}>
+                    {this.renIcon(l.item.short_info[key], key)}
+                    <Text
+                      style={{
+                        color: '#AEB3BA',
+                        fontSize: RFPercentage(2.4),
+                        marginLeft: 4,
+                      }}>
+                      {l.item.short_info[key].value}
+                    </Text>
+                    {this.renName(l.item.short_info[key], key)}
+                  </View>
+                );
+              })}
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
