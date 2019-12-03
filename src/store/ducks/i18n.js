@@ -12,16 +12,20 @@ const initialState = Immutable({
 
 export const Creators = {
   upadateI18n: data => {
-
     return {type: Types.SET_LANG, payload: {data}};
   },
 };
 
 const login = (state = initialState, action) => {
-
   switch (action.type) {
     case Types.SET_LANG: {
-
+      return {
+        ...state,
+        loading: true,
+        i18nKey: action.payload.data,
+      };
+    }
+    case 'mapMain/SET_LANG': {
       return {
         ...state,
         loading: true,

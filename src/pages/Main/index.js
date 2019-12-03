@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Path, Svg} from 'react-native-svg';
+import {getLanguages} from 'react-native-i18n';
 import {
   queryUser,
+  upDateLang,
   createrUser,
   upDateGeoLocal,
 } from '../../database/allSchemas';
@@ -442,7 +444,6 @@ class Main extends Component<Props, State> {
 
   renderItem(info: ListRenderItemInfo<Post>) {
     const l = info;
-    console.log('lllll', l);
     return (
       <View style={styles.listing}>
         <View
@@ -681,6 +682,20 @@ class Main extends Component<Props, State> {
         const dataUser = Array.from(item);
         console.log(dataUser);
         if (dataUser.length) {
+          if (dataUser[0].currentLocale !== '') {
+            this.props.setLangMapMain(dataUser[0].currentLocale);
+          } else {
+            getLanguages().then(languages => {
+              console.log('languages', languages);
+              upDateLang(languages[0])
+                .then(item => {
+                  console.log('update lag done !');
+                })
+                .catch(error => {
+                  console.log('error !', error);
+                });
+            });
+          }
           this.setState({
             token: dataUser[0].token,
           });
@@ -688,6 +703,16 @@ class Main extends Component<Props, State> {
           createrUser('creater')
             .then(item => {
               console.log(item);
+              getLanguages().then(languages => {
+                console.log('languages', languages);
+                upDateLang(languages[0])
+                  .then(item => {
+                    console.log('update lag done !');
+                  })
+                  .catch(error => {
+                    console.log('error !', error);
+                  });
+              });
             })
             .catch(error => {
               console.log('error !', error);

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Creators as userCreators} from '../../store/ducks/login';
 import {View, ScrollView} from 'react-native';
 import {Text, ListItem} from 'react-native-elements';
-import {queryUser, deleteDataUser} from '../../database/allSchemas';
+import {queryUser, deleteDataUser, upDateLang} from '../../database/allSchemas';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import RNPickerSelect from 'react-native-picker-select';
 import AppText from '../Text-i18n';
@@ -17,6 +17,7 @@ class User extends React.Component {
     super(props);
     this.state = {
       data: {},
+      valueLang: '',
       token: false,
       list2: [
         {
@@ -62,7 +63,11 @@ class User extends React.Component {
     queryUser()
       .then(item => {
         const dataUser = Array.from(item);
-        this.setState({token: dataUser[0].token, data: dataUser[0]});
+        this.setState({
+          token: dataUser[0].token,
+          data: dataUser[0],
+          valueLang: dataUser[0].currentLocale,
+        });
       })
       .catch(error => {
         console.log('error !', error);
@@ -112,6 +117,14 @@ class User extends React.Component {
     return avatar_url;
   }
   setLang(lang) {
+    upDateLang(lang)
+      .then(item => {
+        console.log('update lag done !');
+      })
+      .catch(error => {
+        console.log('error !', error);
+      });
+    this.setState({valueLang: lang});
     this.props.setLang(lang);
   }
   render() {
@@ -205,6 +218,7 @@ class User extends React.Component {
               <AppText i18nKey={'LANG'}>Language :</AppText>
               <RNPickerSelect
                 onValueChange={value => this.setLang(value)}
+                value={this.state.valueLang}
                 items={[
                   {label: 'English', value: 'en'},
                   {label: 'Vietnamese', value: 'vi'},

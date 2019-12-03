@@ -7,6 +7,7 @@ export const Types = {
   SET_GEO: 'mapMain/SET_GEO',
   SET_POP: 'mapMain/SET_POP',
   SET_SETTING: 'mapMain/SET_SETTING',
+  SET_LANG: 'mapMain/SET_LANG',
 };
 
 const initialState = Immutable({
@@ -41,9 +42,14 @@ export const Creators = {
   },
 
   setSettingmapMainSuccess: data => {
-    console.log('data', data);
     return {
       type: Types.SET_SETTING,
+      payload: {data},
+    };
+  },
+  setLangMapMain: data => {
+    return {
+      type: Types.SET_LANG,
       payload: {data},
     };
   },

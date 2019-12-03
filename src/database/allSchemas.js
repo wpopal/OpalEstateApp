@@ -98,7 +98,6 @@ export const createrUser = newUser =>
       .catch(error => reject(error));
   });
 
-
 export const updateParams = newParams => {
   console.log(newParams);
   return new Promise((resolve, reject) => {
@@ -156,6 +155,25 @@ export const upDateGeoLocal = newData =>
             true,
           );
           resolve(newData);
+        });
+      })
+      .catch(error => reject(error));
+  });
+
+export const upDateLang = currentLocale =>
+  new Promise((resolve, reject) => {
+    Realm.open(databaseOption)
+      .then(realm => {
+        realm.write(() => {
+          realm.create(
+            DATA_SET,
+            {
+              id: 0,
+              currentLocale: currentLocale,
+            },
+            true,
+          );
+          resolve(currentLocale);
         });
       })
       .catch(error => reject(error));

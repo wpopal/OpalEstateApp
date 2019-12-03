@@ -14,6 +14,7 @@ import {detailRequest} from './detail';
 export default function* rootSaga() {
   return yield all([
     takeLatest(LoginTypes.SET_LANG, setLangSaga),
+    takeLatest(MapTypes.SET_LANG, setLangSaga),
     takeLatest(MapTypes.GET_REQUEST, mapMainRequest),
     takeLatest(AgencyTypes.GET_REQUEST, agencyRequest),
     takeLatest(DetailTypes.GET_REQUEST, detailRequest),
