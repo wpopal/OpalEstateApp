@@ -45,7 +45,7 @@ const ApplicationTabs = createMaterialTopTabNavigator(
     [ROUTE_NAMES.AGENT]: {
       screen: agent,
       navigationOptions: {
-        tabBarIcon: getTabIcon('city-variant'),
+        tabBarIcon: getTabIcon('account-tie'),
       },
     },
     [ROUTE_NAMES.USER]: {

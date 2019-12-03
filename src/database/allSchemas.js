@@ -15,6 +15,7 @@ export const TodoLisrSchema = {
     avatar: 'string',
     user_role: 'string',
     geo_local: 'string',
+    currentLocale: 'string',
   },
 };
 
@@ -60,7 +61,8 @@ export const updateUser = newUser =>
               user_nicename: newUser.user_nicename,
               avatar: newUser.avatar,
               user_role: newUser.user_role,
-              geo_local: '',
+              geo_local: newUser.geo_local,
+              currentLocale: newUser.currentLocale,
             },
             true,
           );
@@ -86,6 +88,7 @@ export const createrUser = newUser =>
               avatar: '',
               user_role: '',
               geo_local: '',
+              currentLocale: '',
             },
             true,
           );
